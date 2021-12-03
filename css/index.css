@@ -1,0 +1,12 @@
+.body{
+    background: rgb(0, 0, 0);
+}
+
+
+.button-interpretar{
+    background: rgb(115, 206, 10);
+    height: 50px;
+    position:relative;
+    top:50%; 
+    left:45%;
+}
