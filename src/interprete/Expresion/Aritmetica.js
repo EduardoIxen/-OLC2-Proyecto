@@ -19,15 +19,10 @@ class Aritmetica extends Instruction{
                 return right;
             }
         }
-        console.log("aca");
-        console.log(this.operator);
-        if (this.operator == Operador_Aritmetico.SUMA){
-
-            console.log(this.casteo(this.exp_left.type, left));
-            console.log(this.casteo(this.exp_right.type, right));
-            if(this.exp_left.type == Tipo.ENTERO && this.exp_right == Tipo.ENTERO){
+    
+        if (this.operator == Operador_Aritmetico.MAS){
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
                 this.type = Tipo.ENTERO;
-
                 return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right)
             }
             
@@ -45,7 +40,7 @@ class Aritmetica extends Instruction{
         }else if (tipo == Tipo.BOOLEANO){
             return Boolean(valor)
         }
-        return str(valor)
+        return valor.toString();
     }
 
    

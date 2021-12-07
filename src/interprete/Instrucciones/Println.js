@@ -7,7 +7,6 @@ class Println extends Instruction{
 
     interpretar(tree, table){
         var value = this.expression.interpretar(tree, table);
-        console.log(value);
         tree.updateConsola(value);
     }
 }

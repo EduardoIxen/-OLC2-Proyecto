@@ -31,7 +31,3 @@ const Operador_Logico = {
     AND : 2,
     NOT : 3,
 }
-
-
-module.exports = Tipo;
-module.exports = Operador_Aritmetico;

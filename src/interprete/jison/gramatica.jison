@@ -53,8 +53,8 @@
 /*************************
  * Expresiones Regulares *
  *************************/ 
-[0-9]+("."[0-9]+)?\b            return 'RDECIMAL';
 [0-9]+\b                        return 'RENTERO';
+[0-9]+("."[0-9]+)?\b            return 'RDECIMAL';
 (\'([^\\\"]|\\.)\')             return 'RCARACTER';
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
