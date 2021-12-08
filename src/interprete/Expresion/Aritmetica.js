@@ -42,6 +42,86 @@ class Aritmetica extends Instruction{
                 return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
             }
             
+        }else if (this.operator == Operador_Aritmetico.RESTA){
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                this.type = Tipo.ENTERO
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right)
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
+            }
+        }else if(this.operator == Operador_Aritmetico.POR){
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                this.type = Tipo.ENTERO
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right)
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
+            }
+        }else if(this.operator == Operador_Aritmetico.DIV){
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                this.type = Tipo.ENTERO
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right)
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+            }
+        }else if(this.operator == Operador_Aritmetico.MODULO){
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                this.type = Tipo.ENTERO
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right)
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
+            }
         }
         
     }

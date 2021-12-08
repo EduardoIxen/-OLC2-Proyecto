@@ -9,7 +9,7 @@ const Tipo = {
 
 const Operador_Aritmetico = {
 
-    SUMA    : 1,
+    MAS    : 1,
     RESTA   : 2,
     POR     : 3,
     DIV     : 4,
