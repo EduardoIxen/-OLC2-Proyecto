@@ -50,7 +50,7 @@ class Relacional extends Instruction{
                 return this.casteo(this.exp_left.type, left) < this.casteo(this.exp_right.type, right);
             }
             
-            return Exception("Semantico", "Tipo Erroneo de operacion para <.", this.row, this.column);
+            return new Exception("Semantico", "Tipo Erroneo de operacion para <.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.MAYORQUE){ // >
             /*****************************************  INT *****************************************/
@@ -84,7 +84,7 @@ class Relacional extends Instruction{
                 return this.casteo(this.exp_left.type, left) > this.casteo(this.exp_right.type, right);
             }
             
-            return Exception("Semantico", "Tipo Erroneo de operacion para >.", this.row, this.column);
+            return new Exception("Semantico", "Tipo Erroneo de operacion para >.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.MENORIGUAL){ // <=
             console.log("hola")
@@ -119,7 +119,7 @@ class Relacional extends Instruction{
                 return this.casteo(this.exp_left.type, left) <= this.casteo(this.exp_right.type, right);
             }
             
-            return Exception("Semantico", "Tipo Erroneo de operacion para <=.", this.row, this.column);
+            return new Exception("Semantico", "Tipo Erroneo de operacion para <=.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.MAYORIGUAL){ // >=
             /*****************************************  INT *****************************************/
@@ -153,7 +153,7 @@ class Relacional extends Instruction{
                 return this.casteo(this.exp_left.type, left) >= this.casteo(this.exp_right.type, right);
             }
             
-            return Exception("Semantico", "Tipo Erroneo de operacion para >=.", this.row, this.column);
+            return new Exception("Semantico", "Tipo Erroneo de operacion para >=.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.IGUALACION){ // ==
             /*****************************************  INT *****************************************/
@@ -202,61 +202,60 @@ class Relacional extends Instruction{
                 return this.casteo(this.exp_left.type, left) == this.casteo(this.exp_right.type, right);
             }
             
-            return Exception("Semantico", "Tipo Erroneo de operacion para ==.", this.row, this.column);
+            return new Exception("Semantico", "Tipo Erroneo de operacion para ==.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.DIFERENCIA){ // !=
         /*****************************************  INT *****************************************/
-        if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        /*****************************************  DECIMAL *****************************************/
-        else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        /*****************************************  CHAR *****************************************/
-        else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        /*****************************************  STRING *****************************************/
-        else if(this.exp_left.type == Tipo.STRING && this.exp_right.type == Tipo.STRING){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        else if(this.exp_left.type == Tipo.STRING && this.exp_right.type == Tipo.NULO){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        /*****************************************  BOOLEAN *****************************************/
-        else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        /*****************************************  NULL *****************************************/
-        else if(this.exp_left.type == Tipo.NULO && this.exp_right.type == Tipo.STRING){
-            return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
-        }
-        
-        return Exception("Semantico", "Tipo Erroneo de operacion para ==.", this.row, this.column);
+            if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            /*****************************************  DECIMAL *****************************************/
+            else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            /*****************************************  CHAR *****************************************/
+            else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            /*****************************************  STRING *****************************************/
+            else if(this.exp_left.type == Tipo.STRING && this.exp_right.type == Tipo.STRING){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            else if(this.exp_left.type == Tipo.STRING && this.exp_right.type == Tipo.NULO){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            /*****************************************  BOOLEAN *****************************************/
+            else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            /*****************************************  NULL *****************************************/
+            else if(this.exp_left.type == Tipo.NULO && this.exp_right.type == Tipo.STRING){
+                return this.casteo(this.exp_left.type, left) != this.casteo(this.exp_right.type, right);
+            }
+            
+            return new Exception("Semantico", "Tipo Erroneo de operacion para ==.", this.row, this.column);
 
-    }
+        }
         
-        
-        return Exception("Semantico", "Tipo de Operacion no Especificado.", this.row, this.column);
+        return new Exception("Semantico", "Tipo de Operacion no Especificado.", this.row, this.column);
 
     }
 

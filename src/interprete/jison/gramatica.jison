@@ -155,6 +155,8 @@ instruccion
         : imprimir_instr fin_instr               { $$ = $1; }
          | declaracion_instr fin_instr           { $$ = $1; }
         // | asignacion_instr fin_instr             {}
+        | if_instr                               {$$ = $1; }
+        // | if_instr_dos                           {$$ = $1; }
         // | ternario_instr                         {}
 ;
 
@@ -166,7 +168,7 @@ fin_instr
 /************************************* [PRINT] y [PRINTLN] ************************************/                                      */
 imprimir_instr
         : RPRINTLN tk_para expresion tk_parc	{ $$ = new Println($3, @1.first_line, @1.first_column); }
-        | RPRINT tk_para expresion tk_parc	{ $$ = $3; }
+        | RPRINT tk_para expresion tk_parc	{ $$ = new Print($3,   @1.first_line, @1.first_column);   }
 ;
 
 /***************************************** [DECLARACION] ***************************************/     
@@ -179,6 +181,24 @@ declaracion_instr
 // asignacion_instr
 //         : identificador tk_igual EXPRESION      {}
 // ;
+
+/********************************************* [IF][SIN LLAVE] *********************************************/    
+// if_instr_dos  
+//         : RIF tk_para expresion tk_parc instrucciones                                               {}
+//         | RIF tk_para expresion tk_parc instrucciones tk_llavec RELSE instrucciones tk_llavec       {}
+//         | RIF tk_para expresion tk_parc  instrucciones RELSE if_instr_dos                               {}
+// ;
+/********************************************* [IF][CON LLAVE] *********************************************/    
+if_instr  
+        : RIF tk_para expresion tk_parc BLOCK_IF                        {}
+        | RIF tk_para expresion tk_parc BLOCK_IF RELSE BLOCK_IF         {}
+        | RIF tk_para expresion tk_parc BLOCK_IF RELSE if_instr         {}
+;
+
+BLOCK_IF
+        : tk_llavea instrucciones tk_llavec     {}
+        // | instrucciones                         {}
+        ;
 
 /***************************************** [TERNARIO] ***************************************/   
 // ternario_instr
@@ -210,8 +230,8 @@ expresion
         | tk_menos expresion %prec UMINUS       {$$ = new Aritmetica($2, null, Operador_Aritmetico.UMENOS, @1.first_line, @1.first_column); }
 
                 /* Relacional */
-        | expresion tk_menorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MENORQUE, @1.first_line, @1.first_column); }
-        | expresion tk_mayorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MAYORQUE, @1.first_line, @1.first_column); }
+        | expresion tk_menorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MENORQUE,   @1.first_line, @1.first_column); }
+        | expresion tk_mayorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MAYORQUE,   @1.first_line, @1.first_column); }
         | expresion tk_menorigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.MENORIGUAL, @1.first_line, @1.first_column); }
         | expresion tk_mayorigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.MAYORIGUAL, @1.first_line, @1.first_column); }
         | expresion tk_dobleigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.IGUALACION, @1.first_line, @1.first_column); }
@@ -228,13 +248,13 @@ expresion
                 /* Agrupación */        
         | tk_para expresion tk_parc             {$$ = $2}
                 /* Primitivos */
-        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,        $1, @1.first_line, @1.first_column);    }
-        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,       $1, @1.first_line, @1.first_column);    }
-        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER,      $1, @1.first_line, @1.first_column);    }
-        | RCADENA                               {$$ = new Primitivo(Tipo.STRING,        $1, @1.first_line, @1.first_column);    }
-        | identificador                         {$$ = new Identificador(                $1, @1.first_line, @1.first_column);    }
-        | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO,      true, @1.first_line, @1.first_column);  }
-        | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO,      false, @1.first_line, @1.first_column); }
-        | RNULL                                 {}
+        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,   $1,    @1.first_line, @1.first_column);    }
+        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,  $1,    @1.first_line, @1.first_column);    }
+        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER, $1,    @1.first_line, @1.first_column);    }
+        | RCADENA                               {$$ = new Primitivo(Tipo.STRING,   $1,    @1.first_line, @1.first_column);    }
+        | identificador                         {$$ = new Identificador(           $1,    @1.first_line, @1.first_column);    }
+        | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO, true,  @1.first_line, @1.first_column);    }
+        | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO, false, @1.first_line, @1.first_column);    }
+        | RNULL                                 {$$ = new Primitivo(Tipo.NULO,     null,  @1.first_line, @1.first_column);    }
 ;
 

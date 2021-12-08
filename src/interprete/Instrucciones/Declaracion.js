@@ -5,21 +5,22 @@ class Declaracion extends Instruction{
         this.type = type;
         this.id = id;
         this.expression = expression;
-        this.value = null;
     }
 
     interpretar(tree, table){
+        var value = null;
+     
         if (this.expression != null) {
-            let value = this.expression.interpretar(tree, table)  //obtenemos el valor de la expresion para asignarselo a la vatiable
+            value = this.expression.interpretar(tree, table);  //obtenemos el valor de la expresion para asignarselo a la vatiable
             if (value instanceof Exception) return value;
-            if (this.type != value.type) return new Exception("Error semantico", "Tipos incompatibles", this.row, this.column);
-            this.value = value;
+            this.type = this.expression.type;
 
-            var simbolo = Simbolo(this.id, this.type, this.row, this.column, this.value, "agregar ambito");
-            var result = table.setTabla(simbolo);
-
-            if (result instanceof Exception) return result;
-            return null;
         }
+
+        var simbolo = new Simbolo(this.id, this.type, this.row, this.column, value, "agregar ambito");
+        var result = table.setTabla(simbolo);
+
+        if (result instanceof Exception) return result;
+        return null;
     }
 }

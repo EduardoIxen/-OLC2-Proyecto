@@ -22,7 +22,7 @@ class Simbolo{
     getColumn(){ return this.column}
     setColumn(column){ this.column = column; }
 
-    getValue(){ return this.valor; }
+    getValue(){ return this.value; }
     setValue(value){ this.value = value; }
 
     getAmbito(){ return this.ambito; }

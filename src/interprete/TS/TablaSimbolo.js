@@ -17,10 +17,10 @@ class TablaSimbolo{
 
 
     setTabla(simbolo){
-        if (simbolo.id.toLowerCase() in this.tabla){
+        if (simbolo.id in this.tabla){
             return Exception("Semantico",`Variable ${simbolo.id} ya existe.`, simbolo.getRow(), simbolo.getColumn());
         }else{
-            this.tabla[simbolo.id.toLowerCase()] = simbolo;
+            this.tabla[simbolo.id] = simbolo;
             return null;
         }
     }
@@ -28,8 +28,8 @@ class TablaSimbolo{
     getTabla(id){
         var tablaActual = this;
         while(tablaActual.tabla != null){
-            if(id.toLowerCase() in tablaActual.tabla){
-                return tablaActual.tabla[id.toLowerCase()];  //retornar el simbolo encontrado
+            if(id in tablaActual.tabla){
+                return tablaActual.tabla[id];  //retornar el simbolo encontrado
             }else{
                 tablaActual = tablaActual.anterior;
                 if (tablaActual == null) {
@@ -43,11 +43,11 @@ class TablaSimbolo{
     updateTabla(simbolo){
         var tablaActual = this;
         while (tablaActual != null){
-            if(simbolo.id.toLowerCase() in tablaActual.tabla){
-                if(tablaActual.tabla[simbolo.id.toLowerCase()].getType() == simbolo.getType()){
+            if(simbolo.id in tablaActual.tabla){
+                if(tablaActual.tabla[simbolo.id].getType() == simbolo.getType()){
                     console.log(`se actualiza ${simbolo.id}`)
-                    tablaActual.tabla[simbolo.id.toLowerCase()].setValue(simbolo.getValue())
-                    tablaActual.tabla[simbolo.id.toLowerCase()].setType(simbolo.getType())
+                    tablaActual.tabla[simbolo.id].setValue(simbolo.getValue())
+                    tablaActual.tabla[simbolo.id].setType(simbolo.getType())
                     return null; //variable actualizada
                 }
                 return Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
