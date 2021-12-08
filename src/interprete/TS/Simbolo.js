@@ -1,11 +1,12 @@
 class Simbolo{
 
-    constructor(id, type, row, column, value){
+    constructor(id, type, row, column, value, ambito){
         this.id = id;
         this.type = type;
         this.row = row;
         this.column = column;
         this.value = value;
+        this.ambito = ambito;
     }
 
 
@@ -23,5 +24,8 @@ class Simbolo{
 
     getValue(){ return this.valor; }
     setValue(value){ this.value = value; }
+
+    getAmbito(){ return this.ambito; }
+    setAmbito(ambito){ this.ambito = ambito; }
 
 }

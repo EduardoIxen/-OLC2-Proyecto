@@ -152,8 +152,8 @@ instrucciones
 ;
 
 instruccion
-        : imprimir_instr fin_instr               {}
-        // | declaracion_instr fin_instr            {}
+        : imprimir_instr fin_instr               { $$ = $1; }
+         | declaracion_instr fin_instr           { $$ = $1; }
         // | asignacion_instr fin_instr             {}
         // | ternario_instr                         {}
 ;
@@ -170,10 +170,10 @@ imprimir_instr
 ;
 
 /***************************************** [DECLARACION] ***************************************/     
-// declaracion_instr
-//         : TIPO identificador tk_igual expresion {}
-//         | TIPO LISTA_ID                         {}
-// ;
+declaracion_instr
+         : TIPO identificador tk_igual expresion { $$ = new Declaracion($1, $2, $4, @1.first_line, @1.first_column); }
+         | TIPO LISTA_ID                         {}
+;
 
 /***************************************** [ASIGNACION] ***************************************/   
 // asignacion_instr
@@ -192,11 +192,11 @@ LISTA_ID: LISTA_ID tk_coma identificador        {}
 
 /***************************************** [TIPO] ***************************************/   
 TIPO
-        : RINT                                  {}
-        | RDOUBLE                               {}
-        | RBOOLEAN                              {}
-        | RCHAR                                 {}
-        | RSTRING                               {}
+        : RINT                                  {$$ = Tipo.ENTERO;  }
+        | RDOUBLE                               {$$ = Tipo.DECIMAL; }
+        | RBOOLEAN                              {$$ = Tipo.BOOLEANO;}
+        | RCHAR                                 {$$ = Tipo.CARACTER;}
+        | RSTRING                               {$$ = Tipo.STRING;  }
 ;
 
 /***************************************** [EXPRESIONES] ***************************************/   
@@ -232,7 +232,7 @@ expresion
         | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,       $1, @1.first_line, @1.first_column);    }
         | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER,      $1, @1.first_line, @1.first_column);    }
         | RCADENA                               {$$ = new Primitivo(Tipo.STRING,        $1, @1.first_line, @1.first_column);    }
-        | identificador                         {$$ = new Primitivo(Tipo.IDENTIFICADOR, $1, @1.first_line, @1.first_column);    }
+        | identificador                         {$$ = new Identificador(                $1, @1.first_line, @1.first_column);    }
         | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO,      true, @1.first_line, @1.first_column);  }
         | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO,      false, @1.first_line, @1.first_column); }
         | RNULL                                 {}

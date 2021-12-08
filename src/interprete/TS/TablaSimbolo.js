@@ -17,44 +17,48 @@ class TablaSimbolo{
 
 
     setTabla(simbolo){
-        if (simbolo.id in this.tabla){
+        if (simbolo.id.toLowerCase() in this.tabla){
             return Exception("Semantico",`Variable ${simbolo.id} ya existe.`, simbolo.getRow(), simbolo.getColumn());
         }else{
-            this.tabla[simbolo.id] = simbolo;
+            this.tabla[simbolo.id.toLowerCase()] = simbolo;
             return null;
         }
     }
 
     getTabla(id){
-        tablaActual = this;
-        while(tablaActual.tabla != None){
-            if(id in tablaActual.tabla){
-                return tablaActual.tabla[id];
+        var tablaActual = this;
+        while(tablaActual.tabla != null){
+            if(id.toLowerCase() in tablaActual.tabla){
+                return tablaActual.tabla[id.toLowerCase()];  //retornar el simbolo encontrado
             }else{
                 tablaActual = tablaActual.anterior;
-                if (tablaActual == null){
-                    return None;
+                if (tablaActual == null) {
+                    return null;
                 }
             }
         }
+        return null;
     }
 
     updateTabla(simbolo){
-        tablaActual = this;
+        var tablaActual = this;
         while (tablaActual != null){
-            if(simbolo.id in tablaActual.tabla){
-                if(tablaActual.tabla[simbolo.id].getType() == simbolo.getType()){
+            if(simbolo.id.toLowerCase() in tablaActual.tabla){
+                if(tablaActual.tabla[simbolo.id.toLowerCase()].getType() == simbolo.getType()){
                     console.log(`se actualiza ${simbolo.id}`)
-                    return null;
+                    tablaActual.tabla[simbolo.id.toLowerCase()].setValue(simbolo.getValue())
+                    tablaActual.tabla[simbolo.id.toLowerCase()].setType(simbolo.getType())
+                    return null; //variable actualizada
                 }
                 return Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
 
             }else{
                 tablaActual = tablaActual.anterior;
-                if(tablaActual == null){
+                if (tablaActual == null) {
                     return null;
                 }
             }
         }
+        return Exception("Semantico",`Variable ${simbolo.getId()} no encontrada.`, simbolo.getRow(), simbolo.getColumn());
     }
 }

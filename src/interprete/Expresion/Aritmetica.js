@@ -40,8 +40,7 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: No se pueden sumar los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","No se pueden sumar los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
             
         }else if (this.operator == Operador_Aritmetico.RESTA){
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
@@ -63,8 +62,7 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) - this.casteo(this.exp_right.type, right);
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: No se pueden restar los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","No se pueden restar los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         }else if(this.operator == Operador_Aritmetico.POR){
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
@@ -86,8 +84,7 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) * this.casteo(this.exp_right.type, right);
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: No se pueden multiplicar los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","No se pueden multiplicar los datos "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         }else if(this.operator == Operador_Aritmetico.DIV){
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
@@ -109,8 +106,7 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: No se pueden dividir los datos"+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","No se pueden dividir los datos "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         }else if(this.operator == Operador_Aritmetico.MODULO){
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
@@ -132,8 +128,7 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right);
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: No se pueden obtener el modulo de "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","No se pueden obtener el modulo de "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         } else if(this.operator == Operador_Aritmetico.UMENOS){
             if(this.exp_left.type == Tipo.ENTERO){
@@ -143,11 +138,9 @@ class Aritmetica extends Instruction{
                 self.type = Tipo.DECIMAL
                 return - this.casteo(this.exp_left.type, left)
             }
-            //Aca crear un nuevo objeto error con la descripcion, fila y columna
-            console.log("Error semantico: Tipo de dato erroneo para -" + "Fila: "+this.row + "Columna: "+this.column);
+            return Exception("Error Semantico","Tipo de dato erroneo poara - ", this.row, this.column);
         }
-        //Aca crear un nuevo objeto error con la descripcion, fila y columna
-        console.log("Error semantico: Tipo de operacion erronea. " + "Fila: "+this.row + "Columna: "+this.column);
+        return Exception("Error Semantico","Tipo de operacion erronea.", this.row, this.column);
 
     }
 
