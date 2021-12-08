@@ -132,10 +132,10 @@ class Aritmetica extends Instruction{
 
         } else if(this.operator == Operador_Aritmetico.UMENOS){
             if(this.exp_left.type == Tipo.ENTERO){
-                self.type = Tipo.ENTERO
+                this.type = Tipo.ENTERO
                 return - this.casteo(this.exp_left.type, left)
             }else if(this.exp_left.type == Tipo.DECIMAL){
-                self.type = Tipo.DECIMAL
+                this.type = Tipo.DECIMAL
                 return - this.casteo(this.exp_left.type, left)
             }
             return new Exception("Error Semantico","Tipo de dato erroneo poara - ", this.row, this.column);
@@ -160,14 +160,14 @@ class Aritmetica extends Instruction{
     }
 
    
-    operator(self){
-        if (self.operador == Operador_Aritmetico.SUMA){
+    operator(){
+        if (this.operador == Operador_Aritmetico.SUMA){
             return "+"
-        }else if(self.operador == Operador_Aritmetico.RESTA){
+        }else if(this.operador == Operador_Aritmetico.RESTA){
             return "-"
-        }else if (self.operador == Operador_Aritmetico.POR){
+        }else if (this.operador == Operador_Aritmetico.POR){
             return "*"
-        }else if (self.operador == Operador_Aritmetico.DIV){
+        }else if (this.operador == Operador_Aritmetico.DIV){
             return "/"
         }
     }
