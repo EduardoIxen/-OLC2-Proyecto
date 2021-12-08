@@ -1,11 +1,12 @@
 const Tipo = {
 
-    ENTERO   : 1,
-    DECIMAL  : 2,
-    STRING   : 3,
-    BOOLEANO : 4,
-    CARACTER : 5,
+    ENTERO        : 1,
+    DECIMAL       : 2,
+    STRING        : 3,
+    BOOLEANO      : 4,
+    CARACTER      : 5,
     IDENTIFICADOR : 6,
+    NULO          : 7
 }
 
 const Operador_Aritmetico = {

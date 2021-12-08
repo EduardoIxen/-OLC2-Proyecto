@@ -116,6 +116,24 @@ break;
 case 21:
 this.$ = new Aritmetica($$[$0], null, Operador_Aritmetico.UMENOS, _$[$0-1].first_line, _$[$0-1].first_column); 
 break;
+case 22:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MENORQUE, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 23:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MAYORQUE, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 24:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MENORIGUAL, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 25:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MAYORIGUAL, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 26:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.IGUALACION, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 27:
+this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.DIFERENCIA, _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
 case 28:
 this.$ = new Logica($$[$0-2], $$[$0], Operador_Logico.AND,   _$[$0-2].first_line, _$[$0-2].first_column); 
 break;
@@ -701,69 +719,69 @@ case 32:return 42;
 break;
 case 33:return 17;
 break;
-case 34:return 35
+case 34:return 'tk_dospuntos';
 break;
-case 35:return 36;
+case 35:return 9;
 break;
-case 36:return 37;
+case 36:return 'tk_llavea';
 break;
-case 37:return 'tk_dospuntos';
+case 37:return 'tk_llavec';
 break;
-case 38:return 9;
+case 38:return 'tk_cora';
 break;
-case 39:return 'tk_llavea';
+case 39:return "tk_corc"
 break;
-case 40:return 'tk_llavec';
+case 40:return 11;
 break;
-case 41:return 'tk_cora';
+case 41:return 13;
 break;
-case 42:return "tk_corc"
+case 42:return 38;
 break;
-case 43:return 11;
+case 43:return 9;
 break;
-case 44:return 13;
+case 44:return 'tk_dolar';
 break;
-case 45:return 38;
+case 45:return 16;
 break;
-case 46:return 9;
+case 46:return 'tk_masmas';
 break;
-case 47:return 'tk_dolar';
+case 47:return 'tk_menosmenos';
 break;
-case 48:return 16;
+case 48:return 'tk_numeral';
 break;
-case 49:return 'tk_masmas';
+case 49:return 'tk_interrogacion';
 break;
-case 50:return 'tk_menosmenos';
+case 50:return 39;
 break;
-case 51:return 'tk_numeral';
+case 51:return 24;
 break;
-case 52:return 'tk_interrogacion';
+case 52:return 25;
 break;
-case 53:return 39;
+case 53:return 26;
 break;
-case 54:return 24;
+case 54:return 27;
 break;
-case 55:return 25;
+case 55:return 28;
 break;
-case 56:return 26;
+case 56:return 34;
 break;
-case 57:return 27;
+case 57:return 31;
 break;
-case 58:return 28;
+case 58:return 32;
 break;
 case 59:return 29;
 break;
 case 60:return 30;
 break;
-case 61:return 'tk_igual';
+case 61:return 33;
 break;
-case 62:return 31;
+case 62:return 'tk_igual';
 break;
-case 63:return 32;
+case 63:return 35
 break;
-case 64:return 33;
+case 64:return 36;
 break;
-case 65:return 34;
+case 65:return 37;
 break;
 case 66:cadena="";this.begin("string");
 break;
@@ -789,7 +807,7 @@ case 76: console.error('Este es un error léxico: ' + yy_.yytext + ', en la line
 break;
 }
 },
-rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:println\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:pow\b)/i,/^(?:sqrt\b)/i,/^(?:sin\b)/i,/^(?:cos\b)/i,/^(?:tan\b)/i,/^(?:log10\b)/i,/^(?:break\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:continue\b)/i,/^(?:begin\b)/i,/^(?:struct\b)/i,/^(?:null\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:char\b)/i,/^(?:String\b)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:'([^\\\"]|\\.)')/i,/^(?:([a-zA-Z])([a-zA-Z0-9_])*)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?::)/i,/^(?:;)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\()/i,/^(?:\))/i,/^(?:&)/i,/^(?:;)/i,/^(?:\$)/i,/^(?:,)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:#)/i,/^(?:\?)/i,/^(?:\^)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:<)/i,/^(?:>)/i,/^(?:=)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\s)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:println\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:pow\b)/i,/^(?:sqrt\b)/i,/^(?:sin\b)/i,/^(?:cos\b)/i,/^(?:tan\b)/i,/^(?:log10\b)/i,/^(?:break\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:continue\b)/i,/^(?:begin\b)/i,/^(?:struct\b)/i,/^(?:null\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:char\b)/i,/^(?:String\b)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:'([^\\\"]|\\.)')/i,/^(?:([a-zA-Z])([a-zA-Z0-9_])*)/i,/^(?::)/i,/^(?:;)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\()/i,/^(?:\))/i,/^(?:&)/i,/^(?:;)/i,/^(?:\$)/i,/^(?:,)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:#)/i,/^(?:\?)/i,/^(?:\^)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:!=)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:==)/i,/^(?:=)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\s)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"string":{"rules":[67,68,69,70,71,72,73,74],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,75,76],"inclusive":true}}
 });
 return lexer;

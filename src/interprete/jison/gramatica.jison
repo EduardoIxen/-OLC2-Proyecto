@@ -58,14 +58,6 @@
 \'([^\\\"]|\\.)\'               return 'RCARACTER';
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
-
-/**********
- * Lógica *
- **********/ 
-"&&"            return 'tk_and'
-"||"		return 'tk_or';
-"!"		return 'tk_not';
-
 /**************
  * OPERADORES *
  **************/
@@ -100,15 +92,20 @@
 /**************
  * Relacional *
  **************/ 
-"<"		return 'tk_menorque';
-">"		return 'tk_mayorque';
-"="		return 'tk_igual';
+"!="		return 'tk_diferente';
 "<="		return 'tk_menorigual';
 ">="		return 'tk_mayorigual';
+"<"		return 'tk_menorque';
+">"		return 'tk_mayorque';
 "=="		return 'tk_dobleigual';
-"!="		return 'tk_diferente';
+"="		return 'tk_igual';
 
-
+/**********
+ * Lógica *
+ **********/ 
+"&&"            return 'tk_and'
+"||"		return 'tk_or';
+"!"		return 'tk_not';
 
 ["]                             {cadena="";this.begin("string");}
 <string>[^"\\]+                 {cadena+=yytext;}
@@ -213,12 +210,12 @@ expresion
         | tk_menos expresion %prec UMINUS       {$$ = new Aritmetica($2, null, Operador_Aritmetico.UMENOS, @1.first_line, @1.first_column); }
 
                 /* Relacional */
-        | expresion tk_menorque expresion       {}
-        | expresion tk_mayorque expresion       {}
-        | expresion tk_menorigual expresion     {}
-        | expresion tk_mayorigual expresion     {}
-        | expresion tk_dobleigual expresion     {}
-        | expresion tk_diferente expresion      {}
+        | expresion tk_menorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MENORQUE, @1.first_line, @1.first_column); }
+        | expresion tk_mayorque expresion       {$$ = new Relacional($1, $3, Operador_Relacional.MAYORQUE, @1.first_line, @1.first_column); }
+        | expresion tk_menorigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.MENORIGUAL, @1.first_line, @1.first_column); }
+        | expresion tk_mayorigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.MAYORIGUAL, @1.first_line, @1.first_column); }
+        | expresion tk_dobleigual expresion     {$$ = new Relacional($1, $3, Operador_Relacional.IGUALACION, @1.first_line, @1.first_column); }
+        | expresion tk_diferente expresion      {$$ = new Relacional($1, $3, Operador_Relacional.DIFERENCIA, @1.first_line, @1.first_column); }
 
                 /* Lógica */
         | expresion tk_and expresion            {$$ = new Logica($1, $3, Operador_Logico.AND,   @1.first_line, @1.first_column); }

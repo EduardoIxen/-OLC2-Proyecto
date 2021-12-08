@@ -1,8 +1,8 @@
 .fondo{
-    background-image: radial-gradient( circle 976px at 51.2% 51%,  rgba(11,27,103,1) 0%, rgba(16,66,157,1) 0%, rgba(11,27,103,1) 17.3%, rgba(11,27,103,1) 58.8%, rgba(11,27,103,1) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% );
+    background-image: radial-gradient( circle 976px at 51.2% 51%,  rgb(3, 3, 3) 0%, rgb(0, 0, 0) 0%, rgb(249, 249, 253) 17.3%, rgb(10, 11, 12) 58.8%, rgb(197, 198, 204) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% );
 }
 
- .button-interpretar {background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5  51%, #00d2ff  100%)}
+ .button-interpretar {background-image: linear-gradient(to right, #f3f4f5 0%, #293950  51%, #0f0f0f  100%)}
  .button-interpretar {
     position: relative;
     margin: 10px;
@@ -11,7 +11,7 @@
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
-    color: white;            
+    color: rgb(4, 3, 3);            
     border-radius: 10px;
     display: block;
     left: 40%;
