@@ -226,8 +226,8 @@ expresion
         | tk_not expresion %prec UNOT           {$$ = new Logica($2, null, Operador_Logico.NOT, @1.first_line, @1.first_column); }
 
                 /* Operadores */
-        | expresion tk_concatenacion expresion  {}
-        | expresion tk_repeticion expresion     {}
+        | expresion tk_concatenacion expresion  {$$ = new Operador($1, $3, Operador_Cadena.CONCATENACION, @1.first_line, @1.first_column); }
+        | expresion tk_repeticion expresion     {$$ = new Operador($1, $3, Operador_Cadena.REPETICION,    @1.first_line, @1.first_column); }
                 /* Agrupación */        
         | tk_para expresion tk_parc             {$$ = $2}
                 /* Primitivos */

@@ -1,4 +1,5 @@
 const Tipo = {
+
     ENTERO   : 1,
     DECIMAL  : 2,
     STRING   : 3,
@@ -32,4 +33,10 @@ const Operador_Logico = {
     OR  : 1,
     AND : 2,
     NOT : 3,
+}
+
+const Operador_Cadena = {
+    
+    CONCATENACION : 1,
+    REPETICION    : 2,
 }
