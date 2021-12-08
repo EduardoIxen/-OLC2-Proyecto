@@ -59,6 +59,13 @@
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
 
+/**********
+ * Lógica *
+ **********/ 
+"&&"            return 'tk_and'
+"||"		return 'tk_or';
+"!"		return 'tk_not';
+
 /**************
  * OPERADORES *
  **************/
@@ -101,12 +108,6 @@
 "=="		return 'tk_dobleigual';
 "!="		return 'tk_diferente';
 
-/**********
- * Lógica *
- **********/ 
-"&&"            return 'tk_and'
-"||"		return 'tk_or';
-"!"		return 'tk_not';
 
 
 ["]                             {cadena="";this.begin("string");}
@@ -220,23 +221,23 @@ expresion
         | expresion tk_diferente expresion      {}
 
                 /* Lógica */
-        | expresion tk_and expresion            {}
-        | expresion tk_or expresion             {}
-        | tk_not expresion %prec UNOT           {}
+        | expresion tk_and expresion            {$$ = new Logica($1, $3, Operador_Logico.AND,   @1.first_line, @1.first_column); }
+        | expresion tk_or expresion             {$$ = new Logica($1, $3, Operador_Logico.OR,    @1.first_line, @1.first_column); }
+        | tk_not expresion %prec UNOT           {$$ = new Logica($2, null, Operador_Logico.NOT, @1.first_line, @1.first_column); }
 
                 /* Operadores */
         | expresion tk_concatenacion expresion  {}
         | expresion tk_repeticion expresion     {}
                 /* Agrupación */        
-        | tk_para expresion tk_parc             {}
+        | tk_para expresion tk_parc             {$$ = $2}
                 /* Primitivos */
-        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,        $1, @1.first_line, @1.first_column); }
-        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,       $1, @1.first_line, @1.first_column); }
-        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER,      $1, @1.first_line, @1.first_column); }
-        | RCADENA                               {$$ = new Primitivo(Tipo.STRING,        $1, @1.first_line, @1.first_column); }
-        | identificador                         {$$ = new Primitivo(Tipo.IDENTIFICADOR, $1, @1.first_line, @1.first_column); }
-        | RTRUE                                 {}
-        | RFALSE                                {}
+        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,        $1, @1.first_line, @1.first_column);    }
+        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,       $1, @1.first_line, @1.first_column);    }
+        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER,      $1, @1.first_line, @1.first_column);    }
+        | RCADENA                               {$$ = new Primitivo(Tipo.STRING,        $1, @1.first_line, @1.first_column);    }
+        | identificador                         {$$ = new Primitivo(Tipo.IDENTIFICADOR, $1, @1.first_line, @1.first_column);    }
+        | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO,      true, @1.first_line, @1.first_column);  }
+        | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO,      false, @1.first_line, @1.first_column); }
         | RNULL                                 {}
 ;
 
