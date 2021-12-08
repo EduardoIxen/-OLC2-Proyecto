@@ -36,53 +36,45 @@
         
         <script src="src/interprete/Instrucciones/Println.js"></script>
         
-        <div>  
-            
+        <div class="mt-3 mb-3">
+            <input type="button" class="button-interpretar" value="Compilar" onclick="execute()">
+        </div>
+        <div>
             <div class="row">
-                <div class="row">
-                    <div class="col">
-                        <input type="button" class="button-interpretar" value="Compilar" onclick="execute()">
-                    </div>
+                <div class="col">
+                    <textarea id="editor"></textarea>    
+                    <script>
+                        var editor = CodeMirror.fromTextArea(
+                            document.getElementById('editor'),
+                            {
+                                mode: 'javascript',
+                                theme: 'liquibyte',
+                                lineNumbers: true,
+                                autoCloseTags: true
+                            }
+                        );
+                        editor.setSize("650","500")
+                    </script>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <textarea id="editor"></textarea>    
-                        <script>
-                            var editor = CodeMirror.fromTextArea(
-                                document.getElementById('editor'),
-                                {
-                                    mode: 'javascript',
-                                    theme: 'liquibyte',
-                                    lineNumbers: true,
-                                    autoCloseTags: true
-                                }
-                            );
-                            editor.setSize("650","500")
-                        </script>
-                    </div>
-                    <div class="col">
-                        <textarea id="out"></textarea>
-                        <script>
-                            var out = CodeMirror.fromTextArea(
-                                document.getElementById('out'),
-                                {
-                                    mode: 'javascript',
-                                    theme: 'liquibyte',
-                                    autoCloseTags: true
-                                }
-                            );
-                            out.setSize("650","500")
-                        </script>
-                    </div>
+                <div class="col">
+                    <textarea id="out"></textarea>
+                    <script>
+                        var out = CodeMirror.fromTextArea(
+                            document.getElementById('out'),
+                            {
+                                mode: 'javascript',
+                                theme: 'liquibyte',
+                                autoCloseTags: true
+                            }
+                        );
+                        out.setSize("650","500")
+                    </script>
+                </div>
                 
-                </div>
-            </div>  
+            </div>
+        </div>  
             
-
         </body>
             
-       
-
-        
     </body>
 </html>

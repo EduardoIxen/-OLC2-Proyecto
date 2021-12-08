@@ -24,6 +24,22 @@ class Aritmetica extends Instruction{
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
                 this.type = Tipo.ENTERO;
                 return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right)
+            } else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
+            } else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                this.type = Tipo.ENTERO;
+                console.log(right);
+                return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
+            }else if((this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.DECIMAL)){
+                this.type = Tipo.DECIMAL;
+                return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
+            }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                this.type = Tipo.ENTERO;
+                return this.casteo(this.exp_left.type, left) + this.casteo(this.exp_right.type, right);
             }
             
         }
@@ -39,6 +55,9 @@ class Aritmetica extends Instruction{
             return parseFloat(valor)
         }else if (tipo == Tipo.BOOLEANO){
             return Boolean(valor)
+        }else if(tipo == Tipo.CARACTER){
+            var caracter = valor.slice(1,-1)
+            return caracter.charCodeAt(0);
         }
         return valor.toString();
     }

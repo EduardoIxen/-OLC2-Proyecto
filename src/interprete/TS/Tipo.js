@@ -3,6 +3,8 @@ const Tipo = {
     DECIMAL  : 2,
     STRING   : 3,
     BOOLEANO : 4,
+    CARACTER : 5,
+    IDENTIFICADOR : 6,
 }
 
 const Operador_Aritmetico = {

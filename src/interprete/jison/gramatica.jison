@@ -53,9 +53,9 @@
 /*************************
  * Expresiones Regulares *
  *************************/ 
+[0-9]+("."[0-9]+)+\b            return 'RDECIMAL';
 [0-9]+\b                        return 'RENTERO';
-[0-9]+("."[0-9]+)?\b            return 'RDECIMAL';
-(\'([^\\\"]|\\.)\')             return 'RCARACTER';
+\'([^\\\"]|\\.)\'               return 'RCARACTER';
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
 
@@ -117,7 +117,7 @@
 <string>"\\t"                   {cadena+="\t";}
 <string>"\\\\"                  {cadena+="\\";}
 <string>"\\\'"                  {cadena+="\'";}
-<string>["]                     {yytext=cadena; this.popState(); return 'cadenatexto';}
+<string>["]                     {yytext=cadena; this.popState(); return 'RCADENA';}
 
 
 <<EOF>>               return 'EOF';
@@ -230,11 +230,11 @@ expresion
                 /* Agrupación */        
         | tk_para expresion tk_parc             {}
                 /* Primitivos */
-        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,  $1, @1.first_line, @1.first_column); }
-        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL, $1, @1.first_line, @1.first_column); }
-        | RCARACTER                             {$$ = new Primitivo(Tipo.STRING,  $1, @1.first_line, @1.first_column); }
-        // | cadenatexto                           {}
-        | identificador                         {$$ = new Primitivo(Tipo.STRING,  $1, @1.first_line, @1.first_column); }
+        | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,        $1, @1.first_line, @1.first_column); }
+        | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,       $1, @1.first_line, @1.first_column); }
+        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER,      $1, @1.first_line, @1.first_column); }
+        | RCADENA                               {$$ = new Primitivo(Tipo.STRING,        $1, @1.first_line, @1.first_column); }
+        | identificador                         {$$ = new Primitivo(Tipo.IDENTIFICADOR, $1, @1.first_line, @1.first_column); }
         | RTRUE                                 {}
         | RFALSE                                {}
         | RNULL                                 {}
