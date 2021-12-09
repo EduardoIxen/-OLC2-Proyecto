@@ -153,9 +153,9 @@ instrucciones
 
 instruccion
         : imprimir_instr fin_instr               { $$ = $1; }
-         | declaracion_instr fin_instr           { $$ = $1; }
-        // | asignacion_instr fin_instr             {}
-        | if_instr                               {$$ = $1; }
+        | declaracion_instr fin_instr            { $$ = $1; }
+        | asignacion_instr fin_instr             { $$ = $1; }
+        | if_instr                               { $$ = $1; }
         // | if_instr_dos                           {$$ = $1; }
         // | ternario_instr                         {}
 ;
@@ -173,14 +173,14 @@ imprimir_instr
 
 /***************************************** [DECLARACION] ***************************************/     
 declaracion_instr
-         : TIPO identificador tk_igual expresion { $$ = new Declaracion($1, $2, $4, @1.first_line, @1.first_column); }
-         | TIPO LISTA_ID                         {}
+         : TIPO identificador tk_igual expresion { $$ = new Declaracion($1, $2, $4,   @1.first_line, @1.first_column); }
+         | TIPO LISTA_ID                         { $$ = new Declaracion($1, $2, null, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [ASIGNACION] ***************************************/   
-// asignacion_instr
-//         : identificador tk_igual EXPRESION      {}
-// ;
+asignacion_instr
+         : identificador tk_igual expresion      { $$ = new Asignacion($1, $3, @1.first_line, @1.first_column); }
+;
 
 /********************************************* [IF][SIN LLAVE] *********************************************/    
 // if_instr_dos  
@@ -206,8 +206,8 @@ BLOCK_IF
 // ;
 
 
-LISTA_ID: LISTA_ID tk_coma identificador        {}
-        | identificador                         {}
+LISTA_ID: LISTA_ID tk_coma identificador        { $1.push($3); $$ = $1;}
+        | identificador                         { $$=[$1]; }
 ;
 
 /***************************************** [TIPO] ***************************************/   
@@ -250,11 +250,11 @@ expresion
                 /* Primitivos */
         | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,   $1,    @1.first_line, @1.first_column);    }
         | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,  $1,    @1.first_line, @1.first_column);    }
-        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER, $1,    @1.first_line, @1.first_column);    }
+        | RCARACTER                             {$$ = new Primitivo(Tipo.CARACTER, $1.slice(1,-1),    @1.first_line, @1.first_column);    }
         | RCADENA                               {$$ = new Primitivo(Tipo.STRING,   $1,    @1.first_line, @1.first_column);    }
         | identificador                         {$$ = new Identificador(           $1,    @1.first_line, @1.first_column);    }
         | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO, true,  @1.first_line, @1.first_column);    }
         | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO, false, @1.first_line, @1.first_column);    }
-        | RNULL                                 {$$ = new Primitivo(Tipo.NULO,     null,  @1.first_line, @1.first_column);    }
+        | RNULL                                 {$$ = new Primitivo(Tipo.NULO,     "null",  @1.first_line, @1.first_column);    }
 ;
 
