@@ -60,26 +60,9 @@
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
 /**************
- * Relacional *
- **************/ 
-"!="		return 'tk_diferente';
-"<="		return 'tk_menorigual';
-">="		return 'tk_mayorigual';
-"<"		return 'tk_menorque';
-">"		return 'tk_mayorque';
-"=="		return 'tk_dobleigual';
-"="		return 'tk_igual';
-
-/**********
- * Lógica *
- **********/ 
-"&&"            return 'tk_and'
-"||"		return 'tk_or';
-"!"		return 'tk_not';
-
-/**************
  * OPERADORES *
  **************/
+"&&"            return 'tk_and'
 ":"	        return 'tk_dospuntos';
 ";"             return 'tk_puntocoma';
 "{"		return 'tk_llavea';
@@ -97,6 +80,7 @@
 "#"             return 'tk_numeral';
 "?"             return 'tk_interrogacion';
 "^"             return 'tk_repeticion';
+
 /**************
  * Aritmética *
  **************/    
@@ -105,6 +89,25 @@
 "*"		return 'tk_por';
 "/"		return 'tk_dividido';
 "%"             return 'tk_modulo';
+
+/**************
+ * Relacional *
+ **************/ 
+"!="		return 'tk_diferente';
+"<="		return 'tk_menorigual';
+">="		return 'tk_mayorigual';
+"<"		return 'tk_menorque';
+">"		return 'tk_mayorque';
+"=="		return 'tk_dobleigual';
+"="		return 'tk_igual';
+
+/**********
+ * Lógica *
+ **********/ 
+
+"||"		return 'tk_or';
+"!"		return 'tk_not';
+
 
 
 ["]                             {cadena="";this.begin("string");}

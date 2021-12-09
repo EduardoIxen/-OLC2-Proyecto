@@ -796,65 +796,65 @@ case 33:return 67;
 break;
 case 34:return 24;
 break;
-case 35:return 37;
+case 35:return 60
 break;
-case 36:return 17;
+case 36:return 37;
 break;
-case 37:return 30;
+case 37:return 17;
 break;
-case 38:return 31;
+case 38:return 30;
 break;
-case 39:return 'tk_cora';
+case 39:return 31;
 break;
-case 40:return "tk_corc"
+case 40:return 'tk_cora';
 break;
-case 41:return 19;
+case 41:return "tk_corc"
 break;
-case 42:return 21;
+case 42:return 19;
 break;
-case 43:return 63;
+case 43:return 21;
 break;
-case 44:return 17;
+case 44:return 63;
 break;
-case 45:return 'tk_dolar';
+case 45:return 17;
 break;
-case 46:return 39;
+case 46:return 'tk_dolar';
 break;
-case 47:return 'tk_masmas';
+case 47:return 39;
 break;
-case 48:return 'tk_menosmenos';
+case 48:return 'tk_masmas';
 break;
-case 49:return 'tk_numeral';
+case 49:return 'tk_menosmenos';
 break;
-case 50:return 'tk_interrogacion';
+case 50:return 'tk_numeral';
 break;
-case 51:return 64;
+case 51:return 'tk_interrogacion';
 break;
-case 52:return 49;
+case 52:return 64;
 break;
-case 53:return 50;
+case 53:return 49;
 break;
-case 54:return 51;
+case 54:return 50;
 break;
-case 55:return 52;
+case 55:return 51;
 break;
-case 56:return 53;
+case 56:return 52;
 break;
-case 57:return 59;
+case 57:return 53;
 break;
-case 58:return 56;
+case 58:return 59;
 break;
-case 59:return 57;
+case 59:return 56;
 break;
-case 60:return 54;
+case 60:return 57;
 break;
-case 61:return 55;
+case 61:return 54;
 break;
-case 62:return 58;
+case 62:return 55;
 break;
-case 63:return 25;
+case 63:return 58;
 break;
-case 64:return 60
+case 64:return 25;
 break;
 case 65:return 61;
 break;
@@ -884,7 +884,7 @@ case 77: console.error('Este es un error léxico: ' + yy_.yytext + ', en la line
 break;
 }
 },
-rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:println\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:pow\b)/i,/^(?:sqrt\b)/i,/^(?:sin\b)/i,/^(?:cos\b)/i,/^(?:tan\b)/i,/^(?:log10\b)/i,/^(?:break\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:continue\b)/i,/^(?:return\b)/i,/^(?:begin\b)/i,/^(?:struct\b)/i,/^(?:null\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:char\b)/i,/^(?:String\b)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:'([^\\\"]|\\.)')/i,/^(?:([a-zA-Z])([a-zA-Z0-9_])*)/i,/^(?::)/i,/^(?:;)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\()/i,/^(?:\))/i,/^(?:&)/i,/^(?:;)/i,/^(?:\$)/i,/^(?:,)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:#)/i,/^(?:\?)/i,/^(?:\^)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:!=)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:==)/i,/^(?:=)/i,/^(?:&&)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\s)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:println\b)/i,/^(?:print\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:pow\b)/i,/^(?:sqrt\b)/i,/^(?:sin\b)/i,/^(?:cos\b)/i,/^(?:tan\b)/i,/^(?:log10\b)/i,/^(?:break\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:continue\b)/i,/^(?:return\b)/i,/^(?:begin\b)/i,/^(?:struct\b)/i,/^(?:null\b)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:char\b)/i,/^(?:String\b)/i,/^(?:[0-9]+(\.[0-9]+)+\b)/i,/^(?:[0-9]+\b)/i,/^(?:'([^\\\"]|\\.)')/i,/^(?:([a-zA-Z])([a-zA-Z0-9_])*)/i,/^(?:&&)/i,/^(?::)/i,/^(?:;)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\()/i,/^(?:\))/i,/^(?:&)/i,/^(?:;)/i,/^(?:\$)/i,/^(?:,)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:#)/i,/^(?:\?)/i,/^(?:\^)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:%)/i,/^(?:!=)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:==)/i,/^(?:=)/i,/^(?:\|\|)/i,/^(?:!)/i,/^(?:["])/i,/^(?:[^"\\]+)/i,/^(?:\\")/i,/^(?:\\n)/i,/^(?:\s)/i,/^(?:\\t)/i,/^(?:\\\\)/i,/^(?:\\\\')/i,/^(?:["])/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"string":{"rules":[68,69,70,71,72,73,74,75],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,76,77],"inclusive":true}}
 });
 return lexer;

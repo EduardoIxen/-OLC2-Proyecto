@@ -34,7 +34,7 @@ class Operador extends Instruction{
                 return new Exception("Error semantico","El numero de veces a repetir debe ser > 0.",this.row,this.column);
                 
             }
-            return Exception("Error Semantico", "La repeticion debe seguir el formato \"string^numero\".", this.row, this.column);
+            return new Exception("Error Semantico", "La repeticion debe seguir el formato \"string^numero\".", this.row, this.column);
         }
     }
 }
