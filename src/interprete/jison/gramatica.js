@@ -92,7 +92,7 @@ break;
 case 3:
  this.$ = [$$[$0]]; 
 break;
-case 4: case 5: case 6:
+case 4: case 5: case 6: case 18:
  this.$ = $$[$0-1]; 
 break;
 case 7:
@@ -112,6 +112,15 @@ case 13:
 break;
 case 14:
  this.$ = new Asignacion($$[$0-2], $$[$0], _$[$0-2].first_line, _$[$0-2].first_column); 
+break;
+case 15:
+this.$ = new If($$[$0-2], $$[$0], null, null, _$[$0-4].first_line, _$[$0-4].first_column); 
+break;
+case 16:
+this.$ = new If($$[$0-4], $$[$0-2], $$[$0], null,   _$[$0-6].first_line, _$[$0-6].first_column); 
+break;
+case 17:
+this.$ = new If($$[$0-4], $$[$0-2], null, $$[$0],   _$[$0-6].first_line, _$[$0-6].first_column); 
 break;
 case 19:
  $$[$0-2].push($$[$0]); this.$ = $$[$0-2];

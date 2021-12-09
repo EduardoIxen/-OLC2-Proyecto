@@ -134,8 +134,9 @@
 %left 'tk_dobleigual' 'tk_diferente' 'tk_menorque' 'tk_menorigual' 'tk_mayorque' 'tk_mayorigual'
 %left 'tk_mas' 'tk_menos'
 %left 'tk_por' 'tk_dividido' 'tk_modulo'
-%left 'RPOW'
+%left 'RPOW' 'RSQRT'
 %left UMINUS
+%left 'tk_para' 'tk_parc'
 
 %start init
 
@@ -182,23 +183,18 @@ asignacion_instr
          : identificador tk_igual expresion      { $$ = new Asignacion($1, $3, @1.first_line, @1.first_column); }
 ;
 
-/********************************************* [IF][SIN LLAVE] *********************************************/    
-// if_instr_dos  
-//         : RIF tk_para expresion tk_parc instrucciones                                               {}
-//         | RIF tk_para expresion tk_parc instrucciones tk_llavec RELSE instrucciones tk_llavec       {}
-//         | RIF tk_para expresion tk_parc  instrucciones RELSE if_instr_dos                               {}
-// ;
-/********************************************* [IF][CON LLAVE] *********************************************/    
+
+/********************************************* [CONDICIONAL][IF] *********************************************/    
 if_instr  
-        : RIF tk_para expresion tk_parc BLOCK_IF                        {}
-        | RIF tk_para expresion tk_parc BLOCK_IF RELSE BLOCK_IF         {}
-        | RIF tk_para expresion tk_parc BLOCK_IF RELSE if_instr         {}
+        : RIF tk_para expresion tk_parc BLOCK_IF                        {$$ = new If($3, $5, null, null, @1.first_line, @1.first_column); }
+        | RIF tk_para expresion tk_parc BLOCK_IF RELSE BLOCK_IF         {$$ = new If($3, $5, $7, null,   @1.first_line, @1.first_column); }
+        | RIF tk_para expresion tk_parc BLOCK_IF RELSE if_instr         {$$ = new If($3, $5, null, $7,   @1.first_line, @1.first_column); }
 ;
 
 BLOCK_IF
-        : tk_llavea instrucciones tk_llavec     {}
-        // | instrucciones                         {}
-        ;
+        : tk_llavea instrucciones tk_llavec     { $$ = $2; }
+        // | instrucciones                      { $$ = $1; }
+;
 
 /***************************************** [TERNARIO] ***************************************/   
 // ternario_instr

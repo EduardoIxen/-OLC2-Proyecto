@@ -6,6 +6,11 @@ class Exception{
         this.row = row;
         this.column = column;
     }
+
+
+    toString(){
+        return `${this.type} - ${this.description} - (${this.row},${this.column})\n`
+    }
     
 
 }
