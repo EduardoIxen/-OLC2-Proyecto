@@ -20,21 +20,21 @@ class If extends Instruction{
                 this.instr_if.map(instruction => {
                     var result = instruction.interpretar(tree, newGlobalTable);
                     if (result instanceof Exception){
-                        tree.getExcepcion().push(result)
-                        tree.updateConsola(result.toString())
+                        tree.getException().push(result);
+                        tree.updateConsola(result.toString());
                     }
                 })
 
             }else{
-                if(this.instr_elseif != null){
+                if(this.instr_elseif != null){ // [CONDITION][ELSE][IF]
                     var result = this.instr_elseif.interpretar(tree, table);
                     if(result instanceof Exception) return result;
                 }
-                else if(this.instr_else != null){
+                else if(this.instr_else != null){ //[CONDITION][ELSE]
                     this.instr_else.map(instruction => {
                         var result = instruction.interpretar(tree, newGlobalTable);
                         if (result instanceof Exception){
-                            tree.getExcepcion().push(result);
+                            tree.getException().push(result);
                             tree.updateConsola(result.toString());
                         }
                     })

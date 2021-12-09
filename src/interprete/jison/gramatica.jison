@@ -158,6 +158,9 @@ instruccion
         | asignacion_instr fin_instr             { $$ = $1; }
         | if_instr                               { $$ = $1; }
         | while_instr                            { $$ = $1; }
+        | break_instr                            { $$ = $1; }
+        | continue_instr                         { $$ = $1; }
+        | return_instr                           { $$ = $1; }
         // | if_instr_dos                           {$$ = $1; }
         // | ternario_instr                         {}
 ;
@@ -197,21 +200,57 @@ BLOCK_IF
         // | instrucciones                      { $$ = $1; }
 ;
 
+/********************************************* [CONDICIONAL][SWITCH] *********************************************/    
+switch_instr
+        : RSWITCH tk_para expresion tk_parc tk_llavea list_case default_intr tk_llavec            {}
+        | RSWITCH tk_para expresion tk_parc tk_llavea list_case tk_llavec                         {}
+        | RSWITCH tk_para expresion tk_parc tk_llavea default_intr tk_llavec                      {}
+;
+
+//                                      [LISTA DE CASE]
+list_case
+        : list_case case_instr             { $1.push($2); $$ = $1; } 
+	| case_instr			    { $$ = [$1]; }
+;
+
+//                                          [CASE]
+case_instr
+        : RCASE expresion tk_dospuntos instrucciones            {}
+;
+
+//                                          [DEFAULT]
+default_intr
+        : RDEFAULT tk_dospuntos instrucciones                   {}
+;
+
 /***************************************** [TERNARIO] ***************************************/   
 // ternario_instr
 //         : expresion tk_interrogacion expresion tk_dospuntos expresion   {}
 // ;
 
-
 LISTA_ID: LISTA_ID tk_coma identificador        { $1.push($3); $$ = $1;}
         | identificador                         { $$=[$1]; }
 ;
 
-/***************************************** [While] ***************************************/   
+/***************************************** [LOOP][WHILE] ***************************************/   
 while_instr
         : RWHILE tk_para expresion tk_parc tk_llavea instrucciones tk_llavec        { $$ = new While($3, $6, @1.first_line, @1.first_column); }
 ;
 
+/***************************************** [BREAK] ***************************************/  
+break_instr
+        : RBREAK tk_puntocoma                   {$$ = new Break(@1.first_line, @1.first_column); }
+;
+
+/***************************************** [CONTINUE] ***************************************/  
+continue_instr
+        : RCONTINUE tk_puntocoma                {$$ = new Continue(@1.first_line, @1.first_column); }
+;
+
+/***************************************** [RETURN] ***************************************/  
+return_instr
+        : RCONTINUE expresion tk_puntocoma      {$$ = new Return($2, @1.first_line, @1.first_column); }
+;
 /***************************************** [TIPO] ***************************************/   
 TIPO
         : RINT                                  {$$ = Tipo.ENTERO;  }
