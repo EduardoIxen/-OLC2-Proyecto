@@ -35,6 +35,7 @@
 "while"     return 'RWHILE';
 "do"        return 'RDO';
 "continue"  return 'RCONTINUE';
+"return"    return 'RRETURN'
 "begin"     return 'REND';
 "struct"    return 'RSTRUCT';
 
@@ -157,6 +158,7 @@ instruccion
         | declaracion_instr fin_instr            { $$ = $1; }
         | asignacion_instr fin_instr             { $$ = $1; }
         | if_instr                               { $$ = $1; }
+        | switch_instr                           { $$ = $1; }
         | while_instr                            { $$ = $1; }
         | break_instr                            { $$ = $1; }
         | continue_instr                         { $$ = $1; }
@@ -202,9 +204,9 @@ BLOCK_IF
 
 /********************************************* [CONDICIONAL][SWITCH] *********************************************/    
 switch_instr
-        : RSWITCH tk_para expresion tk_parc tk_llavea list_case default_intr tk_llavec            {}
-        | RSWITCH tk_para expresion tk_parc tk_llavea list_case tk_llavec                         {}
-        | RSWITCH tk_para expresion tk_parc tk_llavea default_intr tk_llavec                      {}
+        : RSWITCH tk_para expresion tk_parc tk_llavea list_case default_intr tk_llavec            {$$ = new Switch($3, $6, $7,   @1.first_line, @1.first_column); }
+        | RSWITCH tk_para expresion tk_parc tk_llavea list_case tk_llavec                         {$$ = new Switch($3, $6, null, @1.first_line, @1.first_column); }
+        | RSWITCH tk_para expresion tk_parc tk_llavea default_intr tk_llavec                      {$$ = new Switch($3, null, $6, @1.first_line, @1.first_column); }
 ;
 
 //                                      [LISTA DE CASE]
@@ -215,12 +217,12 @@ list_case
 
 //                                          [CASE]
 case_instr
-        : RCASE expresion tk_dospuntos instrucciones            {}
+        : RCASE expresion tk_dospuntos instrucciones            {$$ = new Case($2, $4, @1.first_line, @1.first_column); }
 ;
 
 //                                          [DEFAULT]
 default_intr
-        : RDEFAULT tk_dospuntos instrucciones                   {}
+        : RDEFAULT tk_dospuntos instrucciones                   {$$ = new Default($3, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [TERNARIO] ***************************************/   
@@ -249,7 +251,7 @@ continue_instr
 
 /***************************************** [RETURN] ***************************************/  
 return_instr
-        : RCONTINUE expresion tk_puntocoma      {$$ = new Return($2, @1.first_line, @1.first_column); }
+        : RRETURN expresion tk_puntocoma      {$$ = new Return($2, @1.first_line, @1.first_column); }
 ;
 /***************************************** [TIPO] ***************************************/   
 TIPO

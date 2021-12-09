@@ -14,7 +14,7 @@ class Switch extends Instruction{
         var newTable = new TablaSimbolo(table);
 
         if(this.instr_case != null && this.instr_default != null){ // Condition 1 => [<CASES_LIST>][<DEFAULT>]
-            
+
             this.instr_case.map(instruction => {
                 var result = instruction.interpretar(tree, newTable);
                 if(result instanceof Exception){
@@ -52,8 +52,43 @@ class Switch extends Instruction{
 
         }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
 
+            for (let instruction of this.instr_case) {
+                var result = instruction.interpretar(tree, newTable);
+
+                if(result instanceof Exception){
+                    tree.getException().push(result);
+                    tree.updateConsola(result.toString());
+                }
+
+                if(condition == result){
+                    for(let instruction2 of instruction.getInstruction()){
+                        var value = instruction2.interpretar(tree, newTable);
+                        if(value instanceof Exception){
+                            tree.getException().push(value);
+                            tree.updateConsola(value.toString());
+                        }
+                        if(value instanceof Break) return null;
+                        if(value instanceof Return) return value;
+                        if(value instanceof Continue) return null;
+                    }
+                }
+
+
+            }
         }else if(this.instr_case == null && this.instr_default != null){ // Condition 3 => [<DEFAULT>]
-        
+            
+            for (let instruction of this.instr_default.getInstruction()){
+                var result = instruction.interpretar(tree, newTable);
+
+                if(result instanceof Exception){
+                    tree.getException().push(result);
+                    tree.updateConsola(result.toString());
+                }
+
+                if(result instanceof Break) return null;
+                if(result instanceof Return) return result;
+                if(result instanceof Continue) return null;
+            }
         }
     }
 }
