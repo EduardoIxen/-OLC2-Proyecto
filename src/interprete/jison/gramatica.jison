@@ -31,7 +31,7 @@
 "tan"       return 'RTAN';
 "log10"     return 'RLOG10';
 // "elseif"    return 'RELSEIF';
-"break"     return 'RBREAL';
+"break"     return 'RBREAK';
 "while"     return 'RWHILE';
 "do"        return 'RDO';
 "continue"  return 'RCONTINUE';
@@ -60,6 +60,24 @@
 ([a-zA-Z])([a-zA-Z0-9_])*       return 'identificador';
 
 /**************
+ * Relacional *
+ **************/ 
+"!="		return 'tk_diferente';
+"<="		return 'tk_menorigual';
+">="		return 'tk_mayorigual';
+"<"		return 'tk_menorque';
+">"		return 'tk_mayorque';
+"=="		return 'tk_dobleigual';
+"="		return 'tk_igual';
+
+/**********
+ * Lógica *
+ **********/ 
+"&&"            return 'tk_and'
+"||"		return 'tk_or';
+"!"		return 'tk_not';
+
+/**************
  * OPERADORES *
  **************/
 ":"	        return 'tk_dospuntos';
@@ -79,8 +97,6 @@
 "#"             return 'tk_numeral';
 "?"             return 'tk_interrogacion';
 "^"             return 'tk_repeticion';
-
-
 /**************
  * Aritmética *
  **************/    
@@ -90,23 +106,6 @@
 "/"		return 'tk_dividido';
 "%"             return 'tk_modulo';
 
-/**************
- * Relacional *
- **************/ 
-"!="		return 'tk_diferente';
-"<="		return 'tk_menorigual';
-">="		return 'tk_mayorigual';
-"<"		return 'tk_menorque';
-">"		return 'tk_mayorque';
-"=="		return 'tk_dobleigual';
-"="		return 'tk_igual';
-
-/**********
- * Lógica *
- **********/ 
-"&&"            return 'tk_and'
-"||"		return 'tk_or';
-"!"		return 'tk_not';
 
 ["]                             {cadena="";this.begin("string");}
 <string>[^"\\]+                 {cadena+=yytext;}

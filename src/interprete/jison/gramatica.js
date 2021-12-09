@@ -758,7 +758,7 @@ case 14:return 'RTAN';
 break;
 case 15:return 'RLOG10';
 break;
-case 16:return 'RBREAL';
+case 16:return 41;
 break;
 case 17:return 40;
 break;

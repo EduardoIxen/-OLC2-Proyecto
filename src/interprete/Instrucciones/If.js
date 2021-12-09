@@ -17,13 +17,13 @@ class If extends Instruction{
             var newGlobalTable = new TablaSimbolo(table);
 
             if(Boolean(condition) == true){ //[CONDITION][IF]
-                this.instr_if.map(instruction => {
+                for(var instruction of this.instr_if){
                     var result = instruction.interpretar(tree, newGlobalTable);
                     if (result instanceof Exception){
                         tree.getException().push(result);
                         tree.updateConsola(result.toString());
                     }
-                })
+                }
 
             }else{
                 if(this.instr_elseif != null){ // [CONDITION][ELSE][IF]
@@ -31,13 +31,13 @@ class If extends Instruction{
                     if(result instanceof Exception) return result;
                 }
                 else if(this.instr_else != null){ //[CONDITION][ELSE]
-                    this.instr_else.map(instruction => {
+                    for(var instruction of this.instr_else){
                         var result = instruction.interpretar(tree, newGlobalTable);
                         if (result instanceof Exception){
                             tree.getException().push(result);
                             tree.updateConsola(result.toString());
                         }
-                    })
+                    }
                 }
             }
 

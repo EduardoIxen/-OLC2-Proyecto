@@ -15,7 +15,7 @@ class Switch extends Instruction{
 
         if(this.instr_case != null && this.instr_default != null){ // Condition 1 => [<CASES_LIST>][<DEFAULT>]
 
-            this.instr_case.map(instruction => {
+            for(var instruction of this.instr_case){
                 var result = instruction.interpretar(tree, newTable);
                 if(result instanceof Exception){
                     tree.getException().push(result);
@@ -23,7 +23,7 @@ class Switch extends Instruction{
                 }
 
                 if(condition == result){
-                    instruction.getInstruction().map(instruction2 => {
+                    for(var instruction2 of instruction.getInstruction()){
                         var value = instruction2.interpretar(tree, newTable);
                         if(value instanceof Exception){
                             tree.getException().push(value);
@@ -32,23 +32,22 @@ class Switch extends Instruction{
                         if(value instanceof Break) return null;
                         if(value instanceof Return) return value;
                         if(value instanceof Continue) return null;
-                    })
-                }
+                    }
+                    
+                }   
+            }
 
-            })
 
-
-            this.instr_case.getInstruction().map(instruction => {
+            for(var instruction of this.instr_default.getInstruction()){
                 var value = instruction.interpretar(tree, newTable);
-                        if(value instanceof Exception){
-                            tree.getException().push(value);
-                            tree.updateConsola(value.toString());
-                        }
-                        if(value instanceof Break) return null;
-                        if(value instanceof Return) return value;
-                        if(value instanceof Continue) return null;
-            })
-
+                if(value instanceof Exception){
+                    tree.getException().push(value);
+                    tree.updateConsola(value.toString());
+                }
+                if(value instanceof Break) return null;
+                if(value instanceof Return) return value;
+                if(value instanceof Continue) return null;
+            }
 
         }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
 
