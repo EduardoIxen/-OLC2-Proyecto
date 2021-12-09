@@ -153,7 +153,7 @@ class Aritmetica extends Instruction{
         }else if (tipo == Tipo.BOOLEANO){
             return Boolean(valor)
         }else if(tipo == Tipo.CARACTER){
-            var caracter = valor.slice(1,-1)
+            var caracter = valor
             return caracter.charCodeAt(0);
         }
         return valor.toString();

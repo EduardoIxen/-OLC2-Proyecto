@@ -18,7 +18,7 @@ class TablaSimbolo{
 
     setTabla(simbolo){
         if (simbolo.id in this.tabla){
-            return Exception("Semantico",`Variable ${simbolo.id} ya existe.`, simbolo.getRow(), simbolo.getColumn());
+            return new Exception("Semantico",`Variable ${simbolo.id} ya existe.`, simbolo.getRow(), simbolo.getColumn());
         }else{
             this.tabla[simbolo.id] = simbolo;
             return null;
@@ -44,21 +44,21 @@ class TablaSimbolo{
         var tablaActual = this;
         while (tablaActual != null){
             if(simbolo.id in tablaActual.tabla){
-                if(tablaActual.tabla[simbolo.id].getType() == simbolo.getType()){
-                    console.log(`se actualiza ${simbolo.id}`)
-                    tablaActual.tabla[simbolo.id].setValue(simbolo.getValue())
-                    tablaActual.tabla[simbolo.id].setType(simbolo.getType())
+                if(tablaActual.tabla[simbolo.id].getType() == simbolo.getType() || simbolo.getValue() == "null"){
+                    tablaActual.tabla[simbolo.id].setValue(simbolo.getValue());
+                    if (simbolo.getValue() != "null") {
+                        tablaActual.tabla[simbolo.id].setType(simbolo.getType());
+                    }
                     return null; //variable actualizada
                 }
-                return Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
+                console.log(`Error  tipos ${simbolo.getValue()} ${simbolo.getType()} ${tablaActual.tabla[simbolo.id].getType()}`)
+                return new Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
 
             }else{
                 tablaActual = tablaActual.anterior;
-                if (tablaActual == null) {
-                    return null;
-                }
             }
         }
-        return Exception("Semantico",`Variable ${simbolo.getId()} no encontrada.`, simbolo.getRow(), simbolo.getColumn());
+        console.log("variable no encontrada");
+        return new Exception("Semantico",`Variable ${simbolo.getId()} no encontrada.`, simbolo.getRow(), simbolo.getColumn());
     }
 }

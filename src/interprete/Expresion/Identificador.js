@@ -7,8 +7,10 @@ class Identificador extends Instruction {
 
     interpretar(tree, table) {
         var simbolo = table.getTabla(this.identificador);  //recuperar el simbolo del id
-        if (simbolo == null)
+        if (simbolo == null){
+            console.log("no se encontro")
             return new Exception("Semantico", `Variable ${this.identificador} no encontrada`, this.row, this.column);
+        }
         
         this.type = simbolo.getType();
         return simbolo.getValue(); //retornar el valor del simbolo
