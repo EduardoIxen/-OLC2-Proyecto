@@ -17,13 +17,28 @@ class If extends Instruction{
             var newGlobalTable = new TablaSimbolo(table);
 
             if(Boolean(condition) == true){ //[CONDITION][IF]
-                for(var instruction of this.instr_if){
-                    var result = instruction.interpretar(tree, newGlobalTable);
-                    if (result instanceof Exception){
-                        tree.getException().push(result);
-                        tree.updateConsola(result.toString());
+                try {
+                    for(var instruction of this.instr_if){
+                        var result = instruction.interpretar(tree, newGlobalTable);
+                        if (result instanceof Exception){
+                            tree.getException().push(result);
+                            tree.updateConsola(result.toString());
+                        }
+                        if(result instanceof Break) return null;
+                        if(result instanceof Return) return value;
+                        if(result instanceof Continue) return null;
                     }
+                } catch (error) {
+                    var result = this.instr_if.interpretar(tree, newGlobalTable);
+                        if (result instanceof Exception){
+                            tree.getException().push(result);
+                            tree.updateConsola(result.toString());
+                        }
+                        if(result instanceof Break) return null;
+                        if(result instanceof Return) return value;
+                        if(result instanceof Continue) return null;
                 }
+                
 
             }else{
                 if(this.instr_elseif != null){ // [CONDITION][ELSE][IF]
@@ -31,13 +46,29 @@ class If extends Instruction{
                     if(result instanceof Exception) return result;
                 }
                 else if(this.instr_else != null){ //[CONDITION][ELSE]
-                    for(var instruction of this.instr_else){
-                        var result = instruction.interpretar(tree, newGlobalTable);
-                        if (result instanceof Exception){
-                            tree.getException().push(result);
-                            tree.updateConsola(result.toString());
+
+                    try {
+                        for(var instruction of this.instr_else){
+                            var result = instruction.interpretar(tree, newGlobalTable);
+                            if (result instanceof Exception){
+                                tree.getException().push(result);
+                                tree.updateConsola(result.toString());
+                            }
+                            if(value instanceof Break) return null;
+                            if(value instanceof Return) return value;
+                            if(value instanceof Continue) return null;
                         }
+                    } catch (error) {
+                        var result = this.instr_else.interpretar(tree, newGlobalTable);
+                            if (result instanceof Exception){
+                                tree.getException().push(result);
+                                tree.updateConsola(result.toString());
+                            }
+                            if(value instanceof Break) return null;
+                            if(value instanceof Return) return value;
+                            if(value instanceof Continue) return null;
                     }
+                    
                 }
             }
 

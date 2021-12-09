@@ -165,7 +165,19 @@ instruccion
         | break_instr                            { $$ = $1; }
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
-        // | if_instr_dos                           {$$ = $1; }
+        // | ternario_instr                         {}
+;
+
+instruccion2
+        : imprimir_instr fin_instr               { $$ = $1; }
+        | declaracion_instr fin_instr            { $$ = $1; }
+        | asignacion_instr fin_instr             { $$ = $1; }
+        // | if_instr                               { $$ = $1; }
+        | switch_instr                           { $$ = $1; }
+        | while_instr                            { $$ = $1; }
+        | break_instr                            { $$ = $1; }
+        | continue_instr                         { $$ = $1; }
+        | return_instr                           { $$ = $1; }
         // | ternario_instr                         {}
 ;
 
@@ -201,7 +213,7 @@ if_instr
 
 BLOCK_IF
         : tk_llavea instrucciones tk_llavec     { $$ = $2; }
-        // | instrucciones                      { $$ = $1; }
+        | instruccion2                          { $$ = $1; }
 ;
 
 /********************************************* [CONDICIONAL][SWITCH] *********************************************/    
