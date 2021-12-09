@@ -157,6 +157,7 @@ instruccion
         | declaracion_instr fin_instr            { $$ = $1; }
         | asignacion_instr fin_instr             { $$ = $1; }
         | if_instr                               { $$ = $1; }
+        | while_instr                            { $$ = $1; }
         // | if_instr_dos                           {$$ = $1; }
         // | ternario_instr                         {}
 ;
@@ -204,6 +205,11 @@ BLOCK_IF
 
 LISTA_ID: LISTA_ID tk_coma identificador        { $1.push($3); $$ = $1;}
         | identificador                         { $$=[$1]; }
+;
+
+/***************************************** [While] ***************************************/   
+while_instr
+        : RWHILE tk_para expresion tk_parc tk_llavea instrucciones tk_llavec        { $$ = new While($3, $6, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [TIPO] ***************************************/   
