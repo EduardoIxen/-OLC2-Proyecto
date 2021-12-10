@@ -87,6 +87,9 @@ class Aritmetica extends Instruction{
             return new Exception("Error Semantico","No se pueden multiplicar los datos "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         }else if(this.operator == Operador_Aritmetico.DIV){
+            if (this.casteo(this.exp_right.type, right) == 0) {
+                return new Exception("Matematico", "Error matemetico: Division por cero.", this.row, this.column);
+            }
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
                 this.type = Tipo.ENTERO
                 return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right)
@@ -109,6 +112,9 @@ class Aritmetica extends Instruction{
             return new Exception("Error Semantico","No se pueden dividir los datos "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         }else if(this.operator == Operador_Aritmetico.MODULO){
+            if (this.casteo(this.exp_right.type, right) == 0) {
+                return new Exception("Matematico", "Error matemetico: Modulo por cero.", this.row, this.column);
+            }
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
                 this.type = Tipo.ENTERO
                 return this.casteo(this.exp_left.type, left) % this.casteo(this.exp_right.type, right)

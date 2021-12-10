@@ -33,6 +33,7 @@ class Do_While extends Instruction{
                         break; //dejar de ejecutar las instrucciones del ciclo actual del while y pasar al siguiente ciclo
                     }
                 }
+                condicion = this.condicion.interpretar(tree,table);
                 if (Boolean(condicion) == false) {
                     break;
                 }

@@ -165,6 +165,7 @@ instruccion
         | break_instr                            { $$ = $1; }
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
+        | do_while_instr                         { $$ = $1; }
         // | ternario_instr                         {}
 ;
 
@@ -178,6 +179,7 @@ instruccion2
         | break_instr                            { $$ = $1; }
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
+        | do_while_instr                         { $$ = $1; }
         // | ternario_instr                         {}
 ;
 
@@ -251,6 +253,11 @@ LISTA_ID: LISTA_ID tk_coma identificador        { $1.push($3); $$ = $1;}
 /***************************************** [LOOP][WHILE] ***************************************/   
 while_instr
         : RWHILE tk_para expresion tk_parc tk_llavea instrucciones tk_llavec        { $$ = new While($3, $6, @1.first_line, @1.first_column); }
+;
+
+/***************************************** [LOOP][DO WHILE] ***************************************/   
+do_while_instr
+        : RDO tk_llavea instrucciones tk_llavec RWHILE tk_para expresion tk_parc tk_puntocoma    { $$ = new Do_While($7, $3, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [BREAK] ***************************************/  

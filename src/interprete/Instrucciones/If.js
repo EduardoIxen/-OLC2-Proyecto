@@ -24,9 +24,9 @@ class If extends Instruction{
                             tree.getException().push(result);
                             tree.updateConsola(result.toString());
                         }
-                        if(result instanceof Break) return null;
-                        if(result instanceof Return) return value;
-                        if(result instanceof Continue) return null;
+                        if(result instanceof Break) return result;
+                        if(result instanceof Return) return result;
+                        if(result instanceof Continue) return result;
                     }
                 } catch (error) {
                     var result = this.instr_if.interpretar(tree, newGlobalTable);
@@ -34,9 +34,9 @@ class If extends Instruction{
                             tree.getException().push(result);
                             tree.updateConsola(result.toString());
                         }
-                        if(result instanceof Break) return null;
-                        if(result instanceof Return) return value;
-                        if(result instanceof Continue) return null;
+                        if(result instanceof Break) return result;
+                        if(result instanceof Return) return result;
+                        if(result instanceof Continue) return result;
                 }
                 
 
@@ -44,6 +44,9 @@ class If extends Instruction{
                 if(this.instr_elseif != null){ // [CONDITION][ELSE][IF]
                     var result = this.instr_elseif.interpretar(tree, table);
                     if(result instanceof Exception) return result;
+                    if(result instanceof Break) return result;
+                    if(result instanceof Return) return result;
+                    if(result instanceof Continue) return result;
                 }
                 else if(this.instr_else != null){ //[CONDITION][ELSE]
 
@@ -54,9 +57,9 @@ class If extends Instruction{
                                 tree.getException().push(result);
                                 tree.updateConsola(result.toString());
                             }
-                            if(value instanceof Break) return null;
-                            if(value instanceof Return) return value;
-                            if(value instanceof Continue) return null;
+                            if(result instanceof Break) return result;
+                            if(result instanceof Return) return result;
+                            if(result instanceof Continue) return result;
                         }
                     } catch (error) {
                         var result = this.instr_else.interpretar(tree, newGlobalTable);
@@ -64,9 +67,9 @@ class If extends Instruction{
                                 tree.getException().push(result);
                                 tree.updateConsola(result.toString());
                             }
-                            if(value instanceof Break) return null;
-                            if(value instanceof Return) return value;
-                            if(value instanceof Continue) return null;
+                            if(result instanceof Break) return result;
+                            if(result instanceof Return) return result;
+                            if(result instanceof Continue) return result;
                     }
                     
                 }
