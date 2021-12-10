@@ -3,6 +3,9 @@
  *****************************************/
 
 /* description: Parses and executes mathematical expressions. */
+%{
+        var listaErrores = [];
+%}
 
 /* lexical grammar */
 %lex
@@ -122,7 +125,10 @@
 
 
 <<EOF>>               return 'EOF';
-.                     { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                     { 
+        console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
+        listaErrores.push(new Exception("Error Lexico", "No se reconoce "+yytext, yylloc.first_line,  yylloc.first_column));
+        }
 
 /lex
 
@@ -146,7 +152,11 @@
 %% /* language grammar */
 
 init 
-        : instrucciones EOF                     {return $1; }
+        : instrucciones EOF                     {       $$ = $1;
+                                                        var retornoErrores = Object.assign([], listaErrores);
+                                                        listaErrores = [];
+                                                        return {instr:$$, errores:retornoErrores}
+                                                }
 ;
 
 
@@ -167,6 +177,9 @@ instruccion
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
         // | ternario_instr                         {}
+        | error tk_puntocoma                     {
+                                                console.error("eroro sintacticooo");
+                                                listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
 instruccion2
@@ -181,6 +194,9 @@ instruccion2
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
         // | ternario_instr                         {}
+        | error tk_puntocoma                     {
+                                                console.error("eroro sintacticooo");
+                                                listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
 fin_instr
