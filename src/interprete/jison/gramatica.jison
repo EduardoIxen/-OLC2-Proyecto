@@ -176,9 +176,8 @@ instruccion
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
-        // | ternario_instr                         {}
         | error tk_puntocoma                     {
-                                                console.error("eroro sintacticooo");
+                                                console.error("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
@@ -193,9 +192,8 @@ instruccion2
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
-        // | ternario_instr                         {}
         | error tk_puntocoma                     {
-                                                console.error("eroro sintacticooo");
+                                                console.error("Error Sintactico", "No se esperaba "+yytext+"("+ @1.first_line+"," +@1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
@@ -257,11 +255,6 @@ default_intr
         : RDEFAULT tk_dospuntos instrucciones                   {$$ = new Default($3, @1.first_line, @1.first_column); }
 ;
 
-/***************************************** [TERNARIO] ***************************************/   
-// ternario_instr
-//         : expresion tk_interrogacion expresion tk_dospuntos expresion   {}
-// ;
-
 LISTA_ID: LISTA_ID tk_coma identificador        { $1.push($3); $$ = $1;}
         | identificador                         { $$=[$1]; }
 ;
@@ -290,6 +283,12 @@ continue_instr
 return_instr
         : RRETURN expresion tk_puntocoma      {$$ = new Return($2, @1.first_line, @1.first_column); }
 ;
+
+/***************************************** [TERNARIO] ***************************************/   
+ternario_instr
+        : tk_para expresion tk_parc tk_interrogacion expresion tk_dospuntos expresion   {$$ = new Ternario($2, $5, $7, @1.first_line, @1.first_column); }
+;
+
 /***************************************** [TIPO] ***************************************/   
 TIPO
         : RINT                                  {$$ = Tipo.ENTERO;  }
@@ -325,8 +324,9 @@ expresion
                 /* Operadores */
         | expresion tk_concatenacion expresion  {$$ = new Operador($1, $3, Operador_Cadena.CONCATENACION, @1.first_line, @1.first_column); }
         | expresion tk_repeticion expresion     {$$ = new Operador($1, $3, Operador_Cadena.REPETICION,    @1.first_line, @1.first_column); }
+        | ternario_instr                        {$$ = $1; }
                 /* Agrupación */        
-        | tk_para expresion tk_parc             {$$ = $2}
+        | tk_para expresion tk_parc             {$$ = $2; }
                 /* Primitivos */
         | RENTERO                               {$$ = new Primitivo(Tipo.ENTERO,   $1,    @1.first_line, @1.first_column);    }
         | RDECIMAL                              {$$ = new Primitivo(Tipo.DECIMAL,  $1,    @1.first_line, @1.first_column);    }
