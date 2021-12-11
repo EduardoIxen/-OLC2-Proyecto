@@ -5,6 +5,6 @@ class TypeOf extends Instruction{
     }
 
     interpretar(tree, table){
-        return null;
+        return this;
     }
 }

@@ -5,6 +5,6 @@ class String extends Instruction{
     }
 
     interpretar(tree, table){
-        return null;
+        return this;
     }
 }

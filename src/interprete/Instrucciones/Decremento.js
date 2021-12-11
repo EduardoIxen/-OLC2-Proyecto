@@ -25,8 +25,11 @@ class Decremento extends Instruction{
 
         var result = table.updateTabla(symbol);
         if(result instanceof Exception) return result;
-
-        return parseInt(symbol.value) + 1;
+        if(this.jump == true){
+            return parseInt(symbol.value) + 1;
+        }else{
+            return parseInt(symbol.value);
+        }
     }
 
 }

@@ -80,3 +80,11 @@ function execute(){
     }
     out.setValue(ast.getConsola());
 }
+
+
+function createNativas(ast){
+
+    var nameFunc = "Pow";
+    
+
+}

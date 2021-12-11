@@ -184,7 +184,7 @@ instruccion
         | llamada_instr                          { $$ = $1; }
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
-        | incre_decre_instr fin_instr            { $$ = $1; } 
+        | incre_decre_instr fin_instr            { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -204,7 +204,7 @@ instruccion2
         | llamada_instr                          { $$ = $1; }
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
-        | incre_decre_instr fin_instr            { $$ = $1; } 
+        | incre_decre_instr fin_instr            { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -239,9 +239,12 @@ asignacion_instr
 /***************************************** [INCREMENTO] ***************************************/   
 incre_decre_instr
         : identificador tk_masmas                { $$= new Incremento($1, true, @1.first_line, @1.first_column); }
-        // : tk_masmas identificador                { $$= new Incremento($2, false, @1.first_line, @1.first_column); }
         | identificador tk_menosmenos            { $$= new Decremento($1, true, @1.first_line, @1.first_column); }
-        // | tk_menosmenos identificador            { $$= new Decremento($2, false, @1.first_line, @1.first_column); }
+;
+
+l_incre_decre_instr
+        : tk_menosmenos identificador            { $$= new Decremento($2, false, @1.first_line, @1.first_column); }
+        | tk_masmas identificador                { $$= new Incremento($2, false, @1.first_line, @1.first_column); }
 ;
 
 /********************************************* [CONDICIONAL][IF] *********************************************/    
@@ -411,6 +414,7 @@ expresion
         | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO, false, @1.first_line, @1.first_column);    }
         | RNULL                                 {$$ = new Primitivo(Tipo.NULO,     "null",  @1.first_line, @1.first_column);    }
         | llamada_instr                         {$$ = $1;}     
-        | incre_decre_instr                     { $$ = $1; } 
+        | incre_decre_instr                     {$$ = $1; } 
+        | l_incre_decre_instr                   {$$ = $1; }
 ;
 

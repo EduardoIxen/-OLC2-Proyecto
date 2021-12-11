@@ -5,6 +5,6 @@ class Log10 extends Instruction{
     }
 
     interpretar(tree, table){
-        return null;
+        return this;
     }
 }

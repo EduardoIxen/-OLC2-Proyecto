@@ -1,10 +1,10 @@
-class ToDouble extends Instructions{
+class Todouble extends Instruction{
     
     constructor(row, column){
         super(row, column);
     }
 
     interpretar(tree, table){
-        return null;
+        return this;
     }
 }
