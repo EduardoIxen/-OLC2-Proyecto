@@ -14,11 +14,14 @@ class Declaracion extends Instruction{
             if (this.expression != "null") {
                 value = this.expression.interpretar(tree, table);  //obtenemos el valor de la expresion para asignarselo a la vatiable
                 if (value instanceof Exception) return value;
+
             }else{
                 value = "null";
             }
 
-            this.type = this.expression.type;
+            if (this.type != this.expression.type) {
+                return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+            }
 
             var simbolo = new Simbolo(this.id, this.type, this.row, this.column, value, "agregar ambito");
             var result = table.setTabla(simbolo);

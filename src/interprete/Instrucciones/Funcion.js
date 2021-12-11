@@ -10,6 +10,7 @@ class Funcion extends Instruction{
 
     interpretar(tree, table){
         this.table = table;
+        var countReturn = 0;
         var newTable = new TablaSimbolo(table);
         for(var instr of this.instructions){
             var value = instr.interpretar(tree, newTable);
@@ -26,7 +27,8 @@ class Funcion extends Instruction{
                 if (this.type == value.type) {
                     return value.result;
                 }else{
-                    var err = new Exception("Semantico", "Sentencia BREAK fuera de ciclo.", instr.row, instr.column)
+                    countReturn += 1;
+                    var err = new Exception("Semantico", "Tipo de retorno invalido.", instr.row, instr.column)
                     tree.getException().push(err);  //guardar el error para seguir con las demas instrucciones
                     tree.updateConsola(err.toString());
                 }
@@ -36,6 +38,9 @@ class Funcion extends Instruction{
                 tree.getException().push(err);  //guardar el error para seguir con las demas instrucciones
                 tree.updateConsola(err.toString());
             }
+        }
+        if (countReturn == 0) {
+            return new Exception("Semantico", "Necesita retornar un valor", instr.row, instr.column)
         }
         return null;
     }

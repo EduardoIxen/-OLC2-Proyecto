@@ -9,6 +9,7 @@ const Tipo = {
     NULO          : 7,
     ARRAY         : 8,
     STRUCT        : 9,
+    VOID          : 10,
 }
 
 const Operador_Aritmetico = {

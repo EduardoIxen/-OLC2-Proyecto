@@ -42,7 +42,6 @@
 "begin"     return 'REND';
 "struct"    return 'RSTRUCT';
 "main"      return 'RMAIN';
-"void"      return "RVOID";
 "for"       return "RFOR";
 "in"        return "RIN";
 
@@ -57,6 +56,7 @@
 "false"     return 'RFALSE';
 "char"      return 'RCHAR';
 "String"    return 'RSTRING';
+"void"      return "RVOID";
 
 /*************************
  * Expresiones Regulares *
@@ -130,7 +130,6 @@
 
 <<EOF>>               return 'EOF';
 .                     { 
-        console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);
         listaErrores.push(new Exception("Error Lexico", "No se reconoce "+yytext, yylloc.first_line,  yylloc.first_column));
         }
 
@@ -186,7 +185,6 @@ instruccion
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
         | error tk_puntocoma                     {
-                                                console.error("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
@@ -206,7 +204,6 @@ instruccion2
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }         
         | error tk_puntocoma                     {
-                                                console.error("Error Sintactico", "No se esperaba "+yytext+"("+ @1.first_line+"," +@1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
@@ -338,6 +335,8 @@ TIPO
         | RBOOLEAN                              {$$ = Tipo.BOOLEANO;}
         | RCHAR                                 {$$ = Tipo.CARACTER;}
         | RSTRING                               {$$ = Tipo.STRING;  }
+        | RVOID                                 {$$ = Tipo.VOID;    }
+
 ;
 
 /***************************************** [FUNCIONES] ***************************************/   

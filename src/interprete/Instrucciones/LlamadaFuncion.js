@@ -6,30 +6,31 @@ class LlamadaFuncion extends Instruction{
     }
 
     interpretar(tree, table){
-        var result = tree.getFunciones(this.id); //obtener la funcion que deseamos
+        var result = tree.getFuncion(this.id); //obtener la funcion que deseamos
         if (result == null) {
             return new Exception("Semantico", "No se encontro la funcion"+this.id, this.row, this.column);
         }
-        console.log("si se obtuvo");
+
         var newTable = new TablaSimbolo(tree.getTablaTsGlobal());
-        console.log("resL", result.length);
-        console.log("parm", this.parameters.length);
-        if (result.length == this.parameters.length) {
-            var conunt = 0;
+
+        if (result.parameters.length == this.parameters.length) { //cantidad de parametros iguales
+            var count = 0;
             for(var expresion of this.parameters){
-                console.log("espre", expresion);
                 var resultExp = expresion.interpretar(tree, table);
                 if (resultExp instanceof Exception) {
                     return resultExp;
                 }
 
-                if (result.parameters[conunt].tipo == expresion.type) {  //verificar que los tipos sean iguales
+                if (result.parameters[count].tipo == expresion.type) {  //verificar que los tipos sean iguales
                     //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
-                    var simbolo = Simbolo(result.parameters[conunt].identificador, result.parameters[conunt].tipo, this.row, this.column, resultExp, "ambito");
+                    var simbolo = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
                     var resultTabla = newTable.setTabla(simbolo);
                     if (resultTabla instanceof Exception) {
                         return resultTabla;
                     }
+
+                //falta elif de arreglos
+                
                 }else{
                     return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);
                 }
