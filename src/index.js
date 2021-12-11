@@ -72,6 +72,7 @@ function execute(){
     for(var instruccion of ast.getInstruccion()){
         if (!((instruccion instanceof Main) || (instruccion instanceof Declaracion) || (instruccion instanceof Asignacion)
         || (instruccion instanceof Funcion))) {  //falta delaracion y asignacion de arreglos
+            console.log("fueraM",instruccion);
             var err = new Exception("Semantico", "Sentencia fuera de main.", instruccion.row, instruccion.column);
             ast.getException().push(err);
             ast.updateConsola(err.toString());
