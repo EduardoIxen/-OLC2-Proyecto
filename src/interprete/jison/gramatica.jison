@@ -43,6 +43,8 @@
 "struct"    return 'RSTRUCT';
 "main"      return 'RMAIN';
 "void"      return "RVOID";
+"for"       return "RFOR";
+"in"        return "RIN";
 
 /******************
  * Tipo de Datos  *
@@ -182,6 +184,7 @@ instruccion
         | funcion_instr                          { $$ = $1; }
         | llamada_instr                          { $$ = $1; }
         | main_instr                             { $$ = $1; }
+        | for_instr                              { $$ = $1; }
         | error tk_puntocoma                     {
                                                 console.error("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
@@ -201,6 +204,7 @@ instruccion2
         | funcion_instr                          { $$ = $1; }
         | llamada_instr                          { $$ = $1; }
         | main_instr                             { $$ = $1; }
+        | for_instr                              { $$ = $1; }         
         | error tk_puntocoma                     {
                                                 console.error("Error Sintactico", "No se esperaba "+yytext+"("+ @1.first_line+"," +@1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
@@ -281,6 +285,21 @@ while_instr
 /***************************************** [LOOP][DO WHILE] ***************************************/   
 do_while_instr
         : RDO tk_llavea instrucciones tk_llavec RWHILE tk_para expresion tk_parc tk_puntocoma    { $$ = new Do_While($7, $3, @1.first_line, @1.first_column); }
+;
+
+/***************************************** [LOOP][FOR] ***************************************/   
+for_instr 
+        : RFOR tk_para declaracion_for tk_puntocoma expresion tk_puntocoma asignacion_for tk_parc tk_llavea instrucciones tk_llavec               {$$ = new For($3, $5, $7, $10, Tipo.ENTERO, @1.first_line, @1.first_column); }
+        | RFOR identificador RIN expresion tk_llavea instrucciones tk_llavec            {$$ = new For($2, null, $4, $6, Tipo.STRING, @1.first_line, @1.first_column); }
+;
+
+asignacion_for 
+        : asignacion_instr              {$$ = $1; }
+;
+
+declaracion_for
+        : declaracion_instr             {$$ = $1; }
+        | identificador                 {$$ = new Identificador($1, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [BREAK] ***************************************/  

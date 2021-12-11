@@ -6,7 +6,9 @@ const Tipo = {
     BOOLEANO      : 4,
     CARACTER      : 5,
     IDENTIFICADOR : 6,
-    NULO          : 7
+    NULO          : 7,
+    ARRAY         : 8,
+    STRUCT        : 9,
 }
 
 const Operador_Aritmetico = {

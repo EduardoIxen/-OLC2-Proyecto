@@ -8,7 +8,7 @@ function execute(){
     var TsGlobal = new TablaSimbolo(null);
     ast.setTablaTsGlobal(TsGlobal);
 
-    console.log(instrucciones.errores); //lista de errores léxicos y sintácticos obtenida
+    // console.log(instrucciones.errores); //lista de errores léxicos y sintácticos obtenida
 
     for(var e of instrucciones.errores){
         ast.getException().push(e);
