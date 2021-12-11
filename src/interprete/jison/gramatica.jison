@@ -226,6 +226,15 @@ imprimir_instr
         | RPRINT tk_para expresion tk_parc	{ $$ = new Print($3,   @1.first_line, @1.first_column);   }
 ;
 
+// list_expresiones
+// 	: list_expresiones tk_coma list_expresion             { $1.push($2); $$ = $1; } // Recursivo por la izquierda.
+// 	| list_expresion		                      { $$ = [$1]; }
+// ;
+
+// list_expresion 
+//         : expresion                                           {$$ = $1; }
+// ;
+
 /***************************************** [DECLARACION] ***************************************/     
 declaracion_instr
          : TIPO identificador tk_igual expresion { $$ = new Declaracion($1, $2, $4,   @1.first_line, @1.first_column); }
