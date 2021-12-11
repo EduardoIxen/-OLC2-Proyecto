@@ -3,7 +3,7 @@
 function execute(){
     
     entrada = editor.getValue();
-    instrucciones = gramatica.parse(entrada.toString());
+    var instrucciones = gramatica.parse(entrada.toString());
     var ast = new Arbol(instrucciones.instr);
     var TsGlobal = new TablaSimbolo(null);
     ast.setTablaTsGlobal(TsGlobal);
