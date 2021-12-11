@@ -11,7 +11,7 @@ class Identificador extends Instruction {
             console.log("no se encontro")
             return new Exception("Semantico", `Variable ${this.identificador} no encontrada`, this.row, this.column);
         }
-        
+        console.log("si se encontro id", simbolo.getType())
         this.type = simbolo.getType();
         return simbolo.getValue(); //retornar el valor del simbolo
 

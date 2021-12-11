@@ -10,7 +10,7 @@
 /* lexical grammar */
 %lex
 %x string
-%options case-insensitive
+%options case-sensitive
 %%
 
 \s+                   /* skip whitespace */
@@ -41,6 +41,8 @@
 "return"    return 'RRETURN'
 "begin"     return 'REND';
 "struct"    return 'RSTRUCT';
+"main"      return 'RMAIN';
+"void"      return "RVOID";
 
 /******************
  * Tipo de Datos  *
@@ -153,7 +155,8 @@
 
 init 
         : instrucciones EOF                     {       $$ = $1;
-                                                        var retornoErrores = Object.assign([], listaErrores);
+                                                        //var retornoErrores = Object.assign([], listaErrores);
+                                                        var retornoErrores = listaErrores;
                                                         listaErrores = [];
                                                         return {instr:$$, errores:retornoErrores}
                                                 }
@@ -176,6 +179,9 @@ instruccion
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
+        | funcion_instr                          { $$ = $1; }
+        | llamada_instr                          { $$ = $1; }
+        | main_instr                             { $$ = $1; }
         | error tk_puntocoma                     {
                                                 console.error("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
@@ -192,6 +198,9 @@ instruccion2
         | continue_instr                         { $$ = $1; }
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
+        | funcion_instr                          { $$ = $1; }
+        | llamada_instr                          { $$ = $1; }
+        | main_instr                             { $$ = $1; }
         | error tk_puntocoma                     {
                                                 console.error("Error Sintactico", "No se esperaba "+yytext+"("+ @1.first_line+"," +@1.first_column);
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
@@ -200,6 +209,11 @@ instruccion2
 fin_instr
         : tk_puntocoma                          {}
         |                                       {}
+;
+
+/************************************* [MAIN] ************************************/
+main_instr
+        : RVOID RMAIN tk_para tk_parc tk_llavea instrucciones tk_llavec         { $$ = new Main($6, @1.first_line, @1.first_column); }
 ;
 
 /************************************* [PRINT] y [PRINTLN] ************************************/                                      */
@@ -298,6 +312,38 @@ TIPO
         | RSTRING                               {$$ = Tipo.STRING;  }
 ;
 
+/***************************************** [FUNCIONES] ***************************************/   
+funcion_instr
+        : TIPO identificador tk_para tk_parc tk_llavea instrucciones tk_llavec                  { $$ = new Funcion($1, $2, [], $6, @1.first_line, @1.first_column); }
+        | TIPO identificador tk_para parametros tk_parc tk_llavea instrucciones tk_llavec       { $$ = new Funcion($1, $2, $4, $7, @1.first_line, @1.first_column); }
+;
+
+/***************************************** [PARAMETROS FUNCION] ***************************************/   
+parametros
+        : parametros tk_coma parametro          { $1.push($3); $$ = $1;}
+        | parametro                             { $$=[$1]; }
+;
+
+parametro
+        : TIPO identificador                    { $$ = {tipo: $1, identificador: $2} ;}
+;
+
+/**************************************** [LLAMADA FUNCION] *************************************/   
+llamada_instr
+        : identificador tk_para tk_parc                                 { $$ = new LlamadaFuncion($1, [], @1.first_line, @1.first_column); }
+        | identificador tk_para parametros_llamada tk_parc              { $$ = new LlamadaFuncion($1, $3, @1.first_line, @1.first_column); }
+;
+
+/***************************************** [PARAMETROS LLAMADA] ***************************************/   
+parametros_llamada
+                : parametros_llamada tk_coma parametro_llamada                  { $1.push($3); $$ = $1;}
+                | parametro_llamada                                             { $$=[$1]; }
+;
+
+parametro_llamada
+                : expresion                                                     { $$ = $1; }
+;
+
 /***************************************** [EXPRESIONES] ***************************************/   
 expresion
                 /* Aritmética */
@@ -336,5 +382,6 @@ expresion
         | RTRUE                                 {$$ = new Primitivo(Tipo.BOOLEANO, true,  @1.first_line, @1.first_column);    }
         | RFALSE                                {$$ = new Primitivo(Tipo.BOOLEANO, false, @1.first_line, @1.first_column);    }
         | RNULL                                 {$$ = new Primitivo(Tipo.NULO,     "null",  @1.first_line, @1.first_column);    }
+        | llamada_instr                         {$$ = $1;}
 ;
 

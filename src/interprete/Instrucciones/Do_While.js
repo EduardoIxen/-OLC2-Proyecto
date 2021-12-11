@@ -1,7 +1,7 @@
 class Do_While extends Instruction{
 
-    constructor(condicion, instrucciones, fila, columna){
-        super(fila, columna);
+    constructor(condicion, instrucciones, row, column){
+        super(row, column);
         this.condicion = condicion;
         this.instrucciones = instrucciones;
         this.table = null;
@@ -38,7 +38,7 @@ class Do_While extends Instruction{
                     break;
                 }
             }else{
-                return new Excepcion("Semantico", "Tipo de dato no booleano en while.", this.fila, this.columna)
+                return new Excepcion("Semantico", "Tipo de dato no booleano en while.", this.row, this.column)
             }
         }
     }
