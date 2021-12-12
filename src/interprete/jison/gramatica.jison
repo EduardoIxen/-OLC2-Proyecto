@@ -48,10 +48,12 @@
 /***********
  * Nativas *
  ***********/ 
-"toLowercase"     return 'RTOLOWERCASE';
-"toUppercase"     return 'RTOUPPERCASE';
-"parse"           return 'RPARSE';
-"length"          return 'RLENGTH';
+"toLowercase"           return 'RTOLOWERCASE';
+"toUppercase"           return 'RTOUPPERCASE';
+"parse"                 return 'RPARSE';
+"length"                return 'RLENGTH';
+"caracterOfPosition"    return 'RCARACTEROFPOSITION';
+"subString"             return 'RSUBSTRING';
 
 /******************
  * Tipo de Datos  *
@@ -379,9 +381,12 @@ llamada_instr
 
 
 nativas_instr
-        : identificador tk_punto RTOLOWERCASE tk_para tk_parc           { $$ = new ToLowerCase($1, @1.first_line, @1.first_column); }
-        | identificador tk_punto RTOUPPERCASE tk_para tk_parc           { $$ = new ToUpperCase($1, @1.first_line, @1.first_column); }
-        | TIPO tk_punto RPARSE tk_para expresion tk_parc                { $$ = new Parse($1, $5, @1.first_line, @1.first_column);   }
+        : identificador tk_punto RTOLOWERCASE tk_para tk_parc                           { $$ = new ToLowerCase($1, @1.first_line, @1.first_column); }
+        | identificador tk_punto RTOUPPERCASE tk_para tk_parc                           { $$ = new ToUpperCase($1, @1.first_line, @1.first_column); }
+        | TIPO tk_punto RPARSE tk_para expresion tk_parc                                { $$ = new Parse($1, $5, @1.first_line, @1.first_column);   }
+        | identificador tk_punto RLENGTH tk_para tk_parc                                { $$ = new Length($1, @1.first_line, @1.first_column); }
+        | identificador tk_punto RCARACTEROFPOSITION tk_para expresion tk_parc          { $$ = new CaracterOfPosition($1, $5, @1.first_line, @1.first_column); }
+        | identificador tk_punto RSUBSTRING tk_para expresion tk_coma expresion tk_parc { $$ = new SubString($1, $5, $7, @1.first_line, @1.first_column); }
 ;
 
 
