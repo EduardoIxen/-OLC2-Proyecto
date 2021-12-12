@@ -4,6 +4,7 @@ class SubString extends Instruction{
         this.identificador = identificador;
         this.exp_left = exp_left;
         this.exp_right = exp_right;
+        this.type = Tipo.STRING;
     }
 
     interpretar(tree, table){

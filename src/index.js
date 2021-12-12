@@ -86,11 +86,63 @@ function execute(){
 function createNativas(ast){
 
     var name = "cos";
-    var parameters = [{tipo:Tipo.ENTERO, identificador:'01_Native_Cos'}];
+    var parameters = [{tipo:Tipo.ENTERO, identificador:'01-Native-Cos'}];
     var instructions = [];
     var func = new Cos(name, parameters, instructions, -1, -1);
     ast.addFuncion(func);
+
+    name = "sin";
+    parameters = [{tipo:Tipo.ENTERO, identificador:'02-Native-Sin'}];
+    instructions = [];
+    func = new Sin(name, parameters, instructions, -1, -1);
+    ast.addFuncion(func);
     
+    name = "tan";
+    parameters = [{tipo:Tipo.ENTERO, identificador:'03-Native-Tan'}];
+    instructions = [];
+    func = new Tan(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "log10";
+    parameters = [{tipo:Tipo.ENTERO, identificador:'04-Native-Log10'}];
+    instructions = [];
+    func = new Log10(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "sqrt";
+    parameters = [{tipo:Tipo.ENTERO, identificador:'05-Native-Sqrt'}];
+    instructions = [];
+    func = new Sqrt(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "pow";
+    parameters = [{tipo:Tipo.ENTERO, identificador:'06-Native-Pow'}, {tipo:Tipo.ENTERO, identificador:'07-Native-Pow'}];
+    instructions = [];
+    func = new Pow(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "string";
+    parameters = [{tipo:Tipo.STRING, identificador:'08-Native-String'}];
+    instructions = [];
+    func = new ConvertString(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "toInt";
+    parameters = [{tipo:Tipo.STRING, identificador:'09-Native-ToInt'}];
+    instructions = [];
+    func = new ToInt(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "toDouble";
+    parameters = [{tipo:Tipo.STRING, identificador:'10-Native-ToDouble'}];
+    instructions = [];
+    func = new ToDouble(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
+
+    name = "typeof";
+    parameters = [{tipo:Tipo.STRING, identificador:'11-Native-TypeOf'}];
+    instructions = [];
+    func = new TypeOf(name, parameters, instructions,-1, -1);
+    ast.addFuncion(func);
 
 }
-//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

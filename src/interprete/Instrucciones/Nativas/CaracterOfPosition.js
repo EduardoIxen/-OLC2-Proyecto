@@ -4,6 +4,7 @@ class CaracterOfPosition extends Instruction{
         super(row, column);
         this.expression = expression;
         this.identificador = identificador;
+        this.type = null;
 
     }
 

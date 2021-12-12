@@ -27,13 +27,6 @@
 "switch"    return 'RSWITCH';
 "case"      return 'RCASE';
 "default"   return 'RDEFAULT';
-"pow"       return 'RPOW';
-"sqrt"      return 'RSQRT';
-"sin"       return 'RSIN';
-"cos"       return 'RCOS';
-"tan"       return 'RTAN';
-"log10"     return 'RLOG10';
-// "elseif"    return 'RELSEIF';
 "break"     return 'RBREAK';
 "while"     return 'RWHILE';
 "do"        return 'RDO';
@@ -157,7 +150,7 @@
 %left 'tk_dobleigual' 'tk_diferente' 'tk_menorque' 'tk_menorigual' 'tk_mayorque' 'tk_mayorigual'
 %left 'tk_mas' 'tk_menos'
 %left 'tk_por' 'tk_dividido' 'tk_modulo'
-%left 'RPOW' 'RSQRT'
+// %left 'RPOW' 'RSQRT'
 %left UMINUS
 %left 'tk_para' 'tk_parc'
 
