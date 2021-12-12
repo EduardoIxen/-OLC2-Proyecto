@@ -7,6 +7,7 @@ function execute(){
     var ast = new Arbol(instrucciones.instr);
     var TsGlobal = new TablaSimbolo(null);
     ast.setTablaTsGlobal(TsGlobal);
+    createNativas(ast);
 
     // console.log(instrucciones.errores); //lista de errores léxicos y sintácticos obtenida
 
@@ -84,7 +85,11 @@ function execute(){
 
 function createNativas(ast){
 
-    var nameFunc = "Pow";
+    var name = "cos";
+    var parameters = [{tipo:Tipo.ENTERO, identificador:'01_Native_Cos'}];
+    var instructions = [];
+    var func = new Cos(name, parameters, instructions, -1, -1);
+    ast.addFuncion(func);
     
 
 }

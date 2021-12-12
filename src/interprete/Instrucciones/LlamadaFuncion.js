@@ -23,13 +23,19 @@ class LlamadaFuncion extends Instruction{
 
                 if (result.parameters[count].tipo == expresion.type) {  //verificar que los tipos sean iguales
                     //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
-                    var simbolo = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
-                    var resultTabla = newTable.setTabla(simbolo);
+                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
+                    var resultTabla = newTable.setTabla(symbol);
                     if (resultTabla instanceof Exception) {
                         return resultTabla;
                     }
 
                 //falta elif de arreglos
+                }else if(result.parameters[count]['identificador'] == "01_Native_Cos"){
+                    console.log(result.parameters[count]['identificador'] )
+                    result.parameters[count]['tipo'] = expresion.type;
+                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "local");
+                    var resultTabla = newTable.setTabla(symbol);
+                    if (resultTabla instanceof Exception) return resultTabla;
                 
                 }else{
                     return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);
