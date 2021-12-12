@@ -9,8 +9,6 @@ function execute(){
     ast.setTablaTsGlobal(TsGlobal);
     createNativas(ast);
 
-    // console.log(instrucciones.errores); //lista de errores léxicos y sintácticos obtenida
-
     for(var e of instrucciones.errores){
         ast.getException().push(e);
         ast.updateConsola(e);
@@ -20,7 +18,7 @@ function execute(){
         if (instruccion instanceof Funcion) {
             ast.addFuncion(instruccion);
         }
-        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof Declaracion)) { //falta declaracion y asignacion de arreglos
+        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof DeclaracionArray)) { //falta asignacion de arreglos
             var value = instruccion.interpretar(ast, TsGlobal);
             if(value instanceof Exception){
                 ast.getException().push(value);
@@ -72,8 +70,7 @@ function execute(){
     }
     for(var instruccion of ast.getInstruccion()){
         if (!((instruccion instanceof Main) || (instruccion instanceof Declaracion) || (instruccion instanceof Asignacion)
-        || (instruccion instanceof Funcion))) {  //falta delaracion y asignacion de arreglos
-            console.log("fueraM",instruccion);
+        || (instruccion instanceof Funcion) || (instruccion instanceof DeclaracionArray))) {  //falta  asignacion de arreglos
             var err = new Exception("Semantico", "Sentencia fuera de main.", instruccion.row, instruccion.column);
             ast.getException().push(err);
             ast.updateConsola(err.toString());

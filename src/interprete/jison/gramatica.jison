@@ -189,6 +189,7 @@ instruccion
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
+        | declaracion_array_instr fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -209,6 +210,7 @@ instruccion2
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
+        | declaracion_array_instr fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -233,6 +235,24 @@ imprimir_instr
 declaracion_instr
          : TIPO identificador tk_igual expresion { $$ = new Declaracion($1, $2, $4,   @1.first_line, @1.first_column); }
          | TIPO LISTA_ID                         { $$ = new Declaracion($1, $2, null, @1.first_line, @1.first_column); }
+;
+
+/************************************** [DECLARACION][ARREGLO] ***********************************/     
+declaracion_array_instr:
+        TIPO tk_cora tk_corc identificador tk_igual valores_array       {$$ = new DeclaracionArray($1, $4, $6, @1.first_line, @1.first_column);}
+;
+
+valores_array:
+        tk_cora lista_valores_array tk_corc                     {$$ = $2;}
+;
+
+lista_valores_array:
+        lista_valores_array tk_coma valores                     {$1.push($3); $$ = $1; }
+        | valores                                               {$$ = [$1];}
+;
+
+valores:  valores_array                                         {$$ = $1;}
+        | expresion                                             {$$ = $1;}
 ;
 
 /***************************************** [ASIGNACION] ***************************************/   
