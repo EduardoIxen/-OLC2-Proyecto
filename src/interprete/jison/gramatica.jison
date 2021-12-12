@@ -45,6 +45,14 @@
 "for"       return "RFOR";
 "in"        return "RIN";
 
+/***********
+ * Nativas *
+ ***********/ 
+"toLowercase"     return 'RTOLOWERCASE';
+"toUppercase"     return 'RTOUPPERCASE';
+"parse"           return 'RPARSE';
+"length"          return 'RLENGTH';
+
 /******************
  * Tipo de Datos  *
  ******************/ 
@@ -87,6 +95,7 @@
 "#"             return 'tk_numeral';
 "?"             return 'tk_interrogacion';
 "^"             return 'tk_repeticion';
+"."             return 'tk_punto';
 
 /**************
  * Aritmética *
@@ -181,7 +190,7 @@ instruccion
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
         | funcion_instr                          { $$ = $1; }
-        | llamada_instr                          { $$ = $1; }
+        | llamada_instr fin_instr                { $$ = $1; }
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
@@ -201,7 +210,7 @@ instruccion2
         | return_instr                           { $$ = $1; }
         | do_while_instr                         { $$ = $1; }
         | funcion_instr                          { $$ = $1; }
-        | llamada_instr                          { $$ = $1; }
+        | llamada_instr fin_instr                { $$ = $1; }
         | main_instr                             { $$ = $1; }
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
@@ -365,7 +374,16 @@ parametro
 llamada_instr
         : identificador tk_para tk_parc                                 { $$ = new LlamadaFuncion($1, [], @1.first_line, @1.first_column); }
         | identificador tk_para parametros_llamada tk_parc              { $$ = new LlamadaFuncion($1, $3, @1.first_line, @1.first_column); }
+        | nativas_instr                                                 { $$ = $1; }
 ;
+
+
+nativas_instr
+        : identificador tk_punto RTOLOWERCASE tk_para tk_parc           { $$ = new ToLowerCase($1, @1.first_line, @1.first_column); }
+        | identificador tk_punto RTOUPPERCASE tk_para tk_parc           { $$ = new ToUpperCase($1, @1.first_line, @1.first_column); }
+        | TIPO tk_punto RPARSE tk_para expresion tk_parc                { $$ = new Parse($1, $5, @1.first_line, @1.first_column);   }
+;
+
 
 /***************************************** [PARAMETROS LLAMADA] ***************************************/   
 parametros_llamada

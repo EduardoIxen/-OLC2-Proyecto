@@ -87,7 +87,6 @@ class Relacional extends Instruction{
             return new Exception("Semantico", "Tipo Erroneo de operacion para >.", this.row, this.column);
 
         }else if(this.operator == Operador_Relacional.MENORIGUAL){ // <=
-            console.log("hola")
             /*****************************************  INT *****************************************/
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
                 return this.casteo(this.exp_left.type, left) <= this.casteo(this.exp_right.type, right);
