@@ -8,7 +8,7 @@ class LlamadaFuncion extends Instruction{
     interpretar(tree, table){
         var result = tree.getFuncion(this.id); //obtener la funcion que deseamos
         if (result == null) {
-            return new Exception("Semantico", "No se encontro la funcion"+this.id, this.row, this.column);
+            return new Exception("Semantico", "No se encontro la funcion "+this.id, this.row, this.column);
         }
 
         var newTable = new TablaSimbolo(tree.getTablaTsGlobal());

@@ -26,7 +26,10 @@ class Funcion extends Instruction{
             if (value instanceof Return) {
                 if (this.type == value.type) {
                     return value.result;
-                }else{
+                }else if (this.type == Tipo.VOID) {
+                    return null;
+                }
+                else{
                     countReturn += 1;
                     var err = new Exception("Semantico", "Tipo de retorno invalido.", instr.row, instr.column)
                     tree.getException().push(err);  //guardar el error para seguir con las demas instrucciones
@@ -39,7 +42,7 @@ class Funcion extends Instruction{
                 tree.updateConsola(err.toString());
             }
         }
-        if (countReturn == 0) {
+        if (countReturn == 0 && this.type != Tipo.VOID) {
             return new Exception("Semantico", "Necesita retornar un valor", instr.row, instr.column)
         }
         return null;

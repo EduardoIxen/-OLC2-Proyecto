@@ -20,11 +20,6 @@ class Operador extends Instruction{
         }
 
         if (this.operator == Operador_Cadena.CONCATENACION) {
-            if (this.exp_left.type == Tipo.CARACTER) {
-                left = left.slice(1,-1);
-            }else if (this.exp_right.type == Tipo.CARACTER) {
-                right = right.slice(1,-1)
-            }
             return left.toString() + right.toString();
         } else if (this.operator == Operador_Cadena.REPETICION) {
             if (this.exp_left.type == Tipo.STRING && (this.exp_right.type == Tipo.ENTERO || this.exp_right.type == Tipo.DECIMAL)) {

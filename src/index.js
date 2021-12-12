@@ -37,8 +37,8 @@ function execute(){
             }
         }
     }
+    contador = 0;
     for(var instruccion of ast.getInstruccion()){  // Segunda pasada para el main
-        contador = 0;
         if (instruccion instanceof Main) {
             contador += 1;
             if (contador == 2) {
@@ -88,3 +88,4 @@ function createNativas(ast){
     
 
 }
+//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

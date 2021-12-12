@@ -325,6 +325,8 @@ continue_instr
 /***************************************** [RETURN] ***************************************/  
 return_instr
         : RRETURN expresion tk_puntocoma      {$$ = new Return($2, @1.first_line, @1.first_column); }
+        | RRETURN tk_puntocoma                {$$ = new Return(null, @1.first_line, @1.first_column); }
+
 ;
 
 /***************************************** [TERNARIO] ***************************************/   
