@@ -7,12 +7,18 @@ class Println extends Instruction{
 
     interpretar(tree, table){
         var value = this.expression.interpretar(tree, table);
-        if (this.expression.type == Tipo.ARRAY) {
-            var value = this.expression.interpretar(tree, table);
+        console.log("valuep",value);
+        console.log("exprp",this.expression);
+        if ((this.expression.type == Tipo.ARRAY && value.type == Tipo.ARRAY)) {
+            //var value = this.expression.interpretar(tree, table);
             //value.list_value lista valores pasar a recorrer
             value = this.recorrerArray(value.list_value);
-        }else{
-            var value = this.expression.interpretar(tree, table);
+        }else if (this.expression.type == Tipo.ARRAY && !(value instanceof Array)) {
+            var value2 = value.interpretar(tree, table);
+            value = value2;
+        }else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
+            value = this.recorrerArray(value);
+            console.log("lista array",value);
         }
         
         if(value instanceof Exception) return value;

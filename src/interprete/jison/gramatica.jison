@@ -245,6 +245,7 @@ declaracion_array_instr:
 
 valores_array:
         tk_cora lista_valores_array tk_corc                     {$$ = $2;}
+        | tk_cora tk_corc                                       {$$ = [];}
 ;
 
 lista_valores_array:
@@ -471,5 +472,6 @@ expresion
         | llamada_instr                         {$$ = $1;}     
         | incre_decre_instr                     {$$ = $1; } 
         | l_incre_decre_instr                   {$$ = $1; }
+        | identificador tk_cora expresion tk_corc {$$ = new AccesoArreglo($1, $3, @1.first_line, @1.first_column);}
 ;
 

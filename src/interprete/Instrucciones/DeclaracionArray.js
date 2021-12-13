@@ -36,7 +36,6 @@ class DeclaracionArray extends Instruction{
             }
         }else{
             var value = list_values.interpretar(tree, table);
-            console.log("ls",list_values);
             if (list_values.type != this.type_init) {
                 this.type_correct = false;
             }
