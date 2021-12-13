@@ -35,8 +35,9 @@
 "begin"     return 'REND';
 "struct"    return 'RSTRUCT';
 "main"      return 'RMAIN';
-"for"       return "RFOR";
-"in"        return "RIN";
+"for"       return 'RFOR';
+"in"        return 'RIN';
+"struct"    return 'RSTRUCT';
 
 /***********
  * Nativas *
@@ -333,6 +334,7 @@ asignacion_for
 
 declaracion_for
         : declaracion_instr             {$$ = $1; }
+        | asignacion_instr              {$$ = $1; }
         | identificador                 {$$ = new Identificador($1, @1.first_line, @1.first_column); }
 ;
 
@@ -412,6 +414,21 @@ parametros_llamada
 parametro_llamada
                 : expresion                                                     { $$ = $1; }
 ;
+
+/***************************************** [PARAMETROS LLAMADA] ***************************************/   
+struct_instr
+        : RSTRUCT identificador tk_llavea LIST_STRUCTS tk_llavec                 {}
+;
+  
+LIST_STRUCTS
+                : LIST_STRUCTS tk_coma LIST_STRUCT                        { $1.push($3); $$ = $1;}
+                | LIST_STRUCT                                             { $$=[$1]; }
+;
+
+LIST_STRUCT
+                : TIPO expresion                                          { $$ = $1; }
+;
+
 
 /***************************************** [EXPRESIONES] ***************************************/   
 expresion
