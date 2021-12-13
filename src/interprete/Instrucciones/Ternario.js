@@ -5,20 +5,25 @@ class Ternario extends Instruction{
         this.condition = condition;
         this.instr_true = instr_true;
         this.instr_false = instr_false;
+        this.type = null;
     }
 
     interpretar(tree, table){
         var condition = this.condition.interpretar(tree, table);
-
+        console.log(this.condition.type);
+        console.log(condition)
         if(this.condition.type == Tipo.BOOLEANO){
             
             if(Boolean(condition) == true){ 
                 var value = this.instr_true.interpretar(tree, table);
                 if(value instanceof Exception) return value;
+                this.type = this.instr_true.type;
                 return value;
             }else{
+                console.log('entro')
                 var value = this.instr_false.interpretar(tree, table);
                 if(value instanceof Exception) return value;
+                this.type = this.instr_false.type;
                 return value;
             }
 
