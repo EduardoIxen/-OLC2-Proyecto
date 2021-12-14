@@ -39,17 +39,15 @@ class AsignacionStruct extends Instruction{
         for(var instruccion of this.atributos){
             var value = instruccion.interpretar(tree, table);
             if(struct[count].type == this.atributos[count].type || this.atributos[count].type == Tipo.NULO || this.atributos[count].type == Tipo.STRUCT){
-                // console.log(`${struct[count].name} =${value}`);
                 atrr[struct[count].name] = value;
             }else{
                 return new Exception("Semantico", `Tipo de dato incorrecto en asignación de Struct.`, this.row, this.column);
             }
             count ++;
         }
-        // console.log(`${this.id}. (${this.type})`)
-        // console.log(atrr);
+
         symbol = new Simbolo(this.id, this.type, this.row, this.column, atrr, "Ambito");
-        // console.log(symbol.value);
+        symbol.nameStruct = this.name;
         var result = table.setTabla(symbol);
         return result;
     }

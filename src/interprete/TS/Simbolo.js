@@ -7,6 +7,7 @@ class Simbolo{
         this.column = column;
         this.value = value;
         this.ambito = ambito;
+        this.nameStruct = null;
     }
 
 

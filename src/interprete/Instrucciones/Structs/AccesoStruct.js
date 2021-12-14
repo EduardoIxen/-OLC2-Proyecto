@@ -13,19 +13,29 @@ class AccesoStruct extends Instruction{
         if(symbol == null){
             return new Exception("Semantico", `No existe la variable ${this.identificador}.`, this.row, this.column);
         }
+        if(symbol.type != Tipo.STRUCT){
+            return new Exception("Semantico", `No es tipo Struct.`, this.row, this.column);
+        }
 
+        var struct = tree.getStruct(symbol.nameStruct);
+        if(struct == null){
+            return new Exception("Semantico", `No existe la variable en Struct.`, this.row, this.column);
+        }
+        
         var temp;
         var count = 0;
-
         temp = symbol.value;
         while(count<this.atributos.length){
             
             if(temp[this.atributos[count].id]){
+                struct = this.recorrer(tree, struct,this.atributos[count].id);
+                if(0<=struct){
+                    this.type = struct;
+                }
                 temp = symbol.value[this.atributos[count].id];
                 
                 if(temp instanceof Object){
                     count ++;
-                    // componer
                     try{
 
                         if(temp[this.atributos[count].id]){
@@ -34,6 +44,10 @@ class AccesoStruct extends Instruction{
                             return new Exception("Semantico", `No existe el atributo ${this.atributos[count].id}.`, this.row, this.column);
                         }
                     }catch(error){
+                        struct = this.recorrer(tree, struct,this.atributos[count].id)
+                        if(0<=struct){
+                            this.type = struct;
+                        }
                         return temp;
                     }
                 }
@@ -41,9 +55,33 @@ class AccesoStruct extends Instruction{
             }else{
                 return new Exception("Semantico", `No existe el atributo ${this.atributos[count].id}.`, this.row, this.column);
             }
+            
+            struct = this.recorrer(tree, struct,this.atributos[count].id);
+            if(0<=struct){
+                this.type = struct;
+            }
             count ++;
         }
 
         return temp;
+    }
+
+    recorrer(tree, struct,id){
+        var i = 0;
+        while(i<struct.length){
+            if(struct[i].name == id){
+                if(struct[i].type){
+                    var struct2 = tree.getStruct(struct[i].type);
+
+                    if(struct2!= null){
+                        return struct2;
+                    }else{
+                        return struct[i].type;
+                    }
+
+                }
+            }
+            i++;
+        }
     }
 }
