@@ -192,6 +192,7 @@ instruccion
         | declaracion_array_instr fin_instr      { $$ = $1; }
         | struct_instr fin_instr                 { $$ = $1; }
         | asignacion_struct fin_instr            { $$ = $1; }
+        | assign_array_instr fin_instr           { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -215,6 +216,7 @@ instruccion2
         | declaracion_array_instr fin_instr      { $$ = $1; }
         | struct_instr fin_instr                 { $$ = $1; }
         | asignacion_struct fin_instr            { $$ = $1; }
+        | assign_array_instr fin_instr           { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -243,7 +245,8 @@ declaracion_instr
 
 /************************************** [DECLARACION][ARREGLO] ***********************************/     
 declaracion_array_instr:
-        TIPO tk_cora tk_corc identificador tk_igual valores_array       {$$ = new DeclaracionArray($1, $4, $6, @1.first_line, @1.first_column);}
+          TIPO tk_cora tk_corc identificador tk_igual valores_array                     {$$ = new DeclaracionArray($1, $4, $6, @1.first_line, @1.first_column);}
+        | TIPO tk_cora tk_corc identificador tk_igual identificador list_position       {$$ = new DeclaracionArray($1, $4, new AccesoArreglo($6,$7, @1.first_line, @1.first_column), @1.first_line, @1.first_column);}
 ;
 
 valores_array:
@@ -262,7 +265,8 @@ valores:  valores_array                                         {$$ = $1;}
 
 /***************************************** [ACCESO ARREGLO] ***************************************/   
 assign_array_instr
-        : identificador list_position
+        : identificador list_position tk_igual expresion        {$$ = new AccesoArreglo($1, $2, @1.first_line, @1.first_column, $4);}
+        | identificador list_position tk_igual valores_array    {$$ = new AccesoArreglo($1, $2, @1.first_line, @1.first_column, $4);}
 ;
 
 list_position
