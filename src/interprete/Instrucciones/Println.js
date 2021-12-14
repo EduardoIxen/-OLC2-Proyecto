@@ -9,14 +9,17 @@ class Println extends Instruction{
         var value = this.expression.interpretar(tree, table);
         console.log("valuep",value);
         console.log("exprp",this.expression);
-        if ((this.expression.type == Tipo.ARRAY && value.type == Tipo.ARRAY)) {
-            //var value = this.expression.interpretar(tree, table);
-            //value.list_value lista valores pasar a recorrer
-            value = this.recorrerArray(value.list_value);
-        }else if (this.expression.type == Tipo.ARRAY && !(value instanceof Array)) {
-            var value2 = value.interpretar(tree, table);
-            value = value2;
-        }else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
+        if (this.expression.type == Tipo.ARRAY && !(value instanceof Array)) {
+            console.log("ssssasdasda")
+            //value = this.recorrerArray(value.list_value);
+            
+            try {
+                value = value.value;
+            } catch (error) {
+                value = new Exception("semático", "Index malo", this.row, this.column);
+            }
+        }
+        else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
             value = this.recorrerArray(value);
             console.log("lista array",value);
         }

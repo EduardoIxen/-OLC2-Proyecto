@@ -125,7 +125,7 @@
 <string>[^"\\]+                 {cadena+=yytext;}
 <string>"\\\""                  {cadena+="\"";}
 <string>"\\n"                   {cadena+="\n";}
-<string>\s                      {cadena+=" ";}
+<string>\s+                     {cadena+=" ";}
 <string>"\\t"                   {cadena+="\t";}
 <string>"\\\\"                  {cadena+="\\";}
 <string>"\\\'"                  {cadena+="\'";}
@@ -259,6 +259,21 @@ lista_valores_array:
 valores:  valores_array                                         {$$ = $1;}
         | expresion                                             {$$ = $1;}
 ;
+
+/***************************************** [ACCESO ARREGLO] ***************************************/   
+assign_array_instr
+        : identificador list_position
+;
+
+list_position
+        : list_position expression_acces                        {$1.push($2); $$ = $1;}
+        | expression_acces                                      {$$ = [$1];}
+;
+
+expression_acces
+        : tk_cora expresion tk_corc                             {$$ = $2;}
+;
+
 
 /***************************************** [ASIGNACION] ***************************************/   
 asignacion_instr
@@ -510,7 +525,7 @@ expresion
         | llamada_instr                         {$$ = $1;}     
         | incre_decre_instr                     {$$ = $1; } 
         | l_incre_decre_instr                   {$$ = $1; }
-        | identificador tk_cora expresion tk_corc {$$ = new AccesoArreglo($1, $3, @1.first_line, @1.first_column);}
         | acceso_struct                         {$$ = $1; }
+        | identificador list_position           {$$ = new AccesoArreglo($1, $2, @1.first_line, @1.first_column);}
 ;
 

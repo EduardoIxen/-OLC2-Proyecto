@@ -20,9 +20,15 @@ class Declaracion extends Instruction{
             }
 
             if (this.type != this.expression.type) {
-                return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+                if (this.expression.type == Tipo.ARRAY) {
+                    if (this.type != value.type) {
+                        return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+                    }
+                }else{
+                    return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+                }
             }
-
+            console.log("value dec", value)
             var simbolo = new Simbolo(this.id, this.type, this.row, this.column, value, "agregar ambito");
             var result = table.setTabla(simbolo);
     

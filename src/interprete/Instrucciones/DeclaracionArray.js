@@ -5,7 +5,6 @@ class DeclaracionArray extends Instruction{
         this.type_init = type_init;
         this.id = id;
         this.list_value = [];
-        this.list_tabla = [];
         this.list_expresion = list_expresion;
         this.id_array = id_array;
         this.type_correct = true;
@@ -41,6 +40,10 @@ class DeclaracionArray extends Instruction{
             }
             var primitive = new Primitivo(list_values.type, value, this.row, this.column, "ambito");
             return primitive;
+        }
+
+        if (expressions == undefined) {
+            return new Exception("Semantico", "Index inexistente.", this.row, this.column);
         }
         return expressions;
     }
