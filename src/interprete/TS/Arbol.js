@@ -5,8 +5,9 @@ class Arbol {
         this.instruccion = instruccion
         this.funciones = []
         this.exception = []
-        this.consola = ""
+        this.consola = "";
         this.tablaTsGlobal = null;
+        this.struct = {};
     }
 
     getInstruccion() { return this.instruccion; }
@@ -32,4 +33,22 @@ class Arbol {
         return null;
     }
     addFuncion(funcion){ this.funciones.push(funcion); }
+
+    addStruct(struct){
+        
+        if(struct.id in this.struct){
+            return new Exception("Semantico",`Variable ${struct.getId()} ya existe en Struct.`, struct.getRow(), struct.getColumn());
+        }
+
+        this.struct[struct.getId()] = struct.getAtributos();
+        return null
+        
+    }
+
+    getStruct(id){
+        if(id in this.struct){
+            return this.struct[id]
+        }
+        return null;
+    }
 }

@@ -37,7 +37,6 @@
 "main"      return 'RMAIN';
 "for"       return 'RFOR';
 "in"        return 'RIN';
-"struct"    return 'RSTRUCT';
 
 /***********
  * Nativas *
@@ -191,6 +190,8 @@ instruccion
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
         | declaracion_array_instr fin_instr      { $$ = $1; }
+        | struct_instr fin_instr                 { $$ = $1; }
+        | asignacion_struct fin_instr            { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -212,6 +213,8 @@ instruccion2
         | for_instr                              { $$ = $1; }
         | incre_decre_instr fin_instr            { $$ = $1; }
         | declaracion_array_instr fin_instr      { $$ = $1; }
+        | struct_instr fin_instr                 { $$ = $1; }
+        | asignacion_struct fin_instr            { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -361,6 +364,56 @@ ternario_instr
         : tk_para expresion tk_parc tk_interrogacion expresion tk_dospuntos expresion   {$$ = new Ternario($2, $5, $7, @1.first_line, @1.first_column); }
 ;
 
+/***************************************** [STRUCT][DECLARACION] ***************************************/   
+struct_instr
+        : RSTRUCT identificador tk_llavea lista_struct tk_llavec      {$$ = new DeclaracionStruct($2, $4, @1.first_line, @1.first_column); }
+;
+  
+lista_struct
+        : lista_struct tk_coma LIST_STRUCT                        { $1.push($3); $$ = $1; }
+        | LIST_STRUCT                                             { $$=[$1]; }
+;
+
+LIST_STRUCT
+        : TIPO identificador                                     { $$ = {type: $1, name: $2, bool:false}; }
+        | identificador identificador                            { $$ = {type: $1, name: $2, bool:true} ; }
+;
+
+/***************************************** [STRUCT][ASIGNACION] ***************************************/   
+asignacion_struct
+        : identificador identificador tk_igual identificador tk_para parametros_struct tk_parc  {$$ = new AsignacionStruct($1, $2, $4, $6, @1.first_line, @1.first_column); }
+;
+
+parametros_struct
+                : parametros_struct tk_coma parametro_struct    { $1.push($3); $$ = $1;}
+                | parametro_struct                              { $$=[$1]; }
+;
+
+parametro_struct
+                : expresion                                     { $$ = $1; }
+;
+
+/***************************************** [STRUCT][MOSTRAR] ***************************************/ 
+acceso_struct
+        : identificador LIST_ACCES_STRUCTS              {$$ = new AccesoStruct($1, $2, @1.first_line, @1.first_column); }
+;
+
+/***************************************** [STRUCT][MODIFICAR] ***************************************/ 
+modificar_acceso_struct
+        : identificador  tk_igual expresion             {}
+;
+
+/***************************************** [STRUCT][LIST][ATRIBUTOS] ***************************************/ 
+LIST_ACCES_STRUCTS
+                : LIST_ACCES_STRUCTS LIST_ACCES_STRUCT  { $1.push($2); $$ = $1;}
+                | LIST_ACCES_STRUCT                     { $$=[$1]; }
+;
+
+LIST_ACCES_STRUCT
+                : tk_punto identificador                { $$ = {id:$2}; }
+;
+
+
 /***************************************** [TIPO] ***************************************/   
 TIPO
         : RINT                                  {$$ = Tipo.ENTERO;  }
@@ -416,21 +469,6 @@ parametro_llamada
                 : expresion                                                     { $$ = $1; }
 ;
 
-/***************************************** [PARAMETROS LLAMADA] ***************************************/   
-struct_instr
-        : RSTRUCT identificador tk_llavea LIST_STRUCTS tk_llavec                 {}
-;
-  
-LIST_STRUCTS
-                : LIST_STRUCTS tk_coma LIST_STRUCT                        { $1.push($3); $$ = $1;}
-                | LIST_STRUCT                                             { $$=[$1]; }
-;
-
-LIST_STRUCT
-                : TIPO expresion                                          { $$ = $1; }
-;
-
-
 /***************************************** [EXPRESIONES] ***************************************/   
 expresion
                 /* Aritmética */
@@ -473,5 +511,6 @@ expresion
         | incre_decre_instr                     {$$ = $1; } 
         | l_incre_decre_instr                   {$$ = $1; }
         | identificador tk_cora expresion tk_corc {$$ = new AccesoArreglo($1, $3, @1.first_line, @1.first_column);}
+        | acceso_struct                         {$$ = $1; }
 ;
 

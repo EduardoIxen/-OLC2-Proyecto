@@ -1,7 +1,7 @@
 
 
 function execute(){
-    
+    out.setValue("")
     entrada = editor.getValue();
     var instrucciones = gramatica.parse(entrada.toString());
     var ast = new Arbol(instrucciones.instr);
@@ -18,7 +18,7 @@ function execute(){
         if (instruccion instanceof Funcion) {
             ast.addFuncion(instruccion);
         }
-        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof DeclaracionArray)) { //falta asignacion de arreglos
+        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof DeclaracionArray) || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct)) { //falta asignacion de arreglos
             var value = instruccion.interpretar(ast, TsGlobal);
             if(value instanceof Exception){
                 ast.getException().push(value);
@@ -70,7 +70,8 @@ function execute(){
     }
     for(var instruccion of ast.getInstruccion()){
         if (!((instruccion instanceof Main) || (instruccion instanceof Declaracion) || (instruccion instanceof Asignacion)
-        || (instruccion instanceof Funcion) || (instruccion instanceof DeclaracionArray))) {  //falta  asignacion de arreglos
+        || (instruccion instanceof Funcion) || (instruccion instanceof DeclaracionArray) 
+        || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct))) {  //falta  asignacion de arreglos
             var err = new Exception("Semantico", "Sentencia fuera de main.", instruccion.row, instruccion.column);
             ast.getException().push(err);
             ast.updateConsola(err.toString());
@@ -143,3 +144,21 @@ function createNativas(ast){
     ast.addFuncion(func);
 
 }
+
+
+function handleFileCharge(){
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+  }
+  
+  function handleFileSelect(event){
+    var reader = new FileReader()
+    reader.onload = handleFileLoad;
+    reader.readAsText(event.target.files[0])
+  }
+  
+  function handleFileLoad(event){
+    editor.setValue("")
+    var result = event.target.result;
+    editor.setValue(result)
+  }
+  
