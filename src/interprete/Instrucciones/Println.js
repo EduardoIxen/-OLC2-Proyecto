@@ -7,10 +7,8 @@ class Println extends Instruction{
 
     interpretar(tree, table){
         var value = this.expression.interpretar(tree, table);
-        console.log("valuep",value);
-        console.log("exprp",this.expression);
-        if (this.expression.type == Tipo.ARRAY && !(value instanceof Array)) {
-            console.log("ssssasdasda")
+        if(value instanceof Exception) return value;
+        if (this.expression.type == Tipo.ARRAY && !(value instanceof DeclaracionArray) && !(value instanceof Array)) {
             //value = this.recorrerArray(value.list_value);
             
             try {
@@ -18,13 +16,13 @@ class Println extends Instruction{
             } catch (error) {
                 value = new Exception("semático", "Index malo", this.row, this.column);
             }
-        }
-        else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
+        }else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
             value = this.recorrerArray(value);
-            console.log("lista array",value);
+        }else if (this.expression.type == Tipo.ARRAY && value.type == Tipo.ARRAY) {
+            value = this.recorrerArray(value.list_value);
+        }else if (value instanceof Primitivo) {
+            value = value.value;
         }
-        
-        if(value instanceof Exception) return value;
         tree.updateConsola(value+'\n');
     }
 

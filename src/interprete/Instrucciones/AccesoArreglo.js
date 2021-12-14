@@ -1,10 +1,11 @@
 class AccesoArreglo extends Instruction{
-    constructor(id, list_expression, row, column){
+    constructor(id, list_expression, row, column, new_value=null){
         super(row, column);
         this.id = id;
         this.list_expression = list_expression;
         this.type = null;
         this.type_init = null;
+        this.new_value = new_value;
     }
 
     interpretar(tree, table){
@@ -25,40 +26,55 @@ class AccesoArreglo extends Instruction{
             this.type_init 
         }
         return symbol.getValue().list_value[num].value*/
-        console.log("aaa",symbol.getValue().list_value)
+
         var auxIndex = []
         for(var numeroIndex of this.list_expression){
-            console.log(numeroIndex.value);
-            auxIndex.push(parseInt(numeroIndex.value));
+            if (numeroIndex instanceof Identificador || numeroIndex instanceof Aritmetica) {
+                auxIndex.push(numeroIndex.interpretar(tree, table));
+            }else{
+                auxIndex.push(parseInt(numeroIndex.value));
+            }
         }
-        console.log(auxIndex);
         //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));
-        var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
-        console.log("---",pruea)
+        if (this.new_value == null) {
+            var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
+        }else{
+            if (this.new_value.type == symbol.getValue().type_init) {
+                var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
+            }else if (this.new_value instanceof Array) {
+                for(var val of this.new_value){
+                    if (val.type != symbol.getValue().type_init) {
+                        return new Exception("Semántico", "Tipo de datos incompatibes.", this.row, this.column);
+                    }
+                }
+                var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
+            }   
+            else{
+                return new Exception("Semántico", "Tipo de datos incompatibes.", this.row, this.column);
+            }
+        }
         return pruea;
     }
 
     searchValue(list_position, list_value, value){
-        console.log("ls val",list_value)
-        console.log("ls pos",list_position)
-        console.log("ls pos1",list_position.length)
-        console.log("ls pos2",list_position.length != 0)
         if (list_position.length != 0) {
-            console.log("entro")
             if (value === null) {
-                console.log("1",list_value[list_position[0]])
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
             }
             if (list_position.length === 1) {
-                console.log("2",list_value[list_position[0]])
+                console.log("que es",list_value[list_position[0]])
+
                 list_value[list_position[0]] = value
                 return null
             }else if (list_position.length !== 1) {
-                console.log("3",list_value[list_position[0]])
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
             }else{
                 return new Exception("Semantico", "La posicion deseada esta fuera del rango valido.", this.row, this.column);
             }
+        }
+
+        if (list_value === undefined) {
+            return new Exception("Semántico", "Indice fuera de rango", this.row, this.column);
         }
         
         return list_value;

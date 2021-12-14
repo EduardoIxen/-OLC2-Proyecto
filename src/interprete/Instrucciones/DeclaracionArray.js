@@ -12,6 +12,12 @@ class DeclaracionArray extends Instruction{
 
     interpretar(tree, table){
         if (this.list_expresion != []) {
+            if (this.list_expresion instanceof AccesoArreglo) {
+                var result2 = this.list_expresion = this.list_expresion.interpretar(tree, table);
+                if (result2 instanceof Exception) {
+                    return result2;
+                }
+            }
             this.list_value = this.getValues(this.list_expresion, tree, table);
             if (this.type_correct) {
                 var symbol = new Simbolo(this.id, Tipo.ARRAY, this.row, this.column, this);

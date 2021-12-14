@@ -6,11 +6,8 @@ class Print extends Instruction{
     }
 
     interpretar(tree, table){
-                var value = this.expression.interpretar(tree, table);
-        console.log("valuep",value);
-        console.log("exprp",this.expression);
+        var value = this.expression.interpretar(tree, table);
         if (this.expression.type == Tipo.ARRAY && !(value instanceof Array)) {
-            console.log("ssssasdasda")
             //value = this.recorrerArray(value.list_value);
             
             try {
@@ -21,7 +18,6 @@ class Print extends Instruction{
         }
         else if (this.expression.type == Tipo.ARRAY && (value instanceof Array)) {
             value = this.recorrerArray(value);
-            console.log("lista array",value);
         }
         
         if(value instanceof Exception) return value;

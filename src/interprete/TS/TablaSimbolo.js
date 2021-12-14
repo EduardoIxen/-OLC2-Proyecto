@@ -51,14 +51,12 @@ class TablaSimbolo{
                     }
                     return null; //variable actualizada
                 }
-                console.log(`Error  tipos ${simbolo.getValue()} ${simbolo.getType()} ${tablaActual.tabla[simbolo.id].getType()}`)
                 return new Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
 
             }else{
                 tablaActual = tablaActual.anterior;
             }
         }
-        console.log("variable no encontrada");
         return new Exception("Semantico",`Variable ${simbolo.getId()} no encontrada.`, simbolo.getRow(), simbolo.getColumn());
     }
 }
