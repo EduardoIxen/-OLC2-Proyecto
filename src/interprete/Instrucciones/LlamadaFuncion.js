@@ -12,7 +12,6 @@ class LlamadaFuncion extends Instruction{
         }
 
         var newTable = new TablaSimbolo(tree.getTablaTsGlobal());
-
         if (result.parameters.length == this.parameters.length) { //cantidad de parametros iguales
             var count = 0;
             for(var expresion of this.parameters){
@@ -30,10 +29,9 @@ class LlamadaFuncion extends Instruction{
                             return resultTabla;
                         }
 
-                    //falta elif de arreglos
                     }
                 }else if(result.parameters[count].tipo != Tipo.ARRAY){
-    
+                    var temp =result.parameters[count].tipo;
                     if (result.parameters[count].tipo == expresion.type) {  //verificar que los tipos sean iguales
                         //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
                         var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
@@ -42,7 +40,13 @@ class LlamadaFuncion extends Instruction{
                             return resultTabla;
                         }
 
-                    //falta elif de arreglos
+                    }else if(expresion.type == Tipo.STRUCT ){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        symbol.nameStruct = temp;
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
                     }else if(result.parameters[count].identificador == '01-Native-Cos'){
                         result.parameters[count]['tipo'] = expresion.type;
                         var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
@@ -104,7 +108,7 @@ class LlamadaFuncion extends Instruction{
                         if (resultTabla instanceof Exception) return resultTabla;
                     
                     }else{
-                        return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);
+                        return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada2.", this.row, this.column);
                     }
                 }else{
                     return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);

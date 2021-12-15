@@ -403,6 +403,8 @@ LIST_STRUCT
 /***************************************** [STRUCT][ASIGNACION] ***************************************/   
 asignacion_struct
         : identificador identificador tk_igual identificador tk_para parametros_struct tk_parc  {$$ = new AsignacionStruct($1, $2, $4, $6, @1.first_line, @1.first_column); }
+        | identificador identificador tk_igual RNULL                                            {$$ = new AsignacionStruct($1, $2, null, null, @1.first_line, @1.first_column); }
+        // | identificador identificador tk_igual acceso_struct                                    {$$ = new AsignacionStruct($1, $2, null, $4, @1.first_line, @1.first_column); }
 ;
 
 parametros_struct
@@ -450,6 +452,9 @@ TIPO
 funcion_instr
         : TIPO identificador tk_para tk_parc tk_llavea instrucciones tk_llavec                  { $$ = new Funcion($1, $2, [], $6, @1.first_line, @1.first_column); }
         | TIPO identificador tk_para parametros tk_parc tk_llavea instrucciones tk_llavec       { $$ = new Funcion($1, $2, $4, $7, @1.first_line, @1.first_column); }
+        | identificador tk_para tk_parc tk_llavea instrucciones tk_llavec                       { $$ = new Funcion($1, $2, [], $6, @1.first_line, @1.first_column); }
+        | identificador identificador tk_para parametros tk_parc tk_llavea instrucciones tk_llavec       { $$ = new Funcion($1, $2, $4, $7, @1.first_line, @1.first_column); }
+        
 ;
 
 /***************************************** [PARAMETROS FUNCION] ***************************************/   
@@ -461,6 +466,7 @@ parametros
 parametro
         : TIPO identificador                    { $$ = {tipo: $1, identificador: $2} ;}
         | TIPO tk_cora tk_corc identificador    { $$ = {tipo: Tipo.ARRAY, identificador: $4, type_init: $1}; }
+        | identificador identificador           { $$ = {tipo: $1, identificador: $2}; }
 ;
 
 /**************************************** [LLAMADA FUNCION] *************************************/   

@@ -29,7 +29,6 @@ class AccesoStruct extends Instruction{
         
         while(count<this.atributos.length){
 
-            
             if(temp[this.atributos[count].id]){
                 struct = this.recorrer(tree, struct,this.atributos[count].id);
                 if(0<=struct){
@@ -42,19 +41,14 @@ class AccesoStruct extends Instruction{
                 if(temp instanceof Object){
                     count ++;
                     try{
-
+                        
                         if(temp[this.atributos[count].id]){
                             temp = temp[this.atributos[count].id];
                         }else{
                             return new Exception("Semantico", `No existe el atributo ${this.atributos[count].id}.`, this.row, this.column);
                         }
                     }catch(error){
-                        // console.log(temp)
                         this.type = Tipo.STRUCT;
-                        // struct = this.recorrer(tree, struct,this.atributos[count].id)
-                        // if(0<=struct){
-                        //     this.type = struct;
-                        // }
                         return Object.values(temp);
                     }
                 }
@@ -69,7 +63,7 @@ class AccesoStruct extends Instruction{
             }
             count ++;
         }
-        // console.log(symbol.value)
+    
         var temp = symbol.value;
         return Object.values(temp);
     }
