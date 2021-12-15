@@ -46,7 +46,6 @@ class AccesoArreglo extends Instruction{
         }
         //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));  a [1][0][1]
         if (this.new_value == null) {
-            console.log("sasdasdasd")
             var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
             
         }else{
@@ -54,9 +53,6 @@ class AccesoArreglo extends Instruction{
                 //console.log(this.new_value.list_expression[0].type)
                 //console.log(symbol.getValue().type)
                 if (this.new_value.type == symbol.getValue().type_init) { //a[0] = 1
-                    console.log(symbol.getValue().list_value);
-                    console.log(this.new_value);
-                    console.log("aux",auxIndex);
                     var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
                 }
                 else if (this.new_value instanceof Array) {  //a[1] = [1,2,3,4]
@@ -73,11 +69,10 @@ class AccesoArreglo extends Instruction{
             }else{
 
                 if (this.new_value.list_expression[0].type == symbol.getValue().type) {
-                    console.log(this.new_value.list_expression[0]);
-                    console.log(symbol.getValue().list_value);
-                    console.log("asd",this.new_value);
-                    console.log("aux",auxIndex);
-                    var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value.list_expression[0]);
+                    if (this.new_value instanceof AccesoArreglo) {
+                        this.new_value = this.new_value.interpretar(tree, table);
+                    }
+                    var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
                 }else{
                     return new Exception("Semántico", "Tipo de datos incompatibes. 3", this.row, this.column);
                 }
@@ -89,8 +84,6 @@ class AccesoArreglo extends Instruction{
     }
 
     searchValue(list_position, list_value, value){
-        console.log("ls",list_value);
-        console.log("value",value);
         if (list_position.length != 0) {
             if (value === null) {
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
@@ -109,7 +102,6 @@ class AccesoArreglo extends Instruction{
         if (list_value === undefined) {
             return new Exception("Semántico", "Indice fuera de rango", this.row, this.column);
         }
-        
         return list_value;
     }
 }
