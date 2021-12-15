@@ -15,8 +15,17 @@ class AccesoArreglo extends Instruction{
         }
 
         this.type = symbol.type;
-        if (symbol.typeArray != Tipo.ARRAY) {
-            return new Exception("Semantico", "Variable " + this.id + " no es un arreglo.", this.row, this.column);
+
+        if(symbol.typeArray != null){
+            if (symbol.typeArray != Tipo.ARRAY) {
+                return new Exception("Semantico", "Variable " + this.id + " no es un arreglo.", this.row, this.column);
+            }    
+        }else{
+            if(symbol.value != null){
+                if(symbol.value.typeArray != Tipo.ARRAY){
+                    return new Exception("Semantico", "Variable " + this.id + " no es un arreglo.", this.row, this.column);
+                }
+            }
         }
 
         /*var num = this.list_expression.interpretar(tree, table);
@@ -38,10 +47,9 @@ class AccesoArreglo extends Instruction{
         //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));
         if (this.new_value == null) {
             var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
-            console.log(pruea)
+            
         }else{
-            console.log(this.new_value)
-            console.log(`${this.new_value} == ${symbol.getValue().type_init}`)
+            
             if (this.new_value.type == symbol.getValue().type_init) {
                 var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
             }else if (this.new_value instanceof Array) {
