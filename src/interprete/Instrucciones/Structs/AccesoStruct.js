@@ -5,6 +5,7 @@ class AccesoStruct extends Instruction{
         this.identificador = identificador;
         this.atributos = atributos;
         this.type = null;
+        this.symbol = null;
     }
 
     interpretar(tree, table){
@@ -21,19 +22,23 @@ class AccesoStruct extends Instruction{
         if(struct == null){
             return new Exception("Semantico", `No existe la variable en Struct.`, this.row, this.column);
         }
-        
+        this.symbol = symbol;
         var temp;
         var count = 0;
         temp = symbol.value;
+        
         while(count<this.atributos.length){
+
             
             if(temp[this.atributos[count].id]){
                 struct = this.recorrer(tree, struct,this.atributos[count].id);
                 if(0<=struct){
                     this.type = struct;
                 }
-                temp = symbol.value[this.atributos[count].id];
-                
+                temp = temp[this.atributos[count].id];
+                if(this.type!=null){
+                    return temp;
+                }
                 if(temp instanceof Object){
                     count ++;
                     try{
@@ -44,11 +49,13 @@ class AccesoStruct extends Instruction{
                             return new Exception("Semantico", `No existe el atributo ${this.atributos[count].id}.`, this.row, this.column);
                         }
                     }catch(error){
-                        struct = this.recorrer(tree, struct,this.atributos[count].id)
-                        if(0<=struct){
-                            this.type = struct;
-                        }
-                        return temp;
+                        // console.log(temp)
+                        this.type = Tipo.STRUCT;
+                        // struct = this.recorrer(tree, struct,this.atributos[count].id)
+                        // if(0<=struct){
+                        //     this.type = struct;
+                        // }
+                        return Object.values(temp);
                     }
                 }
                 
@@ -62,8 +69,9 @@ class AccesoStruct extends Instruction{
             }
             count ++;
         }
-
-        return temp;
+        // console.log(symbol.value)
+        var temp = symbol.value;
+        return Object.values(temp);
     }
 
     recorrer(tree, struct,id){

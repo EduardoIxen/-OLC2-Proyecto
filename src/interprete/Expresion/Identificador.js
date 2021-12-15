@@ -11,6 +11,7 @@ class Identificador extends Instruction {
             return new Exception("Semantico", `Variable ${this.identificador} no encontrada`, this.row, this.column);
         }
         this.type = simbolo.getType();
+        
         return simbolo.getValue(); //retornar el valor del simbolo
 
     }

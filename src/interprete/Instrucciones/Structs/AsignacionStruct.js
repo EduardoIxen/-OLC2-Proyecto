@@ -48,6 +48,8 @@ class AsignacionStruct extends Instruction{
 
         symbol = new Simbolo(this.id, this.type, this.row, this.column, atrr, "Ambito");
         symbol.nameStruct = this.name;
+        // symbol.ref = tree.ref;
+        // tree.ref ++;
         var result = table.setTabla(symbol);
         return result;
     }

@@ -193,6 +193,7 @@ instruccion
         | struct_instr fin_instr                 { $$ = $1; }
         | asignacion_struct fin_instr            { $$ = $1; }
         | assign_array_instr fin_instr           { $$ = $1; }
+        | modificar_acceso_struct fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -217,6 +218,7 @@ instruccion2
         | struct_instr fin_instr                 { $$ = $1; }
         | asignacion_struct fin_instr            { $$ = $1; }
         | assign_array_instr fin_instr           { $$ = $1; }
+        | modificar_acceso_struct fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
                                                 listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
@@ -419,7 +421,7 @@ acceso_struct
 
 /***************************************** [STRUCT][MODIFICAR] ***************************************/ 
 modificar_acceso_struct
-        : identificador  tk_igual expresion             {}
+        : acceso_struct tk_igual expresion             {$$ = new ModificarStruct($1, $3, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [STRUCT][LIST][ATRIBUTOS] ***************************************/ 
