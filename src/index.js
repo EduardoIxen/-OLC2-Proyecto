@@ -86,7 +86,8 @@ function execute(){
     init.agregarHijoNodo(instruc)
     //var grafo = ast.getDot(init); //devuelve el codigo de graphviz
     
-    document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException())
+    document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
+    // document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ENVIAR LA LISTA SIMBOLO);
     out.setValue(ast.getConsola());
 
 }
@@ -106,6 +107,28 @@ function tablaError(error){
     }
     tablaError += "</tbody>";
     return tablaError;
+}
+
+function tablaSimbolo(simbolo){
+    var tablaSimbolo = '';
+    tablaSimbolo += '<thead>'
+    tablaSimbolo += '<tr>'
+    tablaSimbolo += '<td>Titulo</td>'
+    tablaSimbolo += '</tr>'
+    tablaSimbolo += '</thead>'
+
+    tablaSimbolo += '<tbody>'
+    // for(i of simbolo){
+        // tablaSimbolo += '<tr>'
+        // tablaSimbolo += `<td>${i}</td>`
+        // tablaSimbolo += `<td>${i}</td>`
+        // tablaSimbolo += '</tr>'
+        
+    // }
+    tablaSimbolo += '</tbody>'
+    
+
+    return tablaSimbolo;
 }
 
 function createNativas(ast){
