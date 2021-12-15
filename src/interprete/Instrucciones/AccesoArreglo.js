@@ -44,31 +44,53 @@ class AccesoArreglo extends Instruction{
                 auxIndex.push(parseInt(numeroIndex.value));
             }
         }
-        //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));
+        //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));  a [1][0][1]
         if (this.new_value == null) {
+            console.log("sasdasdasd")
             var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
             
         }else{
-            
-            if (this.new_value.type == symbol.getValue().type_init) {
-                var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
-            }else if (this.new_value instanceof Array) {
-                for(var val of this.new_value){
-                    if (val.type != symbol.getValue().type_init) {
-                        return new Exception("Semántico", "Tipo de datos incompatibes.", this.row, this.column);
-                    }
+            if (this.new_value.type != null) {
+                //console.log(this.new_value.list_expression[0].type)
+                //console.log(symbol.getValue().type)
+                if (this.new_value.type == symbol.getValue().type_init) { //a[0] = 1
+                    console.log(symbol.getValue().list_value);
+                    console.log(this.new_value);
+                    console.log("aux",auxIndex);
+                    var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
                 }
-                var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
-            }   
-            else{
-                return new Exception("Semántico", "Tipo de datos incompatibes.", this.row, this.column);
+                else if (this.new_value instanceof Array) {  //a[1] = [1,2,3,4]
+                    for(var val of this.new_value){
+                        if (val.type != symbol.getValue().type_init) {
+                            return new Exception("Semántico", "Tipo de datos incompatibes 1 .", this.row, this.column);
+                        }
+                    }
+                    var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
+                }   
+                else{
+                    return new Exception("Semántico", "Tipo de datos incompatibes. 2", this.row, this.column);
+                }
+            }else{
+
+                if (this.new_value.list_expression[0].type == symbol.getValue().type) {
+                    console.log(this.new_value.list_expression[0]);
+                    console.log(symbol.getValue().list_value);
+                    console.log("asd",this.new_value);
+                    console.log("aux",auxIndex);
+                    var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value.list_expression[0]);
+                }else{
+                    return new Exception("Semántico", "Tipo de datos incompatibes. 3", this.row, this.column);
+                }
             }
+
         }
         
         return pruea;
     }
 
     searchValue(list_position, list_value, value){
+        console.log("ls",list_value);
+        console.log("value",value);
         if (list_position.length != 0) {
             if (value === null) {
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
