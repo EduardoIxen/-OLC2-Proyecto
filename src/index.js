@@ -8,7 +8,7 @@ function execute(){
     var TsGlobal = new TablaSimbolo(null);
     ast.setTablaTsGlobal(TsGlobal);
     createNativas(ast);
-
+    console.log(instrucciones.error)
     for(var e of instrucciones.errores){
         ast.getException().push(e);
         ast.updateConsola(e);
@@ -85,11 +85,28 @@ function execute(){
     }
     init.agregarHijoNodo(instruc)
     //var grafo = ast.getDot(init); //devuelve el codigo de graphviz
-    //console.log(grafo);
-
+    
+    document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException())
     out.setValue(ast.getConsola());
+
 }
 
+function tablaError(error){
+    var tablaError = '';
+    tablaError += "<thead><tr><th scope=\"col\">Tipo</th>";
+    tablaError += "<th>Descripcion</th>";
+    tablaError += "<th>Fila</th>";
+    tablaError += "<th>Columna</th></tr></thead>";
+    tablaError += "<tbody>";
+    for(var i of error){
+        tablaError += `<tr><td>${Object.values(i)[0]}</td>`;
+        tablaError += `<td>${Object.values(i)[1]}</td>`;
+        tablaError += `<td>${Object.values(i)[2]}</td>`;
+        tablaError += `<td>${Object.values(i)[3]}</td></tr>`;
+    }
+    tablaError += "</tbody>";
+    return tablaError;
+}
 
 function createNativas(ast){
 

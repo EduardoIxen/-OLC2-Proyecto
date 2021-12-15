@@ -1,6 +1,8 @@
 .fondo{
-    background-image: radial-gradient( circle 976px at 51.2% 51%,  rgb(3, 3, 3) 0%, rgb(0, 0, 0) 0%, rgb(249, 249, 253) 17.3%, rgb(10, 11, 12) 58.8%, rgb(197, 198, 204) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% );
-}
+    /* background-image: radial-gradient( circle 976px at 51.2% 51%,  rgb(3, 3, 3) 0%, rgb(0, 0, 0) 0%, rgb(249, 249, 253) 17.3%, rgb(10, 11, 12) 58.8%, rgb(197, 198, 204) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% ); */
+    background: black;
+    font-family: "Times New Roman", Times, serif;
+  }
 
  .button-interpretar {background-image: linear-gradient(to right, #f3f4f5 0%, #293950  51%, #0f0f0f  100%)}
  .button-interpretar {
@@ -23,3 +25,11 @@
     text-decoration: none;
   }
  
+
+.editor-s{
+
+  font-family: "Times New Roman", Times, serif;
+}
+h1{
+  color: white;
+}
