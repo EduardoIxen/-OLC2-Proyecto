@@ -127,4 +127,16 @@ class LlamadaFuncion extends Instruction{
         this.type = result.type;
         return value;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("LLAMADA FUNCION");
+        nodo.agregarHijo(this.id.toString());
+        var parametros = new NodoAST("PARAMETROS");
+        for (var param of this.parameters) {
+            parametros.agregarHijoNodo(param.getNodo());
+        }
+        nodo.agregarHijoNodo(parametros);
+        return nodo;
+
+    }
 }

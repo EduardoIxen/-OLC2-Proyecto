@@ -20,4 +20,9 @@ class Return extends Instruction{
         this.result = null;
         return this;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("RETURN");
+        return nodo;
+    }
 }

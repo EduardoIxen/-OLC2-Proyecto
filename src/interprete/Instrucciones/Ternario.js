@@ -32,4 +32,17 @@ class Ternario extends Instruction{
 
     }
 
+    getNodo(){
+        var nodo = new NodoAST("TERNARIO");
+        var condicion = new NodoAST("CONDICION");
+        condicion.agregarHijoNodo(this.condition.getNodo());
+        var condV = new NodoAST("CONDICION VERDADERA");
+        condV.agregarHijoNodo(this.instr_true.getNodo());
+        var condF = new NodoAST("CONDICION FALSA");
+        condF.agregarHijoNodo(this.instr_false.getNodo());
+        nodo.agregarHijoNodo(condicion);
+        nodo.agregarHijoNodo(condV);
+        nodo.agregarHijoNodo(condF);
+        return nodo;
+    }
 }

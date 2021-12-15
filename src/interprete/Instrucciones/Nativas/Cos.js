@@ -20,4 +20,12 @@ class Cos extends Instruction{
         this.type = symbol.getType();
         return Math.cos(symbol.getValue());
     }
+
+    getNodo(){
+        var nodo = new NodoAST("COSENO");
+        var nodoDato = new NodoAST(this.symbol.getType());
+        nodoDato.agregarHijo(this.symbol.getValue());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }

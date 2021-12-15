@@ -6,6 +6,7 @@ class ToInt extends Instruction{
         this.type = null;
         this.parameters = parameters;
         this.instructions = instructions;
+        this.symbol = null;
     }
 
     interpretar(tree, table){
@@ -18,6 +19,15 @@ class ToInt extends Instruction{
             return new Exception("Semantico", `Tipo de dato de ToInt no es un valor.`, symbol.getRow(), symbol.getColumn());
         }
         this.type = Tipo.ENTERO;
+        this.symbol = symbol;
         return parseInt(symbol.getValue());
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("TO-INT");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(this.symbol.getValue().toString());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
     }
 }

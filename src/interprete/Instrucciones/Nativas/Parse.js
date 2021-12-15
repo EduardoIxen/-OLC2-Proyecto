@@ -43,4 +43,12 @@ class Parse extends Instruction{
         }
 
     }
+
+    getNodo(){
+        var nodo = new NodoAST("PARSE");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(value.toString());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }

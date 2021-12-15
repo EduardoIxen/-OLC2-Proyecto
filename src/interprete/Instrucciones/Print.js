@@ -67,4 +67,10 @@ class Print extends Instruction{
         console.log(texto)
         return texto;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("PRINT");
+        nodo.agregarHijoNodo(this.expression.getNodo());
+        return nodo;
+    }
 }

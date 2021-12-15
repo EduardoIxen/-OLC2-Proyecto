@@ -6,6 +6,8 @@ class Pow extends Instruction{
         this.type = null;
         this.parameters = parameters;
         this.instructions = instructions;
+        this.base = null;
+        this.exponent = null;
     }
 
     interpretar(tree, table){
@@ -28,7 +30,16 @@ class Pow extends Instruction{
         }else if(base.getType() == Tipo.DECIMAL && exponent.getType() == Tipo.DECIMAL){
             this.type = Tipo.DECIMAL;
         }
+        this.base = base.getValue();
+        this.exponent = exponent.getValue();
         
         return Math.pow(base.getValue(), exponent.getValue());
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("POW");
+        nodo.agregarHijo(this.base.getValue().toString());
+        nodo.agregarHijo(this.exponent.getValue().toString());
+        return nodo;
     }
 }

@@ -77,6 +77,16 @@ function execute(){
             ast.updateConsola(err.toString());
         }
     }
+
+    var init = new NodoAST("RAIZ");
+    var instruc = new NodoAST("INSTRUCCIONES");
+    for(var instruAST of ast.getInstruccion()) {
+        instruc.agregarHijoNodo(instruAST.getNodo());
+    }
+    init.agregarHijoNodo(instruc)
+    //var grafo = ast.getDot(init); //devuelve el codigo de graphviz
+    //console.log(grafo);
+
     out.setValue(ast.getConsola());
 }
 

@@ -58,4 +58,17 @@ class DeclaracionArray extends Instruction{
         }
         return expressions;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("DECLARACION ARREGLO");
+        nodo.agregarHijo(this.type.toString());
+        nodo.agregarHijo(this.list_expresion);
+        nodo.agregarHijo(this.id);
+        var exp = new NodoAST("EXPRESION");
+        for(var expre of this.list_expresion){
+            exp.agregarHijoNodo(expre.getNodo());
+        }
+        nodo.agregarHijoNodo(exp);
+        return nodo;
+    }
 }

@@ -15,4 +15,10 @@ class Identificador extends Instruction {
         return simbolo.getValue(); //retornar el valor del simbolo
 
     }
+
+    getNodo(){
+        var nodo = new NodoAST("IDENTIFICADOR");
+        nodo.agregarHijo(this.identificador.toString());
+        return nodo;
+    }
 }

@@ -9,4 +9,10 @@ class Primitivo extends Instruction{
     interpretar(tree, table){
         return this.value;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("PRIMITIVO");
+        nodo.agregarHijo(this.value.toString());
+        return nodo;
+    }
 }

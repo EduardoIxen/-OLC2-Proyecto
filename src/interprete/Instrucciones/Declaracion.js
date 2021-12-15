@@ -55,4 +55,13 @@ class Declaracion extends Instruction{
             return null;
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("DECLARACION");
+        nodo.agregarHijo(this.id.toString());
+        if (this.expression != null) {
+            nodo.agregarHijoNodo(this.expression.getNodo());
+        }
+        return nodo;
+    }
 }

@@ -79,4 +79,26 @@ class If extends Instruction{
             return new Exception("Semantico", "Tipo de dato no booleano en IF.", this.row, this.column);
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("IF");
+        var condicion = new NodoAST("CONDICION");
+        condicion.agregarHijoNodo(this.condition.getNodo());
+        nodo.agregarHijoNodo(condicion);
+        var instruccionesif = new NodoAST("INSTRUCCIONES");
+        for (var instr of this.instr_if) {
+            instruccionesif.agregarHijoNodo(instr.getNodo());
+        }
+        nodo.agregarHijoNodo(instruccionesif);
+        if (this.instr_else != null) {
+            var instElse = new NodoAST("INSTRUCCIONES");
+            for (var instr of this.instr_else) {
+                instElse.agregarHijoNodo(instr.getNodo());
+            }
+            nodo.agregarHijoNodo(instElse);
+        }else if (this.instr_elseif != null) {
+            this.instr_elseif.getNodo();
+        }
+        return nodo;
+    }
 }

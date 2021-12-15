@@ -7,4 +7,9 @@ class Break extends Instruction{
     interpretar(tree, table){
         return this;
     }
+
+    getNodo(){
+        var nodo =  new NodoAST("BREAK");
+        return nodo;
+    }
 }

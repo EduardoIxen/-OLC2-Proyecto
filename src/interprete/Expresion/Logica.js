@@ -53,4 +53,17 @@ class Logica extends Instruction{
         }
         return valor.toString();
     }
+
+    getNodo(){
+        var nodo = new NodoAST("LOGICA");
+        if (this.exp_right != null) {
+            nodo.agregarHijoNodo(this.exp_left.getNodo());
+            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijoNodo(this.exp_right.getNodo());
+        }else{
+            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijoNodo(this.exp_left.getNodo());
+        }
+        return nodo;
+    }
 }

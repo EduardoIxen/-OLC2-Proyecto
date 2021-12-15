@@ -7,4 +7,9 @@ class Continue extends Instruction{
     interpretar(tree, table){
         return this;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("CONTINUE");
+        return nodo;
+    }
 }

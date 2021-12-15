@@ -4,6 +4,7 @@ class ToUpperCase extends Instruction{
         super(row, column);
         this.identificador = identificador;
         this.type = null;
+        this.symbol = null;
 
     }
 
@@ -20,7 +21,15 @@ class ToUpperCase extends Instruction{
         this.type = symbol.getType();
         symbol.setValue(symbol.getValue().toUpperCase())
         var result = table.updateTabla(symbol)
-        
+        this.symbol = symbol;
         return symbol.getValue();
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("TO-UPPERCASE");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(this.symbol.getValue().toString());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
     }
 }

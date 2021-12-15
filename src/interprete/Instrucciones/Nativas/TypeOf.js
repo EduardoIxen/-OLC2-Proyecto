@@ -35,5 +35,12 @@ class TypeOf extends Instruction{
         }          
         return symbol.getType().toString();
     }
+
+    getNodo(){
+        var nodo = new NodoAST("TYPE-OF");
+        var nodoDato = new NodoAST(this.type);
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }
 

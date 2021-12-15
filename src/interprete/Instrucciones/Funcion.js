@@ -47,4 +47,18 @@ class Funcion extends Instruction{
         }
         return null;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("FUNCION");
+        nodo.agregarHijo(this.id.toString());
+        var parametros = new NodoAST("PARAMETROS");
+        for (var param of this.parameters) {
+            var parametro = new NodoAST("PARAMETROS");
+            parametro.agregarHijo(param['tipo'])
+            parametro.agregarHijo(param['identificador'])
+            parametros.agregarHijoNodo(parametro);
+        }
+        nodo.agregarHijoNodo(parametros);
+        return nodo;
+    }
 }

@@ -15,4 +15,15 @@ class Case extends Instruction{
 
     getInstruction(){ return this.instruction; }
     setInstruction(instruction){ this.instruction = instruction; }
+
+    getNodo(){
+        var nodo = new NodoAST("CASE");
+        var instrucciones = new NodoAST("INSTRUCIONES");
+        for(var instr of this.instruction){
+            instrucciones.agregarHijoNodo(instr.getNodo());
+        }
+        nodo.agregarHijoNodo(instrucciones);
+        return nodo;
+
+    }
 }

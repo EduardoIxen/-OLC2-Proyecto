@@ -7,4 +7,9 @@ class Log extends Instruction{
     interpretar(tree, table){
         return this;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("LOGARITMO");
+        return nodo;
+    }
 }

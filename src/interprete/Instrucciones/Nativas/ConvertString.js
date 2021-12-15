@@ -21,4 +21,12 @@ class ConvertString extends Instruction{
 
         return symbol.getValue().toString();
     }
+
+    getNodo(){
+        var nodo = new NodoAST("TO-STRING");
+        var nodoDato = new NodoAST(this.symbol.getType());
+        nodoDato.agregarHijo(this.symbol.getValue());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }

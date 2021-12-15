@@ -67,4 +67,10 @@ class Println extends Instruction{
         console.log(texto)
         return texto;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("PRINTLN");
+        nodo.agregarHijoNodo(this.expression.getNodo());
+        return nodo;
+    }
 }

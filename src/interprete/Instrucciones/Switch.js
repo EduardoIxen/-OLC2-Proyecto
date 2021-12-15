@@ -90,4 +90,20 @@ class Switch extends Instruction{
             }
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("SWITCH");
+        var lsCase = new NodoAST("LISTA CASE");
+        for(var caso of this.instr_case){
+            lsCase.agregarHijoNodo(caso.getNodo());
+        }
+        nodo.agregarHijoNodo(lsCase);
+
+        if (this.instr_default != null) {
+            var defaultInst = new NodoAST("DEFAULT");
+            defaultInst.agregarHijoNodo(this.defaultInst.getNodo());
+            nodo.agregarHijoNodo(defaultInst);
+        }
+        return nodo;
+    }
 }

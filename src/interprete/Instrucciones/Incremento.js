@@ -33,4 +33,10 @@ class Incremento extends Instruction{
         }
     }
 
+    getNodo(){
+        var nodo = new NodoAST("INCREMENTO");
+        nodo.agregarHijo(this.identificador.toString());
+        return nodo;
+    }
+
 }

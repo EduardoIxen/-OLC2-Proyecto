@@ -27,4 +27,13 @@ class DeclaracionStruct extends Instruction{
         }
         return result;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("DECLARACION-STRUCI");
+        nodo.agregarHijo(this.id.toString());
+        if (this.atributos != null) {
+            nodo.agregarHijoNodo(this.atributos.getNodo());
+        }
+        return nodo;
+    }
 }

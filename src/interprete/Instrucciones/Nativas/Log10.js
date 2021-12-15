@@ -20,4 +20,12 @@ class Log10 extends Instruction{
         this.type = symbol.getType();
         return Math.log10(symbol.getValue());
     }
+
+    getNodo(){
+        var nodo = new NodoAST("LOG10");
+        var nodoDato = new NodoAST(this.symbol.getType());
+        nodoDato.agregarHijo(symbol.getValue());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }

@@ -28,17 +28,10 @@ class AccesoArreglo extends Instruction{
             }
         }
 
-        /*var num = this.list_expression.interpretar(tree, table);
-        console.log("num", symbol.getValue().list_value[num])
-        this.type_init = symbol.getValue().list_value[num].type
-        if (symbol.getValue().list_value[num].value instanceof Array) {
-            this.type_init 
-        }
-        return symbol.getValue().list_value[num].value*/
 
         var auxIndex = []
         for(var numeroIndex of this.list_expression){
-            if (numeroIndex instanceof Identificador || numeroIndex instanceof Aritmetica) {
+            if (numeroIndex instanceof Identificador || numeroIndex instanceof Aritmetica || numeroIndex instanceof LlamadaFuncion || numeroIndex instanceof Length) {
                 auxIndex.push(numeroIndex.interpretar(tree, table));
             }else{
                 auxIndex.push(parseInt(numeroIndex.value));
@@ -79,16 +72,15 @@ class AccesoArreglo extends Instruction{
             }
 
         }
-        
         return pruea;
     }
 
     searchValue(list_position, list_value, value){
-        if (list_position.length != 0) {
+        if (list_position.length != 0 && list_value != undefined) {
             if (value === null) {
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
             }
-            if (list_position.length === 1) {
+            if (list_position.length === 1 && list_value[list_position[0]] !== undefined) {
                 list_value[list_position[0]] = value
 
                 return null
@@ -103,5 +95,16 @@ class AccesoArreglo extends Instruction{
             return new Exception("Semántico", "Indice fuera de rango", this.row, this.column);
         }
         return list_value;
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("ACCESO-ARREGLO");
+        nodo.agregarHijo(this.id.toString());
+        var exp = new NodoAST("EXRESION DE LAS DIMENCIONES");
+        for(var expre of this.list_expression){
+            exp.agregarHijoNodo(expre.getNodo());
+        }
+        nodo.agregarHijoNodo(exp);
+        return nodo;
     }
 }

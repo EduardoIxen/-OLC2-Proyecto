@@ -13,4 +13,8 @@ class Instruction {
       throw new Error( 'this is an abstract method' );
     }
 
+    getNodo(){
+      throw new Error( 'this is an abstract method' );
+    }
+
   }

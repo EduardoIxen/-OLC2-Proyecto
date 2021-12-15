@@ -32,4 +32,9 @@ class Decremento extends Instruction{
         }
     }
 
+    getNodo(){
+        var nodo = new NodoAST("DECREMENTO");
+        nodo.agregarHijo(this.identificador.toString());
+        return nodo;
+    }
 }

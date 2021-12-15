@@ -17,4 +17,13 @@ class Asignacion extends Instruction{
         }
         return null;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("ASIGNACION");
+        nodo.agregarHijo(this.id.toString());
+        if (this.expression != null) {
+            nodo.agregarHijoNodo(this.expression.getNodo());
+        }
+        return nodo;
+    }
 }

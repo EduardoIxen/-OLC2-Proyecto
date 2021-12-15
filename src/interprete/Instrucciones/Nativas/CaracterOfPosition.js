@@ -36,4 +36,12 @@ class CaracterOfPosition extends Instruction{
 
     }
 
+    getNodo(){
+        var nodo = new NodoAST("CARACTER-OF-POSITION");
+        var nodoDato = new NodoAST(this.symbol.getType());
+        nodoDato.agregarHijo(this.symbol.getValue());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
+
 }

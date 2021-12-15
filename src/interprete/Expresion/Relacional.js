@@ -283,4 +283,12 @@ class Relacional extends Instruction{
         return valor.toString();
     }
 
+    getNodo(){
+        var nodo = new NodoAST("RELACIONAL");
+        nodo.agregarHijoNodo(this.exp_left.getNodo());
+        nodo.agregarHijo(this.operator.toString());
+        nodo.agregarHijoNodo(this.exp_right.getNodo());
+        return nodo;
+    }
+
 }

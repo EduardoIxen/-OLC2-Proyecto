@@ -184,4 +184,17 @@ class Aritmetica extends Instruction{
             return "/"
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("ARITMETICA");
+        if (this.exp_right != null) {
+            nodo.agregarHijoNodo(this.exp_left.getNodo());
+            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijoNodo(this.exp_right.getNodo());
+        }else{
+            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijoNodo(this.exp_left.getNodo());
+        }
+        return nodo;
+    }
 }

@@ -8,6 +8,8 @@ class Arbol {
         this.consola = "";
         this.tablaTsGlobal = null;
         this.struct = {};
+        this.dot = "";
+        this.contador = 0;
     }
 
     getInstruccion() { return this.instruccion; }
@@ -50,5 +52,25 @@ class Arbol {
             return this.struct[id]
         }
         return null;
+    }
+
+    getDot(raiz){
+        this.dot = "";
+        this.dot += "digraph {\n";
+        this.dot += "n0[label=\"" + raiz.getValor().replace("\"", "\\\"") + "\"];\n";
+        this.contador = 1;
+        this.recorrerAST("n0",raiz);
+        this.dot += "}";
+        return this.dot;
+    }
+
+    recorrerAST(idPadre, nodoPadre){
+        for (var hijo of nodoPadre.getHijos()) {
+            var nombreHijo = "n"+ this.contador.toString();
+            this.dot += nombreHijo + "[label=\"" + hijo.getValor().replace("\"", "\\\"") + "\"];\n";
+            this.dot += idPadre + "->" + nombreHijo+"\n";
+            this.contador += 1;
+            this.recorrerAST(nombreHijo, hijo);
+        }
     }
 }

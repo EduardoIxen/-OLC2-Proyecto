@@ -43,4 +43,14 @@ class While extends Instruction{
             }
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("WHILE");
+        var instrucciones = new NodoAST("INSTRUCIONES");
+        for (var instr of this.instrucciones) {
+            instrucciones.agregarHijoNodo(instr.getNodo());
+        }
+        nodo.agregarHijoNodo(instrucciones);
+        return nodo;
+    }
 }

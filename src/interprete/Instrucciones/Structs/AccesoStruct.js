@@ -86,4 +86,10 @@ class AccesoStruct extends Instruction{
             i++;
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("ACCESO STRCT");
+        nodo.agregarHijo(this.identificador.toString());;
+        return nodo;
+    }
 }

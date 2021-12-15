@@ -6,6 +6,7 @@ class Tan extends Instruction{
         this.type = null;
         this.parameters = parameters;
         this.instructions = instructions;
+        this.symbol = null;
     }
 
     interpretar(tree, table){
@@ -19,6 +20,15 @@ class Tan extends Instruction{
             return new Exception("Semantico", `Tipo de dato de Tan no es un valor.`, symbol.getRow(), symbol.getColumn());
         }
         this.type = symbol.getType();
+        this.symbol = symbol;
         return Math.tan(symbol.getValue());
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("TANGENTE");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(this.symbol.getValue().toString());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
     }
 }

@@ -6,6 +6,7 @@ class ToDouble extends Instruction{
         this.type = null;
         this.parameters = parameters;
         this.instructions = instructions;
+        this.symbol = null;
     }
 
     interpretar(tree, table){
@@ -18,6 +19,15 @@ class ToDouble extends Instruction{
             return new Exception("Semantico", `Tipo de dato de ToInt no es un valor.`, symbol.getRow(), symbol.getColumn());
         }
         this.type = Tipo.DECIMAL;
+        this.symbol = symbol;
         return parseFloat(symbol.getValue());
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("TO-DOUBLE");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(this.symbol.getValue().toString());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
     }
 }

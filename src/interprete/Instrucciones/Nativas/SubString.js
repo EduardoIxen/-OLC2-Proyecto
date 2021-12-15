@@ -5,6 +5,7 @@ class SubString extends Instruction{
         this.exp_left = exp_left;
         this.exp_right = exp_right;
         this.type = Tipo.STRING;
+        this.symbol = null;
     }
 
     interpretar(tree, table){
@@ -19,6 +20,7 @@ class SubString extends Instruction{
         }
 
         var symbol = table.getTabla(this.identificador);
+        this.symbol = symbol;
         if(symbol == null){
             return new Exception("Semantico", `La variable (${this.identificador}) no existe`, this.row, this.column);
         }
@@ -36,5 +38,13 @@ class SubString extends Instruction{
 
         return new Exception("Semantico", `Error de posición ${left} en caracterOfPosition`, this.row, this.column);
         
+    }
+
+    getNodo(){
+        var nodo = new NodoAST("SUBSTRING");
+        var nodoDato = new NodoAST(this.type);
+        nodoDato.agregarHijo(this.symbol.getValue());
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
     }
 }

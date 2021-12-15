@@ -53,4 +53,11 @@ class AsignacionStruct extends Instruction{
         var result = table.setTabla(symbol);
         return result;
     }
+
+    getNodo(){
+        var nodo = new NodoAST("ASIGNACION STRUCI");
+        nodo.agregarHijo(this.id.toString());
+        nodo.agregarHijoNodo(this.atributos.getNodo());
+        return nodo;
+    }
 }

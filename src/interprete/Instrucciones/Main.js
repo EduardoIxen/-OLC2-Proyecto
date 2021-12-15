@@ -27,4 +27,14 @@ class Main extends Instruction{
             }
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("MAIN");
+        var instrucciones = new NodoAST("INSTRUCCIONES");
+        for (var instr of this.instructions) {
+            instrucciones.agregarHijoNodo(instr.getNodo());
+        }
+        nodo.agregarHijoNodo(instrucciones);
+        return nodo;
+    }
 }

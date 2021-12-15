@@ -32,4 +32,12 @@ class Operador extends Instruction{
             return new Exception("Error Semantico", "La repeticion debe seguir el formato \"string^numero\".", this.row, this.column);
         }
     }
+
+    getNodo(){
+        var nodo = new NodoAST("OPERADOR");
+        nodo.agregarHijoNodo(this.exp_left.getNodo());
+        nodo.agregarHijo(this.operator.toString());
+        nodo.agregarHijoNodo(this.exp_right.getNodo());
+        return nodo;
+    }
 }

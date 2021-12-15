@@ -11,4 +11,9 @@ class Default extends Instruction{
 
     getInstruction(){ return this.instruction; }
     setInstruction(instruction){ this.instruction = instruction; }
+
+    getNodo(){
+        var nodo = new NodoAST("DEFAULT");
+        return nodo;
+    }
 }

@@ -43,4 +43,16 @@ class Do_While extends Instruction{
         }
     }
 
+    getNodo(){
+        var nodo = new NodoAST("DO WHILE");
+        var instrucciones = new NodoAST("INSTRUCCIONES");
+        for(var ins of this.instrucciones){
+            instrucciones.agregarHijoNodo(ins.getNodo());
+        }
+        var condicion = new NodoAST("CONDICION");
+        condicion.agregarHijoNodo(this.condicion.getNodo());
+        nodo.agregarHijoNodo(instrucciones);
+        nodo.agregarHijoNodo(condicion);
+        return nodo;
+    }
 }

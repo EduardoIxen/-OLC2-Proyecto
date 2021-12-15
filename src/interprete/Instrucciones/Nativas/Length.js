@@ -20,4 +20,17 @@ class Length extends Instruction{
         return symbol.getValue().length;
     }
 
+    getNodo(){
+        var nodo = new NodoAST("LENGTH");
+        var nodoDato = new NodoAST(this.symbol.getType());
+        if (this.symbol.getType() == Tipo.STRING) {
+            nodoDato.agregarHijo(this.symbol.getValue());
+        }else if (this.symbol.typeArray == Tipo.ARRAY) {
+            nodoDato.agregarHijo(this.symbol.getId());
+        }else{
+            return new Exception("Semantico", "Tipo de dato invalido para la funcion lenght", this.row, this.column);
+        }
+        nodo.agregarHijoNodo(nodoDato);
+        return nodo;
+    }
 }

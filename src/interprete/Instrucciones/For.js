@@ -86,4 +86,19 @@ class For extends Instruction{
         }
 
     }
+
+    getNodo(){
+        var nodo = new NodoAST("FOR");
+        //var condiciones = new NodoAST("CONDICIONES");
+        var instrucciones = new NodoAST("INSTRUCCIONES");
+        /*for (var cond of this.condition) {
+            condiciones.agregarHijoNodo(cond.getNodo());
+        }*/
+        for(var instr of this.instruction){
+            instrucciones.agregarHijoNodo(instr.getNodo());
+        }
+        //nodo.agregarHijoNodo(condiciones);
+        nodo.agregarHijoNodo(instrucciones);
+        return nodo;
+    }
 }
