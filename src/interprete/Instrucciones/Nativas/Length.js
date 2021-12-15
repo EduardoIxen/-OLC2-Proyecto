@@ -12,8 +12,10 @@ class Length extends Instruction{
             return new Exception("Semantico", `La variable (${this.identificador}) no existe`, this.row, this.column);
         }
 
-
         this.type = Tipo.ENTERO;
+        if(symbol.typeArray == Tipo.ARRAY){
+            return symbol.value.list_value.length;
+        }
 
         return symbol.getValue().length;
     }

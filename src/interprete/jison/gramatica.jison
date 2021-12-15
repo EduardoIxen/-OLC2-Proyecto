@@ -380,7 +380,7 @@ return_instr
 
 /***************************************** [TERNARIO] ***************************************/   
 ternario_instr
-        : tk_para expresion tk_parc tk_interrogacion expresion tk_dospuntos expresion   {$$ = new Ternario($2, $5, $7, @1.first_line, @1.first_column); }
+        : expresion tk_interrogacion expresion tk_dospuntos expresion   {$$ = new Ternario($1, $3, $5, @1.first_line, @1.first_column); }
 ;
 
 /***************************************** [STRUCT][DECLARACION] ***************************************/   
@@ -458,6 +458,7 @@ parametros
 
 parametro
         : TIPO identificador                    { $$ = {tipo: $1, identificador: $2} ;}
+        | TIPO tk_cora tk_corc identificador    { $$ = {tipo: Tipo.ARRAY, identificador: $4, type_init: $1}; }
 ;
 
 /**************************************** [LLAMADA FUNCION] *************************************/   

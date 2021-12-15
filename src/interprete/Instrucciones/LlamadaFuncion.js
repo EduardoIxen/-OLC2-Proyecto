@@ -20,79 +20,97 @@ class LlamadaFuncion extends Instruction{
                 if (resultExp instanceof Exception) {
                     return resultExp;
                 }
-                
-                if (result.parameters[count].tipo == expresion.type) {  //verificar que los tipos sean iguales
-                    //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) {
-                        return resultTabla;
-                    }
 
-                //falta elif de arreglos
-                }else if(result.parameters[count].identificador == '01-Native-Cos'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '02-Native-Sin'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '03-Native-tan'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '04-Native-Log10'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '05-Native-Sqrt'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '06-Native-Pow' || result.parameters[count].identificador == '07-Native-Pow'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '08-Native-String'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '09-Native-ToInt'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '10-Native-ToDouble'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
-                }else if(result.parameters[count].identificador == '11-Native-TypeOf'){
-                    result.parameters[count]['tipo'] = expresion.type;
-                    var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
-                    var resultTabla = newTable.setTabla(symbol);
-                    if (resultTabla instanceof Exception) return resultTabla;
-                
+                if(result.parameters[count].tipo == Tipo.ARRAY){
+                    if (result.parameters[count].type_init == expresion.type) {  //verificar que los tipos sean iguales
+                        //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) {
+                            return resultTabla;
+                        }
+
+                    //falta elif de arreglos
+                    }
+                }else if(result.parameters[count].tipo != Tipo.ARRAY){
+    
+                    if (result.parameters[count].tipo == expresion.type) {  //verificar que los tipos sean iguales
+                        //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) {
+                            return resultTabla;
+                        }
+
+                    //falta elif de arreglos
+                    }else if(result.parameters[count].identificador == '01-Native-Cos'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '02-Native-Sin'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '03-Native-tan'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '04-Native-Log10'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '05-Native-Sqrt'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '06-Native-Pow' || result.parameters[count].identificador == '07-Native-Pow'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '08-Native-String'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '09-Native-ToInt'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '10-Native-ToDouble'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else if(result.parameters[count].identificador == '11-Native-TypeOf'){
+                        result.parameters[count]['tipo'] = expresion.type;
+                        var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, expresion.row, expresion.column, resultExp, "local");
+                        var resultTabla = newTable.setTabla(symbol);
+                        if (resultTabla instanceof Exception) return resultTabla;
+                    
+                    }else{
+                        return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);
+                    }
                 }else{
                     return new Exception("Semantico", "Tipo de dato diferente en parametros de la llamada.", this.row, this.column);
+                    
                 }
+                
                 count = count + 1;
             }
         }else{

@@ -8,6 +8,7 @@ class Simbolo{
         this.value = value;
         this.ambito = ambito;
         this.nameStruct = null;
+        this.typeArray = null;
     }
 
 

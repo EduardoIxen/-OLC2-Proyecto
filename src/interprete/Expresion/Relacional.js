@@ -13,14 +13,23 @@ class Relacional extends Instruction{
         if(left instanceof Exception){
             return left;
         } 
+        if(left.value != undefined){
+            left = left.value;
+        }
+
         var right = this.exp_right.interpretar(tree, table);
         if(right instanceof Exception){
             return right;
+        }
+        if(right.value != undefined){
+            right = right.value;
         }
 
         if(this.operator == Operador_Relacional.MENORQUE){ // <
             /*****************************************  INT *****************************************/
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+                // console.log(`${left} - ${right}`)
+                // console.log(this.casteo(this.exp_left.type, left) < this.casteo(this.exp_right.type, right))
                 return this.casteo(this.exp_left.type, left) < this.casteo(this.exp_right.type, right);
             }
             else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL){

@@ -13,10 +13,17 @@ class Aritmetica extends Instruction{
         if(left instanceof Exception){
             return left;
         }
+        if(left.value != undefined){
+            left = left.value;
+        }
+
         if(this.exp_right != null){
             var right = this.exp_right.interpretar(tree, table);
             if(right instanceof Exception){
                 return right;
+            }
+            if(right.value != undefined){
+                right = right.value;
             }
         }
     

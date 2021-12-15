@@ -15,7 +15,7 @@ class AccesoArreglo extends Instruction{
         }
 
         this.type = symbol.type;
-        if (symbol.getType() != Tipo.ARRAY) {
+        if (symbol.typeArray != Tipo.ARRAY) {
             return new Exception("Semantico", "Variable " + this.id + " no es un arreglo.", this.row, this.column);
         }
 
@@ -38,7 +38,10 @@ class AccesoArreglo extends Instruction{
         //console.log("search", this.searchValue(auxIndex, symbol.getValue().list_value, null));
         if (this.new_value == null) {
             var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, null);
+            console.log(pruea)
         }else{
+            console.log(this.new_value)
+            console.log(`${this.new_value} == ${symbol.getValue().type_init}`)
             if (this.new_value.type == symbol.getValue().type_init) {
                 var pruea = this.searchValue(auxIndex, symbol.getValue().list_value, this.new_value);
             }else if (this.new_value instanceof Array) {
@@ -53,6 +56,7 @@ class AccesoArreglo extends Instruction{
                 return new Exception("Semántico", "Tipo de datos incompatibes.", this.row, this.column);
             }
         }
+        
         return pruea;
     }
 
@@ -62,9 +66,8 @@ class AccesoArreglo extends Instruction{
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
             }
             if (list_position.length === 1) {
-                console.log("que es",list_value[list_position[0]])
-
                 list_value[list_position[0]] = value
+
                 return null
             }else if (list_position.length !== 1) {
                 return this.searchValue(list_position.slice(1), list_value[list_position[0]], value)
