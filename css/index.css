@@ -1,6 +1,6 @@
 .fondo{
     /* background-image: radial-gradient( circle 976px at 51.2% 51%,  rgb(3, 3, 3) 0%, rgb(0, 0, 0) 0%, rgb(249, 249, 253) 17.3%, rgb(10, 11, 12) 58.8%, rgb(197, 198, 204) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% ); */
-    background: black;
+    background: rgb(0, 0, 0);
     font-family: "Times New Roman", Times, serif;
   }
 
@@ -32,4 +32,8 @@
 }
 h1{
   color: white;
+}
+
+.outConsola{
+  width:100%; text-align:center;
 }

@@ -84,15 +84,13 @@ function execute(){
         instruc.agregarHijoNodo(instruAST.getNodo());
     }
     init.agregarHijoNodo(instruc)
-    //var grafo = ast.getDot(init); //devuelve el codigo de graphviz
-    //console.log(grafo);
-    
+    var grafo = ast.getDot(init); //devuelve el codigo de graphviz
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
     // document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ENVIAR LA LISTA SIMBOLO);
-    out.setValue(ast.getConsola());
+    outCosole.setValue(ast.getConsola());
+    graph.setValue(grafo);
 
 }
-
 function tablaError(error){
     var tablaError = '';
     tablaError += "<thead><tr><th scope=\"col\">Tipo</th>";
