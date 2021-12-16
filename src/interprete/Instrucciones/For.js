@@ -104,7 +104,7 @@ class For extends Instruction{
     }
 
     getTabla(tree, table, padre){
-        salida = "";
+        var salida = "";
         for (var instr of this.instruction) {
             if (instr instanceof Declaracion) {
                 salida += instr.getTabla(tree, this.tabla, padre).toString();

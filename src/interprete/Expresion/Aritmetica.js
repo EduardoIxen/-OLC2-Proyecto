@@ -197,4 +197,28 @@ class Aritmetica extends Instruction{
         }
         return nodo;
     }
+
+
+
+    /*
+    println(1+2+3);
+
+    t0 = 1 + 2;  // 3
+    t1 = t0 + 3; // 6
+    printf("%f", (double)t1); // 6
+
+    */
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var left = this.exp_left.compilar(tree, table);
+        var right = this.exp_right.compilar(tree, table);
+        var temp = gen.getTemp(); // t0
+        var conca = '';
+        if(this.operator == Operador_Aritmetico.MAS){
+
+            conca = `\t${gen.newTemp()} = ${left} + ${right};`; // t0 = 1 + 3
+        }           
+        tree.updateConsola(conca+'\n');
+        return temp; // t0
+    }
 }

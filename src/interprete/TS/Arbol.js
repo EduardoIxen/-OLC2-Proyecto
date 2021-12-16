@@ -11,6 +11,7 @@ class Arbol {
         this.dot = "";
         this.contador = 0;
         this.tablaSimbolos = [];
+        this.generator = null;
     }
 
     getInstruccion() { return this.instruccion; }
@@ -80,4 +81,8 @@ class Arbol {
             this.recorrerAST(nombreHijo, hijo);
         }
     }
+
+
+    getGenerator(){ return this.generator; }
+    setGenerator(generator){ this.generator = generator; }
 }

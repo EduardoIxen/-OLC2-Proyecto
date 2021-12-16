@@ -14,7 +14,12 @@ class Instruction {
     }
 
     getNodo(){
+      // here code...
       throw new Error( 'this is an abstract method' );
     }
 
+    compilar(tree, table){
+      // here code...
+      throw new Error( 'this is an abstract method' );
+    }
   }

@@ -15,4 +15,8 @@ class Primitivo extends Instruction{
         nodo.agregarHijo(this.value.toString());
         return nodo;
     }
+
+    compilar(tree, table){
+        return this.value;
+    }
 }

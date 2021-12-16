@@ -78,7 +78,7 @@ function execute(){
         }
     }
     taS = "";
-    console.log("ast",ast);
+
     for(var instruccion of ast.getInstruccion()){
         if (instruccion instanceof Declaracion) {
             taS += instruccion.getTabla(ast, TsGlobal, "Global").toString();
@@ -216,17 +216,42 @@ function createNativas(ast){
 
 function handleFileCharge(){
     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-  }
+}
   
-  function handleFileSelect(event){
+function handleFileSelect(event){
     var reader = new FileReader()
     reader.onload = handleFileLoad;
     reader.readAsText(event.target.files[0])
-  }
+}
   
-  function handleFileLoad(event){
+function handleFileLoad(event){
     editor.setValue("")
     var result = event.target.result;
     editor.setValue(result)
-  }
-  
+}
+
+function executeCompiler(){
+    out.setValue("");
+    entrada = editor.getValue();
+    var instrucciones = gramatica.parse(entrada.toString());
+    var ast = new Arbol(instrucciones.instr);
+    var TsGlobal = new TablaSimbolo(null);
+    ast.setTablaTsGlobal(TsGlobal);
+    var TsGenerator = new Generator();
+    ast.setGenerator(TsGenerator)
+    // createNativas(ast);
+
+    for(var instruction of ast.getInstruccion()){
+        var result = instruction.compilar(ast, TsGlobal);
+    }
+    
+    var consola = '';
+    consola += ast.getGenerator().getHeader().toString();
+    consola += '\nvoid main(){\n'
+    consola += ast.getConsola();
+    consola += '}\n'
+    ast.setConsola(consola); 
+    out.setValue(ast.getConsola())
+
+
+}

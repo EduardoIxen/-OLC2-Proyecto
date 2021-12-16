@@ -64,7 +64,6 @@ class Println extends Instruction{
             }
             i++;
         }
-        console.log(texto)
         return texto;
     }
 
@@ -72,5 +71,18 @@ class Println extends Instruction{
         var nodo = new NodoAST("PRINTLN");
         nodo.agregarHijoNodo(this.expression.getNodo());
         return nodo;
+    }
+
+
+    compilar(tree, table){
+        console.log("ss");
+        var expression = this.expression.compilar(tree, table);
+        var gen = tree.getGenerator();
+        var concat = `\tprintf(\"%f\", (double)${expression});`;
+
+
+        tree.updateConsola(concat+'\n')
+
+    
     }
 }

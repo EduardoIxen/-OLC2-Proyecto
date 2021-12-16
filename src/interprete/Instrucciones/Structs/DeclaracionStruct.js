@@ -26,7 +26,12 @@ class DeclaracionStruct extends Instruction{
                 }
             }
         }
-        this.value = result;
+        if(result == null){
+            this.value = '';
+        }else{
+
+            this.value = result;
+        }
         return result;
     }
 
@@ -34,7 +39,11 @@ class DeclaracionStruct extends Instruction{
         var nodo = new NodoAST("DECLARACION-STRUCI");
         nodo.agregarHijo(this.id.toString());
         if (this.atributos != null) {
-            nodo.agregarHijoNodo(this.atributos.getNodo());
+            for(var i of this.atributos){
+                nodo.agregarHijo(i.type.toString());
+                nodo.agregarHijo(i.name.toString());
+                nodo.agregarHijo(',');
+            }
         }
         return nodo;
     }
@@ -53,4 +62,5 @@ class DeclaracionStruct extends Instruction{
         tree.addTSG(dict);
         return salida;
     }
+
 }

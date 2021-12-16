@@ -70,10 +70,10 @@ class Main extends Instruction{
                 salida += instr.getTabla(tree, table, "main -> Switch").toString();
             }
             if (instr instanceof DeclaracionArray) {
-                salida += instr.getTabla(tree, table, this.id).toString();
+                salida += instr.getTabla(tree, table, "main -> DeclaracionArray").toString();
             }
             if (instr instanceof DeclaracionStruct) {
-                salida += instr.getTabla(tree, table, this.id).toString();
+                salida += instr.getTabla(tree, table, "main").toString();
             } //falta declaracion por referencia y copia
         }
 
