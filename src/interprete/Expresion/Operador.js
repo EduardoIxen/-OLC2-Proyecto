@@ -18,6 +18,10 @@ class Operador extends Instruction{
                 return right;
             }
         }
+        /*console.log(left);
+        if (left.typeArray == Tipo.ARRAY) {
+            left = left.interpretar(tree, table);
+        }*/
 
         if (this.operator == Operador_Cadena.CONCATENACION) {
             return left.toString() + right.toString();

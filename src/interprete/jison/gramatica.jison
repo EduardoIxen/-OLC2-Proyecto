@@ -47,6 +47,8 @@
 "length"                return 'RLENGTH';
 "caracterOfPosition"    return 'RCARACTEROFPOSITION';
 "subString"             return 'RSUBSTRING';
+"push"                  return 'RPUSH'
+"pop"                   return 'RPOP'
 
 /******************
  * Tipo de Datos  *
@@ -134,7 +136,7 @@
 
 <<EOF>>               return 'EOF';
 .                     { 
-        listaErrores.push(new Exception("Error Lexico", "No se reconoce "+yytext, yylloc.first_line,  yylloc.first_column));
+        listaErrores.push(new Exception("Léxico", "No se reconoce "+yytext, yylloc.first_line,  yylloc.first_column));
         }
 
 /lex
@@ -195,7 +197,7 @@ instruccion
         | assign_array_instr fin_instr           { $$ = $1; }
         | modificar_acceso_struct fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
-                                                listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
+                                                listaErrores.push(new Exception("Sintáctico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
 instruccion2
@@ -220,7 +222,7 @@ instruccion2
         | assign_array_instr fin_instr           { $$ = $1; }
         | modificar_acceso_struct fin_instr      { $$ = $1; }
         | error tk_puntocoma                     {
-                                                listaErrores.push(new Exception("Error Sintactico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
+                                                listaErrores.push(new Exception("Sintáctico", "No se esperaba "+yytext, @1.first_line, @1.first_column)); }
 ;
 
 fin_instr
@@ -484,6 +486,8 @@ nativas_instr
         | identificador tk_punto RLENGTH tk_para tk_parc                                { $$ = new Length($1, @1.first_line, @1.first_column); }
         | identificador tk_punto RCARACTEROFPOSITION tk_para expresion tk_parc          { $$ = new CaracterOfPosition($1, $5, @1.first_line, @1.first_column); }
         | identificador tk_punto RSUBSTRING tk_para expresion tk_coma expresion tk_parc { $$ = new SubString($1, $5, $7, @1.first_line, @1.first_column); }
+        | identificador tk_punto RPUSH tk_para expresion tk_parc                        { $$ = new Push($1, $5, @1.first_line, @1.first_column); }
+        | identificador tk_punto RPOP tk_para tk_parc                                   { $$ = new Pop($1, @1.first_line, @1.first_column); }
 ;
 
 

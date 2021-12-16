@@ -10,6 +10,7 @@ class Arbol {
         this.struct = {};
         this.dot = "";
         this.contador = 0;
+        this.TSglobal = [];
     }
 
     getInstruccion() { return this.instruccion; }

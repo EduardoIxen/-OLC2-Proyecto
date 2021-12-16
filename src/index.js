@@ -85,6 +85,7 @@ function execute(){
     }
     init.agregarHijoNodo(instruc)
     //var grafo = ast.getDot(init); //devuelve el codigo de graphviz
+    //console.log(grafo);
     
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
     // document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ENVIAR LA LISTA SIMBOLO);
