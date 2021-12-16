@@ -4,11 +4,11 @@ class While extends Instruction{
         super(row, column);
         this.condicion = condicion;
         this.instrucciones = instrucciones;
-        this.table = null;
+        this.tabla = null;
     }
 
     interpretar(tree, table){
-        this.table = table;
+        this.tabla = table;
         while (true) {
             var condicion = this.condicion.interpretar(tree, table);
             if (condicion instanceof Exception) {
@@ -52,5 +52,21 @@ class While extends Instruction{
         }
         nodo.agregarHijoNodo(instrucciones);
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        for (var instr of this.instrucciones) {
+            if (instr instanceof Declaracion) {
+                salida += instr.getTabla(tree, this.tabla, padre).toString();
+            }
+            if (instr instanceof DeclaracionArray) {
+                salida += instr.getTabla(tree, table, padre);
+            }
+            if (instr instanceof DeclaracionStruct) {
+                salida += instr.getTabla(tree, table, padre);
+            }//falta declaracion por referencia y copia
+        }
+        return salida;
     }
 }

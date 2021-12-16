@@ -10,7 +10,7 @@ class Arbol {
         this.struct = {};
         this.dot = "";
         this.contador = 0;
-        this.TSglobal = [];
+        this.tablaSimbolos = [];
     }
 
     getInstruccion() { return this.instruccion; }
@@ -25,6 +25,12 @@ class Arbol {
 
     getTablaTsGlobal() { return this.tablaTsGlobal; }
     setTablaTsGlobal(tablaTsGlobal) { this.tablaTsGlobal = tablaTsGlobal; }
+    addTSG(value){
+        this.tablaSimbolos.push(value);
+    }
+    getTablaSimbolos(){
+        return this.tablaSimbolos;
+    }
 
     getFunciones() { return this.funciones; }
     getFuncion(id){

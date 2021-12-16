@@ -7,10 +7,11 @@ class For extends Instruction{
         this.update = update;
         this.instruction = instruction;
         this.type = type;
+        this.tabla = null;
     }
 
     interpretar(tree, table){
-
+        this.tabla = table;
         var newTable = new TablaSimbolo(table);
         if(this.type == Tipo.ENTERO){ // 
 
@@ -100,5 +101,21 @@ class For extends Instruction{
         //nodo.agregarHijoNodo(condiciones);
         nodo.agregarHijoNodo(instrucciones);
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        salida = "";
+        for (var instr of this.instruction) {
+            if (instr instanceof Declaracion) {
+                salida += instr.getTabla(tree, this.tabla, padre).toString();
+            }
+            if (instr instanceof DeclaracionArray) {
+                salida += instr.getTabla(tree, table, padre);
+            }
+            if (instr instanceof DeclaracionStruct) {
+                salida += instr.getTabla(tree, table, padre);
+            }//falta declaracion por referencia y copia
+        }
+        return salida;
     }
 }

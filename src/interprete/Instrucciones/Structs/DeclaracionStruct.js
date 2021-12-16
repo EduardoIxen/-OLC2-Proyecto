@@ -5,6 +5,7 @@ class DeclaracionStruct extends Instruction{
         this.id = id;
         this.atributos = atributos;
         this.type = Tipo.STRUCT;
+        this.value = null;
     }
 
     interpretar(tree, table){
@@ -25,6 +26,7 @@ class DeclaracionStruct extends Instruction{
                 }
             }
         }
+        this.value = result;
         return result;
     }
 
@@ -35,5 +37,20 @@ class DeclaracionStruct extends Instruction{
             nodo.agregarHijoNodo(this.atributos.getNodo());
         }
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        var dict = {}
+        dict['Identificador'] =this.id.toString();
+        dict['Tipo'] = "Struct";
+        dict['Tipo2'] = "-----";
+        dict['Entorno'] = padre.toString();
+        dict['Valor'] = this.value.toString();
+        dict['Fila'] =this.row.toString();
+        dict['Columna'] =this.column.toString();
+        //tree.getTablaTsGlobal().push(dict);
+        tree.addTSG(dict);
+        return salida;
     }
 }

@@ -55,4 +55,20 @@ class Do_While extends Instruction{
         nodo.agregarHijoNodo(condicion);
         return nodo;
     }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        for (var instr of this.instrucciones) {
+            if (instr instanceof Declaracion) {
+                salida += instr.getTabla(tree, this.tabla, padre).toString();
+            }
+            if (instr instanceof DeclaracionArray) {
+                salida += instr.getTabla(tree, table, padre);
+            }
+            if (instr instanceof DeclaracionStruct) {
+                salida += instr.getTabla(tree, table, padre);
+            }//falta declaracion por referencia y copia
+        }
+        return salida;
+    }
 }

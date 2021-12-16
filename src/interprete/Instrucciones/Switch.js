@@ -5,10 +5,11 @@ class Switch extends Instruction{
         this.condition = condition;
         this.instr_case = instr_case;
         this.instr_default = instr_default;
-
+        this.tabla = null;
     }
 
     interpretar(tree, table){
+        this.tabla = table;
         var condition = this.condition.interpretar(tree, table);
         if(condition instanceof Exception) return condition;
         var newTable = new TablaSimbolo(table);
@@ -105,5 +106,20 @@ class Switch extends Instruction{
             nodo.agregarHijoNodo(defaultInst);
         }
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        for (var instrCase of this.instr_case) {
+            if (instrCase instanceof Case) {
+                salida += instrCase.getTabla(tree, this.tabla, padre).toString();
+            }
+        }
+        if (this.instr_default != null) {
+            if (this.instr_default instanceof Case) {
+                this.instr_default.getTabla(tree, this.tabla, padre);
+            }
+        }
+        return salida;
     }
 }

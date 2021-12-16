@@ -5,6 +5,7 @@ class Declaracion extends Instruction{
         this.type = type;
         this.id = id;
         this.expression = expression;
+        this.value = null;
     }
 
     interpretar(tree, table){
@@ -18,7 +19,7 @@ class Declaracion extends Instruction{
             }else{
                 value = "null";
             }
-
+            this.value = value;
             if (this.type != this.expression.type) {
                 if (this.expression.type == Tipo.ARRAY) {
                     if (this.type != value.type) {
@@ -47,6 +48,7 @@ class Declaracion extends Instruction{
                 value = String.fromCharCode(0);
             }
             for (let identificador of this.id) {
+                this.value = value;
                 let simbolo = new Simbolo(identificador, this.type, this.row, this.column, value, "agregar ambito");
                 let result = table.setTabla(simbolo);
         
@@ -63,5 +65,20 @@ class Declaracion extends Instruction{
             nodo.agregarHijoNodo(this.expression.getNodo());
         }
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        var dict = {}
+        dict['Identificador'] =this.id.toString();
+        dict['Tipo'] = "Variable";
+        dict['Tipo2'] = this.type.toString().replace("TIPO.", "");
+        dict['Entorno'] = padre.toString();
+        dict['Valor'] = this.value.toString();
+        dict['Fila'] =this.row.toString();
+        dict['Columna'] =this.column.toString();
+        //tree.getTablaTsGlobal().push(dict);
+        tree.addTSG(dict);
+        return salida;
     }
 }

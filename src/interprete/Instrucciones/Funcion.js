@@ -5,11 +5,11 @@ class Funcion extends Instruction{
         this.parameters = parameters;
         this.instructions = instr;
         this.type = type;
-        this.table = null;
+        this.tabla = null;
     }
 
     interpretar(tree, table){
-        this.table = table;
+        this.tabla = table;
         var countReturn = 0;
         var newTable = new TablaSimbolo(table);
         for(var instr of this.instructions){
@@ -60,5 +60,47 @@ class Funcion extends Instruction{
         }
         nodo.agregarHijoNodo(parametros);
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        for(var instr of this.instructions){
+            if (instr instanceof Declaracion) {
+                salida += instr.getTabla(tree, this.tabla, this.id).toString();
+            }
+            if (instr instanceof If) {
+                salida += instr.getTabla(tree, table, this.id+" -> If").toString();
+            }
+            if (instr instanceof For) {
+                salida += instr.getTabla(tree, table, this.id+" -> For").toString();
+            }
+            if (instr instanceof While) {
+                salida += instr.getTabla(tree, table, this.id+" -> Wile").toString();
+            }
+            if (instr instanceof Do_While) {
+                salida += instr.getTabla(tree, table, this.id+" -> doWile").toString();
+            }
+            if (instr instanceof Switch) {
+                salida += instr.getTabla(tree, table, this.id+" -> Switch").toString();
+            } //duda verificar
+            if (instr instanceof DeclaracionArray) {
+                salida += instr.getTabla(tree, table, this.id).toString();
+            }
+            if (instr instanceof DeclaracionStruct) {
+                salida += instr.getTabla(tree, table, this.id).toString();
+            } //falta declaracion por referencia y copia
+        }
+
+        var dict = {}
+        dict['Identificador'] =this.id.toString();
+        dict['Tipo'] = "Funcion";
+        dict['Tipo2'] = this.type.toString().replace("TIPO.", "");
+        dict['Entorno'] = padre.toString();
+        dict['Valor'] = "-------";
+        dict['Fila'] =this.row.toString();
+        dict['Columna'] =this.column.toString();
+        //tree.getTablaTsGlobal().push(dict);
+        tree.addTSG(dict);
+        return salida;
     }
 }

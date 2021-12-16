@@ -23,7 +23,6 @@ class LlamadaFuncion extends Instruction{
                 if(result.parameters[count].tipo == Tipo.ARRAY){
                     if (result.parameters[count].type_init == expresion.type) {  //verificar que los tipos sean iguales
                         //CREACION DE SIMBOLOS E INGRESARLO A LA TABLA DE SIMBOLOS 
-                        console.log("aaa->",result)
                         var symbol = new Simbolo(result.parameters[count].identificador, result.parameters[count].tipo, this.row, this.column, resultExp, "ambito");
                         var resultTabla = newTable.setTabla(symbol);
                         if (resultTabla instanceof Exception) {

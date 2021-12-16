@@ -6,10 +6,12 @@ class If extends Instruction{
         this.instr_if = instr_if;
         this.instr_else = instr_else;
         this.instr_elseif = instr_elseif;
+        this.tabla = null;
     }
 
     interpretar(tree, table){
 
+        this.tabla = table;
         var condition = this.condition.interpretar(tree, table);
         if(condition instanceof Exception) return condition;
 
@@ -100,5 +102,39 @@ class If extends Instruction{
             this.instr_elseif.getNodo();
         }
         return nodo;
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        for (var instr of this.instr_if) {
+            if (instr instanceof Declaracion) {
+                salida += instr.getTabla(tree, this.tabla, padre).toString();
+            }
+            if (instr instanceof DeclaracionArray) {
+                salida += instr.getTabla(tree, table, padre);
+            }
+            if (instr instanceof DeclaracionStruct) {
+                salida += instr.getTabla(tree, table, padre);
+            }//falta declaracion por referencia y copia
+        }
+        if (this.instr_else != null) {
+            for (var instr of this.instr_else) {
+                if (instr instanceof Declaracion) {
+                    salida += instr.getTabla(tree, this.tabla, padre).toString();
+                }
+                if (instr instanceof DeclaracionArray) {
+                    salida += instr.getTabla(tree, table, padre);
+                }
+                if (instr instanceof DeclaracionStruct) {
+                    salida += instr.getTabla(tree, table, padre);
+                }//falta declaracion por referencia y copia
+            }
+        }
+        if (this.instr_elseif != null) {
+            if (this.instr_elseif instanceof If) {
+                this.instr_elseif.getTabla(tree, table, padre);
+            }
+        }
+        return salida;
     }
 }

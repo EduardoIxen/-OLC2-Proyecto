@@ -71,4 +71,19 @@ class DeclaracionArray extends Instruction{
         nodo.agregarHijoNodo(exp);
         return nodo;
     }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        var dict = {}
+        dict['Identificador'] =this.id.toString();
+        dict['Tipo'] = "Variable";
+        dict['Tipo2'] = this.type.toString().replace("TIPO.", "ARREGLO->");
+        dict['Entorno'] =padre.toString();
+        dict['Valor'] = this.list_value.toString();
+        dict['Fila'] =this.row.toString();
+        dict['Columna'] =this.column.toString();
+        //tree.getTablaTsGlobal().push(dict);
+        tree.addTSG(dict);
+        return salida;
+    }
 }

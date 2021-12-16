@@ -77,6 +77,19 @@ function execute(){
             ast.updateConsola(err.toString());
         }
     }
+    taS = "";
+    console.log("ast",ast);
+    for(var instruccion of ast.getInstruccion()){
+        if (instruccion instanceof Declaracion) {
+            taS += instruccion.getTabla(ast, TsGlobal, "Global").toString();
+        }
+        if (instruccion instanceof Funcion || instruccion instanceof Main) {
+            taS += instruccion.getTabla(ast, instruccion.tabla, "Global");
+        }
+        if (instruccion instanceof DeclaracionArray || instruccion instanceof DeclaracionStruct) {
+            taS += instruccion.getTabla(ast, TsGlobal, "Global");
+        }
+    }
 
     var init = new NodoAST("RAIZ");
     var instruc = new NodoAST("INSTRUCCIONES");
@@ -86,7 +99,7 @@ function execute(){
     init.agregarHijoNodo(instruc)
     var grafo = ast.getDot(init); //devuelve el codigo de graphviz
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
-    // document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ENVIAR LA LISTA SIMBOLO);
+    document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ast.getTablaSimbolos()); //probar
     outCosole.setValue(ast.getConsola());
     graph.setValue(grafo);
 
@@ -110,20 +123,26 @@ function tablaError(error){
 
 function tablaSimbolo(simbolo){
     var tablaSimbolo = '';
-    tablaSimbolo += '<thead>'
-    tablaSimbolo += '<tr>'
-    tablaSimbolo += '<td>Titulo</td>'
-    tablaSimbolo += '</tr>'
-    tablaSimbolo += '</thead>'
+    tablaSimbolo += "<thead><tr><th scope=\"col\">ID</th>";
+    tablaSimbolo += "<th>Tipo</th>";
+    tablaSimbolo += "<th>Tipo2</th>";
+    tablaSimbolo += "<th>Entorno</th>";
+    tablaSimbolo += "<th>Valor</th>";
+    tablaSimbolo += "<th>Fila</th>";
+    tablaSimbolo += "<th>Columna</th></tr></thead>";
+    tablaSimbolo += "<tbody>";
 
-    tablaSimbolo += '<tbody>'
-    // for(i of simbolo){
-        // tablaSimbolo += '<tr>'
-        // tablaSimbolo += `<td>${i}</td>`
-        // tablaSimbolo += `<td>${i}</td>`
-        // tablaSimbolo += '</tr>'
-        
-    // }
+    for (var simb of simbolo) {
+        tablaSimbolo += '<tr>'
+        tablaSimbolo += `<td>${simb['Identificador']}</td>`
+        tablaSimbolo += `<td>${simb['Tipo']}</td>`
+        tablaSimbolo += `<td>${simb['Tipo2']}</td>`
+        tablaSimbolo += `<td>${simb['Entorno']}</td>`
+        tablaSimbolo += `<td>${simb['Valor']}</td>`
+        tablaSimbolo += `<td>${simb['Fila']}</td>`
+        tablaSimbolo += `<td>${simb['Columna']}</td>`
+        tablaSimbolo += '</tr>'
+    }
     tablaSimbolo += '</tbody>'
     
 
