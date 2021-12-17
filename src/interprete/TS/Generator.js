@@ -36,7 +36,7 @@ class Generator{
         consola += '#include <stdio.h>\n';
         consola += '#include <math.h>\n';
         consola += '\n'
-        consola += 'double heap[23111998];\n'
+        consola += 'double heap[18031999];\n'
         consola += 'double stack[18031999];\n'
         consola += 'double P;\n';
         consola += 'double H;\n';
@@ -52,9 +52,63 @@ class Generator{
         }
 
         consola += '\n';
-        console.log(consola)
         return consola;
     }
 
+    setPrintf(op, type, expression, cond){    // si la cond es true, es un slto de linea.
+        var conca = `\tprintf(\"%${op}\", (${type})${expression});\n`;
+        if(cond == true){                                       
+            conca +=  `\tprintf(\"%c\", (char)10);\n` // salto de linea
+        }
+        return conca;
+    }
+
+    setArithmetic(temp, left, op, right){
+        var conca = '';
+        if(op == '%'){
+            conca = `\t${temp} = fmod(${left},${right});`;
+        
+        }else{
+            conca = `\t${temp} = ${left} ${op} ${right};`;
+        }
+
+        return conca;
+    }
+
+    getBoolean(tree, EV, EF, label, newLabel, temp){
+        var conca = '';
+        conca += `\n\tgoto ${label};\n`;
+        conca += `\t${EV}:\n`;
+        conca += `\t\t${temp} = 1;\n`
+        conca += `\t\tgoto ${newLabel};\n`
+        conca += `\t${EF}:\n`;
+        conca += `\t\t${temp} = 0;\n`
+        conca += `\t${newLabel}:\n`;
+        tree.updateConsola(conca+"\n");
+        return `${temp}`;
+    }
+
+    setBoolean(EV, EF, label, newLabel, cond){
+        var conca = '';
+        conca += `\n\tgoto ${label};`;
+        conca += `\n\t${EV}:\n`;
+        conca += `\t\tprintf("%c", (char)116);\n`;
+        conca += `\t\tprintf("%c", (char)114);\n`;
+        conca += `\t\tprintf("%c", (char)117);\n`;
+        conca += `\t\tprintf("%c", (char)101);\n`;
+        conca += `\t\tgoto ${newLabel};\n`;
+        conca += `\t${EF}:\n`
+        conca += `\t\tprintf("%c", (char)102);\n`;
+        conca += `\t\tprintf("%c", (char)97);\n`;
+        conca += `\t\tprintf("%c", (char)108);\n`;
+        conca += `\t\tprintf("%c", (char)115);\n`;
+        conca += `\t\tprintf("%c", (char)101);\n`;
+        conca += `\t${newLabel}:\n`;
+        if(cond == true){
+            conca += `\tprintf(\"%c\", (char)10);\n` // salto de linea
+        }
+        return conca;
+
+    }
 
 }

@@ -75,14 +75,38 @@ class Println extends Instruction{
 
 
     compilar(tree, table){
-        console.log("ss");
         var expression = this.expression.compilar(tree, table);
         var gen = tree.getGenerator();
-        var concat = `\tprintf(\"%f\", (double)${expression});`;
+        var op = '';
+        var type = '';
+        if(this.expression.type == Tipo.ENTERO){
+            op = 'd';
+            type = 'int';
+        }else if(this.expression.type == Tipo.DECIMAL){
+            // here code...
+            op = 'f';
+            type = 'double';
+        }else if(this.expression.type == Tipo.CARACTER){
+            // here code...
+            op = 'c';
+            type = 'char';
+        }
+            
+            
+        if(this.expression.type == Tipo.BOOLEANO){
+           
+            var EV = gen.newLabel();    // L0:
+            var EF = gen.newLabel();    // L1:
+            var newL = gen.newLabel();  // L2:
 
-
-        tree.updateConsola(concat+'\n')
-
+            if(Boolean(expression) == true){
+                tree.updateConsola(gen.setBoolean(EV, EF, EV, newL, true)+'\n');
+            }else{
+                tree.updateConsola(gen.setBoolean(EV, EF, EF, newL, true)+'\n');
+            }
+        }else{
+            tree.updateConsola(gen.setPrintf(op, type, expression, true)+'\n');
+        }
     
     }
 }

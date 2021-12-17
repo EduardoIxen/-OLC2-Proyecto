@@ -73,4 +73,10 @@ class Print extends Instruction{
         nodo.agregarHijoNodo(this.expression.getNodo());
         return nodo;
     }
+
+    compilar(tree, table){
+        var expression = this.expression.compilar(tree, table);
+        var gen = tree.getGenerator();
+    
+    }
 }

@@ -203,27 +203,90 @@ class Aritmetica extends Instruction{
         return nodo;
     }
 
-
-
-    /*
-    println(1+2+3);
-
-    t0 = 1 + 2;  // 3
-    t1 = t0 + 3; // 6
-    printf("%f", (double)t1); // 6
-
-    */
     compilar(tree, table){
+        var temp = '';
+        var EV = '';
+        var EF = '';
+        var newL = '';
+
         var gen = tree.getGenerator();
         var left = this.exp_left.compilar(tree, table);
-        var right = this.exp_right.compilar(tree, table);
-        var temp = gen.getTemp(); // t0
-        var conca = '';
-        if(this.operator == Operador_Aritmetico.MAS){
+        var right = 0;
 
-            conca = `\t${gen.newTemp()} = ${left} + ${right};`; // t0 = 1 + 3
-        }           
-        tree.updateConsola(conca+'\n');
+        if(this.exp_right != null){
+            right = this.exp_right.compilar(tree, table);
+            if(this.exp_right.type == Tipo.BOOLEANO){
+                temp = gen.newTemp();   // t0
+                EV = gen.newLabel();    // L0:
+                EF = gen.newLabel();    // L1:
+                newL = gen.newLabel();  // L2:
+    
+                if(Boolean(right) == true){
+                    right = gen.getBoolean(tree, EV, EF, EV, newL, temp);
+                }else{
+                    right = gen.getBoolean(tree, EV, EF, EF, newL, temp);
+                }
+            }
+        }
+        
+        if(this.exp_left.type == Tipo.BOOLEANO){
+            temp = gen.newTemp();   // t0
+            EV = gen.newLabel();    // L0:
+            EF = gen.newLabel();    // L1:
+            newL = gen.newLabel();  // L2:
+
+            if(Boolean(left) == true){
+                left = gen.getBoolean(tree, EV, EF, EV, newL, temp);
+            }else{
+                left = gen.getBoolean(tree, EV, EF, EF, newL, temp);
+            }
+        }
+
+        
+
+
+       var temp = gen.newTemp(); // t0
+
+        var op = '';
+        if(this.operator == Operador_Aritmetico.MAS){
+            op = '+';
+        }else if(this.operator == Operador_Aritmetico.RESTA){
+            op = '-';
+        }else if(this.operator == Operador_Aritmetico.POR){
+            op = '*';
+        }else if(this.operator == Operador_Aritmetico.DIV){
+            op = '/';
+        }else if(this.operator == Operador_Aritmetico.MODULO){
+            op = '%'
+        }
+        
+        if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
+            this.type = Tipo.ENTERO;
+        }else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL){
+            this.type = Tipo.DECIMAL;
+        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO){
+            this.type = Tipo.DECIMAL;
+        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
+            this.type = Tipo.DECIMAL;
+        }else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.BOOLEANO){
+            this.type = Tipo.ENTERO;
+        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.ENTERO){
+            this.type = Tipo.ENTERO;
+        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.BOOLEANO){
+            this.type = Tipo.DECIMAL;
+        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.DECIMAL){
+            this.type = Tipo.DECIMAL;
+        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO){
+            this.type = Tipo.ENTERO;
+        }
+
+        if(this.operator == Operador_Aritmetico.UMENOS){
+            op = '-'
+            tree.updateConsola(gen.setArithmetic(temp, right, op, left)+'\n');
+        }else{
+            tree.updateConsola(gen.setArithmetic(temp, left, op, right)+'\n');
+        }
+        
         return temp; // t0
     }
 }
