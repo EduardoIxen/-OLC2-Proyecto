@@ -106,6 +106,7 @@
     <script src="src/interprete/Instrucciones/Structs/ModificarStruct.js"></script>
 
     <script src="src/interprete/TS/Generator.js"></script>
+    <script src="src/interprete/TS/C3D.js"></script>
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -145,13 +146,7 @@
     <div class="container mt-4 mb-3">
         <div class="row align-items-center">
             <div class="col d-flex justify-content-center">
-                <input type="button" class="button-interpretar" value="Interpretar" onclick="execute(); location.href='#salidaConsola';">
-            </div>
-            <div class="col d-flex justify-content-center">
                 <input class="form-control form-control-lg" type="file" id="fileInput">
-            </div>
-            <div class="col d-flex justify-content-center">
-                <input type="button" class="button-interpretar" value="Compilar" onclick="executeCompiler()">
             </div>
         </div>
     </div>
@@ -209,7 +204,7 @@
                 var outCosole = CodeMirror.fromTextArea(
                     document.getElementById('console'),
                     {
-                        mode: 'go',  
+                        mode: null,  
                         theme: 'isotope',
                         lineNumbers: true,
                         autoCloseTags: true
