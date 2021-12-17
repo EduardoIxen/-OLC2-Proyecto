@@ -16,7 +16,7 @@
     color: rgb(4, 3, 3);            
     border-radius: 10px;
     display: block;
-    left: 40%;
+    /*left: 40%;*/
   }
 
   .button-interpretar:hover {
@@ -36,4 +36,10 @@ h1{
 
 .outConsola{
   width:100%; text-align:center;
+}
+
+#grafoAST{
+  width: 500px;
+  height: 500px;
+  border: 1px solid lightgray;
 }

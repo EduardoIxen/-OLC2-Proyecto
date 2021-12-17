@@ -21,6 +21,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <script type="text/javascript" src="vis-4.21.0/dist/vis.js"></script>
+    <link type="text/css" href="vis-4.21.0/dist/vis.css">
 
 </head>
 
@@ -68,6 +70,7 @@
     <script src="src/interprete/Instrucciones/Decremento.js"></script>
     <script src="src/interprete/Instrucciones/DeclaracionArray.js"></script>
     <script src="src/interprete/Instrucciones/AccesoArreglo.js"></script>
+    <script src="src/interprete/Instrucciones/DeclaraccionArrayRC.js"></script>
 
     <script src="src/interprete/Instrucciones/Nativas/ToLowerCase.js"></script>
     <script src="src/interprete/Instrucciones/Nativas/ToUpperCase.js"></script>
@@ -100,14 +103,14 @@
 
 
     <div class="container mt-4 mb-3">
-        <div class="row">
-            <div class="col mb-8">
+        <div class="row align-items-center">
+            <div class="col d-flex justify-content-center">
                 <input type="button" class="button-interpretar" value="Interpretar" onclick="execute()">
             </div>
-            <div class="col mt-2 mb-2 ">
-                <input type="file" id="fileInput">
+            <div class="col d-flex justify-content-center">
+                <input class="form-control form-control-lg" type="file" id="fileInput">
             </div>
-            <div class="col mb-2">
+            <div class="col d-flex justify-content-center">
                 <input type="button" class="button-interpretar" value="Compilar" onclick="executeCompiler()">
             </div>
         </div>
@@ -132,7 +135,7 @@
                             autoCloseTags: true
                         }
                     );
-                    editor.setSize("750", "500")
+                    editor.setSize("650", "500")
                 </script>
             </div>
             <div class="col">
@@ -150,18 +153,17 @@
                             autoCloseTags: true
                         }
                     );
-                    out.setSize("750", "500")
+                    out.setSize("500", "500")
                 </script>
             </div>
 
         </div>
     </div>
 
-    <div class="row container-fluid mt-5" aling='center'>
-        <div class="col">
-            <center>
-                <h1>SALIDA</h1>
-            </center>
+    <div class="container mt-4">
+        <div class="row">
+            <h1 class="text-center">Salida</h1>
+        <div class="row d-flex justify-content-center">
             <textarea class="outConsola" id="console"></textarea>
             <script>
                 var outCosole = CodeMirror.fromTextArea(
@@ -176,23 +178,33 @@
                 outCosole.setSize("950", "500")
             </script>
         </div>
-        <div class="col">
-            <center>
-                <h1>AST</h1>
-            </center>
-            <textarea id="graph"></textarea>
-            <script>
-                var graph = CodeMirror.fromTextArea(
-                    document.getElementById('graph'),
-                    {
-                        mode: 'go',  
-                        theme: 'isotope',
-                        lineNumbers: true,
-                        autoCloseTags: true
-                    }
-                );
-                graph.setSize("750", "500")
-            </script>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">AST</h1>
+                <textarea id="graph"></textarea>
+                <script>
+                    var graph = CodeMirror.fromTextArea(
+                        document.getElementById('graph'),
+                        {
+                            mode: 'go',  
+                            theme: 'isotope',
+                            lineNumbers: true,
+                            autoCloseTags: true
+                        }
+                    );
+                    graph.setSize("500", "500")
+                </script>
+            </div>
+            <div class="col">
+                <h1 class="text-center">GRAFO AST</h1>
+                <div id="grafoAST">
+
+                </div>
+            </div>
         </div>
     </div>
 

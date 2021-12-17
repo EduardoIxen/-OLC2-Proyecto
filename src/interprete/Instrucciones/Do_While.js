@@ -67,6 +67,8 @@ class Do_While extends Instruction{
             }
             if (instr instanceof DeclaracionStruct) {
                 salida += instr.getTabla(tree, table, padre);
+            }if (instr instanceof DeclaracionArrayRC) {
+                salida += instr.getTabla(tree, table, padre);
             }//falta declaracion por referencia y copia
         }
         return salida;

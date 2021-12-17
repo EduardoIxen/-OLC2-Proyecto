@@ -291,4 +291,21 @@ class Relacional extends Instruction{
         return nodo;
     }
 
+    obtOp(operacion){
+        if (operacion == Operador_Relacional.MAYORQUE) {
+            return ">";
+        }else if (operacion == Operador_Relacional.MENORQUE) {
+            return "<";
+        }else if (operacion == Operador_Relacional.MAYORIGUAL) {
+            return ">=";
+        }else if (operacion == Operador_Relacional.MENORIGUAL) {
+            return "<=";
+        }else if (operacion == Operador_Relacional.DIFERENCIA) {
+            return "!=";
+        }else if (operacion == Operador_Relacional.IGUALACION) {
+            return "==";
+        }
+        return operacion.toString();
+    }
+
 }

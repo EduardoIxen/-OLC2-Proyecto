@@ -115,6 +115,9 @@ class If extends Instruction{
             }
             if (instr instanceof DeclaracionStruct) {
                 salida += instr.getTabla(tree, table, padre);
+            }
+            if (instr instanceof DeclaracionArrayRC) {
+                salida += instr.getTabla(tree, table, padre);
             }//falta declaracion por referencia y copia
         }
         if (this.instr_else != null) {
@@ -126,6 +129,9 @@ class If extends Instruction{
                     salida += instr.getTabla(tree, table, padre);
                 }
                 if (instr instanceof DeclaracionStruct) {
+                    salida += instr.getTabla(tree, table, padre);
+                }
+                if (instr instanceof DeclaracionArrayRC) {
                     salida += instr.getTabla(tree, table, padre);
                 }//falta declaracion por referencia y copia
             }

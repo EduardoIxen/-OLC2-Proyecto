@@ -5,7 +5,7 @@ class Declaracion extends Instruction{
         this.type = type;
         this.id = id;
         this.expression = expression;
-        this.value = null;
+        this.value = "";
     }
 
     interpretar(tree, table){

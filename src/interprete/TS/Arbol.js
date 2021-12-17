@@ -27,7 +27,7 @@ class Arbol {
     getTablaTsGlobal() { return this.tablaTsGlobal; }
     setTablaTsGlobal(tablaTsGlobal) { this.tablaTsGlobal = tablaTsGlobal; }
     addTSG(value){
-        this.tablaSimbolos.push(value);
+        this.tablaSimbolos.push(this.verTipo(value));
     }
     getTablaSimbolos(){
         return this.tablaSimbolos;
@@ -67,22 +67,60 @@ class Arbol {
         this.dot += "digraph {\n";
         this.dot += "n0[label=\"" + raiz.getValor().replace("\"", "\\\"") + "\"];\n";
         this.contador = 1;
-        this.recorrerAST("n0",raiz);
+        var nodos = [];
+        var aristas = [];
+        var nivelAST = 0;
+        this.recorrerAST("n0",raiz, nodos, aristas, nivelAST);
         this.dot += "}";
-        return this.dot;
+        return {dot: this.dot, nodosG:nodos, aristasG:aristas};
     }
 
-    recorrerAST(idPadre, nodoPadre){
+    recorrerAST(idPadre, nodoPadre, nodos, aristas, nivelAST){
         for (var hijo of nodoPadre.getHijos()) {
             var nombreHijo = "n"+ this.contador.toString();
             this.dot += nombreHijo + "[label=\"" + hijo.getValor().replace("\"", "\\\"") + "\"];\n";
+            var dict = {}
+            dict['id'] = nombreHijo;
+            dict['label'] = hijo.getValor().replace("\"", "\\\"");
+            dict['level'] = nivelAST;
+            nivelAST++;
+            nodos.push(dict);
             this.dot += idPadre + "->" + nombreHijo+"\n";
+            var arista = {}
+            arista['from'] = idPadre;
+            arista['to'] = nombreHijo;
+            aristas.push(arista);
             this.contador += 1;
-            this.recorrerAST(nombreHijo, hijo);
+            this.recorrerAST(nombreHijo, hijo, nodos, aristas, nivelAST);
         }
     }
 
 
     getGenerator(){ return this.generator; }
     setGenerator(generator){ this.generator = generator; }
+
+    verTipo(tipoDato){
+        if (tipoDato['Tipo2'] == Tipo.ENTERO) {
+            tipoDato['Tipo2'] = "INT";
+        }else if (tipoDato['Tipo2'] == Tipo.DECIMAL) {
+            tipoDato['Tipo2'] = "DOUBLE";
+        }else if (tipoDato['Tipo2'] == Tipo.STRING) {
+            tipoDato['Tipo2'] = "STRING";
+        }else if (tipoDato['Tipo2'] == Tipo.BOOLEANO) {
+            tipoDato['Tipo2'] = "BOOLEAN";
+        }else if (tipoDato['Tipo2'] == Tipo.CARACTER) {
+            tipoDato['Tipo2'] = "CHAR";
+        }else if (tipoDato['Tipo2'] == Tipo.IDENTIFICADOR) {
+            tipoDato['Tipo2'] = "IDENTIFICADOR";
+        }else if (tipoDato['Tipo2'] == Tipo.NULO) {
+            tipoDato['Tipo2'] = "NULO";
+        }else if (tipoDato['Tipo2'] == Tipo.ARRAY) {
+            tipoDato['Tipo2'] = "ARRAY";
+        }else if (tipoDato['Tipo2'] == Tipo.STRUCT) {
+            tipoDato['Tipo2'] = "STRUCT";
+        }else if (tipoDato['Tipo2'] == Tipo.VOID) {
+            tipoDato['Tipo2'] = "VOID";
+        }
+        return tipoDato;
+    }
 }

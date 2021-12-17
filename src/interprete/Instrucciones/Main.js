@@ -52,28 +52,31 @@ class Main extends Instruction{
         var salida = "";
         for(var instr of this.instructions){
             if (instr instanceof Declaracion) {
-                salida += instr.getTabla(tree, this.tabla, "main").toString();
+                salida += instr.getTabla(tree, this.tabla, "Local").toString();
             }
             if (instr instanceof If) {
-                salida += instr.getTabla(tree, table, "main -> If").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof For) {
-                salida += instr.getTabla(tree, table, "main -> For").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof While) {
-                salida += instr.getTabla(tree, table, "main -> Wile").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof Do_While) {
-                salida += instr.getTabla(tree, table, "main -> doWile").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof Switch) {
-                salida += instr.getTabla(tree, table, "main -> Switch").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof DeclaracionArray) {
-                salida += instr.getTabla(tree, table, "main -> DeclaracionArray").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof DeclaracionStruct) {
-                salida += instr.getTabla(tree, table, "main").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
+            }
+            if (instr instanceof DeclaracionArrayRC) {
+                salida += instr.getTabla(tree, table, "Local").toString();
             } //falta declaracion por referencia y copia
         }
 

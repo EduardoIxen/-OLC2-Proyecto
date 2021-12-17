@@ -66,28 +66,31 @@ class Funcion extends Instruction{
         var salida = "";
         for(var instr of this.instructions){
             if (instr instanceof Declaracion) {
-                salida += instr.getTabla(tree, this.tabla, this.id).toString();
+                salida += instr.getTabla(tree, this.tabla, "Local").toString();
             }
             if (instr instanceof If) {
-                salida += instr.getTabla(tree, table, this.id+" -> If").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof For) {
-                salida += instr.getTabla(tree, table, this.id+" -> For").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof While) {
-                salida += instr.getTabla(tree, table, this.id+" -> Wile").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof Do_While) {
-                salida += instr.getTabla(tree, table, this.id+" -> doWile").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof Switch) {
-                salida += instr.getTabla(tree, table, this.id+" -> Switch").toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             } //duda verificar
             if (instr instanceof DeclaracionArray) {
-                salida += instr.getTabla(tree, table, this.id).toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
             }
             if (instr instanceof DeclaracionStruct) {
-                salida += instr.getTabla(tree, table, this.id).toString();
+                salida += instr.getTabla(tree, table, "Local").toString();
+            }
+            if (instr instanceof DeclaracionArrayRC) {
+                salida += instr.getTabla(tree, table, "Local").toString();
             } //falta declaracion por referencia y copia
         }
 

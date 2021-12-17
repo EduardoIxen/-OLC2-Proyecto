@@ -173,26 +173,31 @@ class Aritmetica extends Instruction{
     }
 
    
-    operator(){
-        if (this.operador == Operador_Aritmetico.SUMA){
+    operator2(operador){
+        if (operador == Operador_Aritmetico.MAS){
             return "+"
-        }else if(this.operador == Operador_Aritmetico.RESTA){
+        }else if(operador == Operador_Aritmetico.RESTA){
             return "-"
-        }else if (this.operador == Operador_Aritmetico.POR){
+        }else if (operador == Operador_Aritmetico.POR){
             return "*"
-        }else if (this.operador == Operador_Aritmetico.DIV){
+        }else if (operador == Operador_Aritmetico.DIV){
             return "/"
+        }else if (operador == Operador_Aritmetico.UMENOS){
+            return "-"
+        }else if (operador == Operador_Aritmetico.MODULO){
+            return "%"
         }
+        return operador.toString();
     }
 
     getNodo(){
         var nodo = new NodoAST("ARITMETICA");
         if (this.exp_right != null) {
             nodo.agregarHijoNodo(this.exp_left.getNodo());
-            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijo(this.operator2(this.operator));
             nodo.agregarHijoNodo(this.exp_right.getNodo());
         }else{
-            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijo(this.operator2(this.operator));
             nodo.agregarHijoNodo(this.exp_left.getNodo());
         }
         return nodo;

@@ -61,29 +61,75 @@ class DeclaracionArray extends Instruction{
 
     getNodo(){
         var nodo = new NodoAST("DECLARACION ARREGLO");
-        nodo.agregarHijo(this.type.toString());
-        nodo.agregarHijo(this.list_expresion);
+        nodo.agregarHijo(this.verTipo(this.type.toString()));
+        //nodo.agregarHijo(this.list_expresion);
         nodo.agregarHijo(this.id);
         var exp = new NodoAST("EXPRESION");
-        for(var expre of this.list_expresion){
-            exp.agregarHijoNodo(expre.getNodo());
+        try {
+            for(var expre of this.list_expresion){
+                exp.agregarHijoNodo(expre.getNodo());
+            }
+        } catch (error) {
+            exp.agregarHijo("lista expresiones");
         }
         nodo.agregarHijoNodo(exp);
         return nodo;
+    }
+
+    verTipo(tipoDato){
+        if (tipoDato == Tipo.ENTERO) {
+            return "INT";
+        }else if (tipoDato == Tipo.DECIMAL) {
+            return "DOUBLE";
+        }else if (tipoDato == Tipo.STRING) {
+            return "STRING";
+        }else if (tipoDato == Tipo.BOOLEANO) {
+            return "BOOLEAN";
+        }else if (tipoDato == Tipo.CARACTER) {
+            return "CHAR";
+        }else if (tipoDato == Tipo.IDENTIFICADOR) {
+            return "IDENTIFICADOR";
+        }else if (tipoDato == Tipo.NULO) {
+            return "NULO";
+        }else if (tipoDato == Tipo.ARRAY) {
+            return "ARRAY";
+        }else if (tipoDato == Tipo.STRUCT) {
+            return "STRUCT";
+        }else if (tipoDato == Tipo.VOID) {
+            return "VOID";
+        }
+        return tipoDato.toString();
     }
 
     getTabla(tree, table, padre){
         var salida = "";
         var dict = {}
         dict['Identificador'] =this.id.toString();
-        dict['Tipo'] = "Variable";
+        dict['Tipo'] = "Arreglo";
         dict['Tipo2'] = this.type.toString().replace("TIPO.", "ARREGLO->");
         dict['Entorno'] =padre.toString();
-        dict['Valor'] = this.list_value.toString();
+        /*var temp = [];
+        for(var expre of this.list_expresion){
+            console.log(expre.value)
+            temp.push(expre.value.toString())
+        }*/
+        dict['Valor'] = this.recorrerArray(this.list_expresion);
         dict['Fila'] =this.row.toString();
         dict['Columna'] =this.column.toString();
         //tree.getTablaTsGlobal().push(dict);
         tree.addTSG(dict);
         return salida;
+    }
+
+    recorrerArray(listaValores){
+        var aux = [];
+        for(var temp of listaValores){
+            if (temp instanceof Array) {
+                aux.push(this.recorrerArray(temp));
+            }else{
+                aux.push(temp.value);
+            }
+        }
+        return "["+aux.toString()+"]";
     }
 }

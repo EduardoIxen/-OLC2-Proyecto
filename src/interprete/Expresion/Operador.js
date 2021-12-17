@@ -40,8 +40,17 @@ class Operador extends Instruction{
     getNodo(){
         var nodo = new NodoAST("OPERADOR");
         nodo.agregarHijoNodo(this.exp_left.getNodo());
-        nodo.agregarHijo(this.operator.toString());
+        nodo.agregarHijo(this.obtOperador(this.operator));
         nodo.agregarHijoNodo(this.exp_right.getNodo());
         return nodo;
+    }
+
+    obtOperador(operador){
+        if (operador == Operador_Cadena.CONCATENACION) {
+            return "&";
+        }else if (operador == Operador_Cadena.REPETICION) {
+            return "^";
+        }
+        return operador.toString();
     }
 }

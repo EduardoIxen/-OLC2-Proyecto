@@ -251,6 +251,8 @@ declaracion_instr
 declaracion_array_instr:
           TIPO tk_cora tk_corc identificador tk_igual valores_array                     {$$ = new DeclaracionArray($1, $4, $6, @1.first_line, @1.first_column);}
         | TIPO tk_cora tk_corc identificador tk_igual identificador list_position       {$$ = new DeclaracionArray($1, $4, new AccesoArreglo($6,$7, @1.first_line, @1.first_column), @1.first_line, @1.first_column);}
+        | TIPO tk_cora tk_corc identificador tk_igual identificador                     {$$ = new DeclaracionArrayRC($1, $4, $6,false, @1.first_line, @1.first_column);}
+        | TIPO tk_cora tk_corc identificador tk_igual tk_numeral identificador          {$$ = new DeclaracionArrayRC($1, $4, $7,true, @1.first_line, @1.first_column);}
 ;
 
 valores_array:

@@ -18,7 +18,9 @@ function execute(){
         if (instruccion instanceof Funcion) {
             ast.addFuncion(instruccion);
         }
-        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof DeclaracionArray) || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct)) { //falta asignacion de arreglos
+        if ((instruccion instanceof Declaracion) || (instruccion instanceof Asignacion) || (instruccion instanceof DeclaracionArray)
+         || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct) || (instruccion instanceof AccesoArreglo)
+         || (instruccion instanceof DeclaracionArrayRC)) { //falta asignacion de arreglos
             var value = instruccion.interpretar(ast, TsGlobal);
             if(value instanceof Exception){
                 ast.getException().push(value);
@@ -71,7 +73,7 @@ function execute(){
     for(var instruccion of ast.getInstruccion()){
         if (!((instruccion instanceof Main) || (instruccion instanceof Declaracion) || (instruccion instanceof Asignacion)
         || (instruccion instanceof Funcion) || (instruccion instanceof DeclaracionArray) 
-        || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct))) {  //falta  asignacion de arreglos
+        || (instruccion instanceof DeclaracionStruct) || (instruccion instanceof AsignacionStruct) || (instruccion instanceof DeclaracionArrayRC))) {  //falta  asignacion de arreglos
             var err = new Exception("Semantico", "Sentencia fuera de main.", instruccion.row, instruccion.column);
             ast.getException().push(err);
             ast.updateConsola(err.toString());
@@ -86,7 +88,7 @@ function execute(){
         if (instruccion instanceof Funcion || instruccion instanceof Main) {
             taS += instruccion.getTabla(ast, instruccion.tabla, "Global");
         }
-        if (instruccion instanceof DeclaracionArray || instruccion instanceof DeclaracionStruct) {
+        if (instruccion instanceof DeclaracionArray || instruccion instanceof DeclaracionStruct || instruccion instanceof DeclaracionArrayRC) {
             taS += instruccion.getTabla(ast, TsGlobal, "Global");
         }
     }
@@ -98,10 +100,48 @@ function execute(){
     }
     init.agregarHijoNodo(instruc)
     var grafo = ast.getDot(init); //devuelve el codigo de graphviz
+
+    var salidaDot = grafo.dot;
+    var nodosG = grafo.nodosG;
+    var aristasG = grafo.aristasG;
+
+    var nodosVis = new vis.DataSet(nodosG);
+    var aristasVis = new vis.DataSet(aristasG);
+    var contenedor = document.getElementById("grafoAST");
+    var datos = {
+        nodes:nodosVis,
+        edges:aristasVis
+    };
+    var opciones = {
+        physics: {
+            adaptiveTimestep: true,
+            stabilization: false,
+            barnesHut: {
+                gravitationalConstant: -8000,
+                springConstant: 0.04,
+                springLength: 95
+            },
+            stabilization: {
+                iterations: 987
+            }
+        },
+        nodes:{
+            color:{background:'#F2FF9D'}
+        },
+        layout: {
+            randomSeed: 191006,
+            improvedLayout: false,
+            hierarchical: {
+                direction: "UD",
+              },
+        }
+    };
+    var grafoASTVis = new vis.Network(contenedor, datos, opciones)
+
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
     document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ast.getTablaSimbolos()); //probar
     outCosole.setValue(ast.getConsola());
-    graph.setValue(grafo);
+    graph.setValue(salidaDot);
 
 }
 function tablaError(error){

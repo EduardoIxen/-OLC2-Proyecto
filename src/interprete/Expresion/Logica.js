@@ -58,12 +58,23 @@ class Logica extends Instruction{
         var nodo = new NodoAST("LOGICA");
         if (this.exp_right != null) {
             nodo.agregarHijoNodo(this.exp_left.getNodo());
-            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijo(this.obtenerOp(this.operator));
             nodo.agregarHijoNodo(this.exp_right.getNodo());
         }else{
-            nodo.agregarHijo(this.operator.toString());
+            nodo.agregarHijo(this.obtenerOp(this.operator));
             nodo.agregarHijoNodo(this.exp_left.getNodo());
         }
         return nodo;
+    }
+
+    obtenerOp(operador){
+        if (operador == Operador_Logico.NOT) {
+            return "!";
+        }else if (operador == Operador_Logico.OR) {
+            return "||";
+        }else if (operador == Operador_Logico.AND) {
+            return "&&";
+        }
+        return operador.toString();
     }
 }
