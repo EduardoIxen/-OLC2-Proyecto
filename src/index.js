@@ -8,7 +8,7 @@ function execute(){
     var TsGlobal = new TablaSimbolo(null);
     ast.setTablaTsGlobal(TsGlobal);
     createNativas(ast);
-    console.log(instrucciones.error)
+
     for(var e of instrucciones.errores){
         ast.getException().push(e);
         ast.updateConsola(e);
