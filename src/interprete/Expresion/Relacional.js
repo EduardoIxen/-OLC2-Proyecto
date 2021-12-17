@@ -318,7 +318,7 @@ class Relacional extends Instruction{
         if(left.type == Tipo.BOOLEANO){
             var temp = gen.newTemp();   
             var newL = gen.newLabel();  
-            console.log(newL)
+            
             if(Boolean(left.value)){
                 tree.updateConsola(gen.getBoolean(left.EV, left.EF, left.EV, newL, temp))
                 left.value = temp;

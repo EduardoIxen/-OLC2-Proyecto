@@ -116,12 +116,12 @@ function execute(){
     };
     var opciones = {
         physics: {
-            adaptiveTimestep: true,
+            // adaptiveTimestep: true,
             stabilization: false,
             barnesHut: {
-                gravitationalConstant: -8000,
-                springConstant: 0.04,
-                springLength: 95
+                // gravitationalConstant: -8000,
+                // springConstant: 0.04,
+                springLength: 250 
             },
             stabilization: {
                 iterations: 987
@@ -131,8 +131,8 @@ function execute(){
             color:{background:'#F2FF9D'}
         },
         layout: {
-            randomSeed: 191006,
-            improvedLayout: false,
+            // randomSeed: 191006,
+            // improvedLayout: false,
             hierarchical: {
                 direction: "UD",
               },
