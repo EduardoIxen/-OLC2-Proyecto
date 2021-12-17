@@ -44,6 +44,27 @@ class Primitivo extends Instruction{
     }
 
     compilar(tree, table){
-        return this.value;
+        var gen = tree.getGenerator();
+        if(this.type == Tipo.ENTERO || this.type == Tipo.DECIMAL){
+            return new C3D(this.value.toString(), this.type, false);
+
+        }else if(this.type == Tipo.BOOLEANO){
+            var result = new C3D(this.value, this.type, false);
+            var EV = gen.newLabel();
+            var EF = gen.newLabel();
+            if(this.value){
+                result.EV = EV;
+                result.EF = EF;
+            }else{
+                result.EV = EV;
+                result.EF = EF;
+            }
+        
+        }else{
+            //here code...
+        }
+        
+
+        return result;
     }
 }

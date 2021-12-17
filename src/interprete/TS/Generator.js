@@ -75,7 +75,7 @@ class Generator{
         return conca;
     }
 
-    getBoolean(tree, EV, EF, label, newLabel, temp){
+    getBoolean(EV, EF, label, newLabel, temp){
         var conca = '';
         conca += `\n\tgoto ${label};\n`;
         conca += `\t${EV}:\n`;
@@ -84,13 +84,14 @@ class Generator{
         conca += `\t${EF}:\n`;
         conca += `\t\t${temp} = 0;\n`
         conca += `\t${newLabel}:\n`;
-        tree.updateConsola(conca+"\n");
-        return `${temp}`;
+        return conca.toString();
     }
 
     setBoolean(EV, EF, label, newLabel, cond){
         var conca = '';
-        conca += `\n\tgoto ${label};`;
+        if(label != null){
+            conca += `\n\tgoto ${label};`;
+        }
         conca += `\n\t${EV}:\n`;
         conca += `\t\tprintf("%c", (char)116);\n`;
         conca += `\t\tprintf("%c", (char)114);\n`;
@@ -109,6 +110,17 @@ class Generator{
         }
         return conca;
 
+    }
+    
+    
+    /******
+     * IF *
+    *******/
+    getIf(left, op, right, EV, EF){
+        var conca = '';
+        conca += `\n\tif(${left} ${op} ${right}) goto ${EV}; \n`
+        conca += `\tgoto ${EF};\n`
+        return conca;
     }
 
 }

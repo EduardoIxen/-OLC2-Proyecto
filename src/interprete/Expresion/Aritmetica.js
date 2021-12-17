@@ -204,46 +204,40 @@ class Aritmetica extends Instruction{
     }
 
     compilar(tree, table){
-        var temp = '';
-        var EV = '';
-        var EF = '';
-        var newL = '';
-
+        var result = new C3D(null, null, true);
         var gen = tree.getGenerator();
+
         var left = this.exp_left.compilar(tree, table);
         var right = 0;
-
         if(this.exp_right != null){
             right = this.exp_right.compilar(tree, table);
-            if(this.exp_right.type == Tipo.BOOLEANO){
-                temp = gen.newTemp();   // t0
-                EV = gen.newLabel();    // L0:
-                EF = gen.newLabel();    // L1:
-                newL = gen.newLabel();  // L2:
+
+            if(right.type == Tipo.BOOLEANO){
+                var temp = gen.newTemp();   // t0
+                var newL = gen.newLabel();  // L2:
     
-                if(Boolean(right) == true){
-                    right = gen.getBoolean(tree, EV, EF, EV, newL, temp);
+                if(Boolean(right.value)){
+                    tree.updateConsola(gen.getBoolean(right.EV, right.EF, right.EV, newL, temp));
+                    right.value = temp;
                 }else{
-                    right = gen.getBoolean(tree, EV, EF, EF, newL, temp);
+                    tree.updateConsola(gen.getBoolean(right.EV, right.EF, right.EF, newL, temp));
+                    right.value = temp;
                 }
             }
         }
         
-        if(this.exp_left.type == Tipo.BOOLEANO){
-            temp = gen.newTemp();   // t0
-            EV = gen.newLabel();    // L0:
-            EF = gen.newLabel();    // L1:
-            newL = gen.newLabel();  // L2:
+        if(left.type == Tipo.BOOLEANO){
+            var temp = gen.newTemp();   
+            var newL = gen.newLabel();  
 
-            if(Boolean(left) == true){
-                left = gen.getBoolean(tree, EV, EF, EV, newL, temp);
+            if(Boolean(left.value)){
+                tree.updateConsola(gen.getBoolean(left.EV, left.EF, left.EV, newL, temp))
+                left.value = temp;
             }else{
-                left = gen.getBoolean(tree, EV, EF, EF, newL, temp);
+                tree.updateConsola(gen.getBoolean(left.EV, left.EF, left.EF, newL, temp))
+                left.value = temp;
             }
         }
-
-        
-
 
        var temp = gen.newTemp(); // t0
 
@@ -259,34 +253,24 @@ class Aritmetica extends Instruction{
         }else if(this.operator == Operador_Aritmetico.MODULO){
             op = '%'
         }
-        
-        if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
-            this.type = Tipo.ENTERO;
-        }else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL){
+
+        if(left.type == Tipo.DECIMAL || right.type == Tipo.DECIMAL ){
             this.type = Tipo.DECIMAL;
-        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO){
-            this.type = Tipo.DECIMAL;
-        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
-            this.type = Tipo.DECIMAL;
-        }else if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.BOOLEANO){
-            this.type = Tipo.ENTERO;
-        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.ENTERO){
-            this.type = Tipo.ENTERO;
-        }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.BOOLEANO){
-            this.type = Tipo.DECIMAL;
-        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.DECIMAL){
-            this.type = Tipo.DECIMAL;
-        }else if(this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO){
+        }else{
             this.type = Tipo.ENTERO;
         }
+            
 
         if(this.operator == Operador_Aritmetico.UMENOS){
             op = '-'
-            tree.updateConsola(gen.setArithmetic(temp, right, op, left)+'\n');
+            tree.updateConsola(gen.setArithmetic(temp, right.value, op, left.value));
         }else{
-            tree.updateConsola(gen.setArithmetic(temp, left, op, right)+'\n');
+            tree.updateConsola(gen.setArithmetic(temp, left.value, op, right.value));
         }
         
-        return temp; // t0
+        result.value = temp;
+        result.type = this.type;
+        
+        return result; 
     }
 }

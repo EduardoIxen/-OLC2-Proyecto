@@ -25,4 +25,8 @@ class Return extends Instruction{
         var nodo = new NodoAST("RETURN");
         return nodo;
     }
+
+    compilar(tree, table){
+        //here code..
+    }
 }

@@ -75,37 +75,31 @@ class Println extends Instruction{
 
 
     compilar(tree, table){
-        var expression = this.expression.compilar(tree, table);
         var gen = tree.getGenerator();
+        var result = this.expression.compilar(tree, table);
         var op = '';
         var type = '';
-        if(this.expression.type == Tipo.ENTERO){
+
+        if(result.type == Tipo.ENTERO){
             op = 'd';
             type = 'int';
-        }else if(this.expression.type == Tipo.DECIMAL){
+        }else if(result.type == Tipo.DECIMAL){
             // here code...
             op = 'f';
             type = 'double';
-        }else if(this.expression.type == Tipo.CARACTER){
+        }else if(result.type == Tipo.CARACTER){
             // here code...
             op = 'c';
             type = 'char';
         }
             
             
-        if(this.expression.type == Tipo.BOOLEANO){
+        if(result.type == Tipo.BOOLEANO){
+            var newL = gen.getLabel();
+            tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
            
-            var EV = gen.newLabel();    // L0:
-            var EF = gen.newLabel();    // L1:
-            var newL = gen.newLabel();  // L2:
-
-            if(Boolean(expression) == true){
-                tree.updateConsola(gen.setBoolean(EV, EF, EV, newL, true)+'\n');
-            }else{
-                tree.updateConsola(gen.setBoolean(EV, EF, EF, newL, true)+'\n');
-            }
         }else{
-            tree.updateConsola(gen.setPrintf(op, type, expression, true)+'\n');
+            tree.updateConsola(gen.setPrintf(op, type, result.value, true)+'\n');
         }
     
     }

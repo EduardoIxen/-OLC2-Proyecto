@@ -308,4 +308,53 @@ class Relacional extends Instruction{
         return operacion.toString();
     }
 
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var result = new C3D(null, this.type,  false);
+
+        var left = this.exp_left.compilar(tree, table);
+        
+        if(left.type == Tipo.BOOLEANO){
+            var temp = gen.newTemp();   
+            var newL = gen.newLabel();  
+            console.log(newL)
+            if(Boolean(left.value)){
+                tree.updateConsola(gen.getBoolean(left.EV, left.EF, left.EV, newL, temp))
+                left.value = temp;
+            }else{
+                tree.updateConsola(gen.getBoolean(left.EV, left.EF, left.EF, newL, temp))
+                left.value = temp;
+            }
+        }
+
+        var right = this.exp_right.compilar(tree, table);
+        if(right.type == Tipo.BOOLEANO){
+            var temp = gen.newTemp();   // t0 
+            var newL = gen.newLabel();  // L2:
+
+            if(Boolean(right.value)){
+                tree.updateConsola(gen.getBoolean(right.EV, right.EF, right.EV, newL, temp));
+                right.value = temp;
+            }else{
+                tree.updateConsola(gen.getBoolean(right.EV, right.EF, right.EF, newL, temp));
+                right.value = temp;
+            }
+        }
+
+        var op = this.obtOp(this.operator).toString();
+
+        
+        var EV = gen.newLabel();
+        var EF = gen.newLabel();
+        tree.updateConsola(gen.getIf(left.value, op, right.value, EV, EF));
+        result.EV = EV;
+        result.EF = EF;
+
+        return result;
+
+        
+        
+    }
+
 }

@@ -92,4 +92,10 @@ class Main extends Instruction{
         tree.addTSG(dict);
         return salida;
     }
+
+    compilar(tree, table){
+        for(var instructions of this.instructions)
+        var instruction = instructions.compilar(tree, table);
+
+    }
 }

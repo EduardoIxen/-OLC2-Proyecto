@@ -1,3 +1,3 @@
 ### Instalar analizador
 
-1.- npm install jison
+1.- npm install jison -g
