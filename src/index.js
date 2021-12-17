@@ -1,4 +1,5 @@
-
+var graficarArbol = false;
+var codigoDot = false;
 
 function execute(){
     out.setValue("")
@@ -93,6 +94,7 @@ function execute(){
         }
     }
 
+
     var init = new NodoAST("RAIZ");
     var instruc = new NodoAST("INSTRUCCIONES");
     for(var instruAST of ast.getInstruccion()) {
@@ -136,12 +138,20 @@ function execute(){
               },
         }
     };
-    var grafoASTVis = new vis.Network(contenedor, datos, opciones)
+    if (codigoDot) {
+        graph.setValue(salidaDot);
+        codigoDot = false;
+        return;
+    }
+    if (graficarArbol) {
+        var grafoASTVis = new vis.Network(contenedor, datos, opciones)
+        graficarArbol = false;
+        return;
+    }
 
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
     document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ast.getTablaSimbolos()); //probar
     outCosole.setValue(ast.getConsola());
-    graph.setValue(salidaDot);
 
 }
 function tablaError(error){
@@ -294,4 +304,14 @@ function executeCompiler(){
     out.setValue(ast.getConsola())
 
 
+}
+
+function graphAST() {
+    graficarArbol = true;
+    execute();
+}
+
+function generarDot() {
+    codigoDot = true;
+    execute();
 }

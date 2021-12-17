@@ -1,7 +1,7 @@
 .fondo{
     /* background-image: radial-gradient( circle 976px at 51.2% 51%,  rgb(3, 3, 3) 0%, rgb(0, 0, 0) 0%, rgb(249, 249, 253) 17.3%, rgb(10, 11, 12) 58.8%, rgb(197, 198, 204) 71.4%, rgba(16,66,157,1) 100.2%, rgba(187,187,187,1) 100.2% ); */
     background: rgb(0, 0, 0);
-    font-family: "Times New Roman", Times, serif;
+    /*font-family: "Times New Roman", Times, serif;*/
   }
 
  .button-interpretar {background-image: linear-gradient(to right, #f3f4f5 0%, #293950  51%, #0f0f0f  100%)}
@@ -39,7 +39,15 @@ h1{
 }
 
 #grafoAST{
-  width: 500px;
+  width: 650px;
   height: 500px;
-  border: 1px solid lightgray;
+  border: 2px solid rgb(1, 5, 56);
+}
+
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5{
+  font-family: 'Vollkorn', serif;
 }

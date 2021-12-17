@@ -69,7 +69,8 @@ class Arbol {
         this.contador = 1;
         var nodos = [];
         var aristas = [];
-        var nivelAST = 0;
+        var nivelAST = 1;
+        nodos.push({id:"n0", label:"RAIZ", level:0})
         this.recorrerAST("n0",raiz, nodos, aristas, nivelAST);
         this.dot += "}";
         return {dot: this.dot, nodosG:nodos, aristasG:aristas};
@@ -83,7 +84,6 @@ class Arbol {
             dict['id'] = nombreHijo;
             dict['label'] = hijo.getValor().replace("\"", "\\\"");
             dict['level'] = nivelAST;
-            nivelAST++;
             nodos.push(dict);
             this.dot += idPadre + "->" + nombreHijo+"\n";
             var arista = {}
@@ -91,7 +91,7 @@ class Arbol {
             arista['to'] = nombreHijo;
             aristas.push(arista);
             this.contador += 1;
-            this.recorrerAST(nombreHijo, hijo, nodos, aristas, nivelAST);
+            this.recorrerAST(nombreHijo, hijo, nodos, aristas, nivelAST+1);
         }
     }
 
