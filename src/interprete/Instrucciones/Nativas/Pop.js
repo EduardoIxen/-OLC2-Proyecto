@@ -12,7 +12,7 @@ class Pop extends Instruction{
         }
         var resutl = null;
         try {
-            if (symbol.typeArray == Tipo.ARRAY) {
+            if (symbol.typeArray == Tipo.ARRAY || symbol.type == Tipo.ARRAY) {
                 if (symbol.getValue().list_value.length > 0) {
                     resutl = symbol.getValue().list_value.pop();
                 }else{

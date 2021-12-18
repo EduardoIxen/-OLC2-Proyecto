@@ -13,7 +13,7 @@ class Length extends Instruction{
         }
 
         this.type = Tipo.ENTERO;
-        if(symbol.typeArray == Tipo.ARRAY){
+        if(symbol.typeArray == Tipo.ARRAY || symbol.type == Tipo.ARRAY){
             return symbol.value.list_value.length;
         }
 

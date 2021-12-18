@@ -10,6 +10,9 @@ class Asignacion extends Instruction{
         if (value instanceof Exception) {
             return value;
         }
+        if (value instanceof Primitivo) {
+            value = value.value;
+        }
         var simbolo = new Simbolo(this.id, this.expression.type, this.row, this.column, value, "ambito");
         var result = table.updateTabla(simbolo);
         if (result instanceof Exception) {

@@ -33,9 +33,9 @@ class For extends Instruction{
                                 tree.getException().push(result);
                                 tree.updateConsola(result.toString());
                             }
-                            if(result instanceof Break) return result;
+                            if(result instanceof Break) return null;
                             if(result instanceof Return) return result;
-                            if(result instanceof Continue) return result;
+                            if(result instanceof Continue) break;
                         }
                         var update = this.update.interpretar(tree, newSecondTable);
                         if(update instanceof Exception) return update;

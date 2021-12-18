@@ -20,7 +20,7 @@ class Declaracion extends Instruction{
                 value = "null";
             }
             this.value = value;
-            if (this.type != this.expression.type) {
+            if (this.type != this.expression.type && (this.type != Tipo.DECIMAL && this.expression.type != Tipo.ENTERO)) {
                 if (this.expression.type == Tipo.ARRAY) {
                     if (this.type != value.type) {
                         return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
