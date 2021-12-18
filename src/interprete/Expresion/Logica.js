@@ -77,4 +77,65 @@ class Logica extends Instruction{
         }
         return operador.toString();
     }
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var result = new C3D(null, this.type, false);
+        var left = this.exp_left.compilar(tree, table);
+        var right = 0;
+
+
+        if(this.operator == Operador_Logico.AND){
+            
+            if(!left.isTemp){
+                tree.updateConsola(gen.addGoto(left.EV));
+            }   
+            tree.updateConsola(gen.addLabel(left.EV));
+            if(this.exp_right==null){
+                return new Exception("Semántico", "Expresión derecha no existe.", this.row, this.column);
+            }
+            right = this.exp_right.compilar(tree, table);
+            if(!right.isTemp){
+                tree.updateConsola(gen.addGoto(right.EV));
+            }
+            tree.updateConsola(gen.addLabel(left.EF));
+            tree.updateConsola(gen.addGoto(right.EF));
+
+            result.EV = right.EV;
+            result.EF = right.EF;
+            return result;
+
+        }else if (this.operator == Operador_Logico.OR) {
+            
+            tree.updateConsola(gen.addLabel(left.EF));
+            
+            if(this.exp_right==null){
+                return new Exception("Semántico", "Expresión derecha no existe.", this.row, this.column);
+            }
+            right = this.exp_right.compilar(tree, table);
+            if(!left.isTemp){
+                tree.updateConsola(gen.addGoto(left.EV));
+            }
+            tree.updateConsola(gen.addLabel(left.EV));
+            tree.updateConsola(gen.addGoto(right.EV));
+            if(!right.isTemp){
+                tree.updateConsola(gen.addGoto(right.EV));
+            }
+            
+            result.EV = right.EV;
+            result.EF = right.EF;
+        }else if (this.operator == Operador_Logico.NOT) {
+            if(this.exp_right != null){
+                return new Exception("Semántico", "Expresión derecha no existe.", this.row, this.column);
+            }
+            console.log(left)
+            result.EV = left.EF;
+            result.EF = left.EV;
+            return result;
+        }
+
+        return result;
+    }
+
+
 }

@@ -112,7 +112,14 @@ class Generator{
 
     }
     
-    
+    addGoto(label){
+        var conca = `\tgoto ${label};\n`
+        return conca;
+    }
+    addLabel(label){
+        var conca = `\t${label}:\n`;
+        return conca;
+    }
     /******
      * IF *
     *******/
@@ -122,5 +129,7 @@ class Generator{
         conca += `\tgoto ${EF};\n`
         return conca;
     }
+
+    // getAnd()
 
 }
