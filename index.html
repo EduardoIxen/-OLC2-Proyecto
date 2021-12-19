@@ -109,7 +109,7 @@
     <script src="src/interprete/TS/C3D.js"></script>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">[OLC2]PROYECTO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -129,13 +129,16 @@
                             <a class="nav-link active" onclick="graphAST()" href="#grafoASTDot">Grafo AST</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" onclick="generarDot()" href="#codigoAstDot">Código AST</a>
+                            <a class="nav-link active" onclick="generarDot()" href="#codigoAstDot">Dot AST</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#tablaErroresSL">Tabla de errores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#tablaDeSimbolosGlobal">Tabla de simbolos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" onclick="generarGramatical()" href="#reporteGramatical">Reporte gramatical</a>
                         </li>
                     </ul>
                 </div>
@@ -264,6 +267,17 @@
                 <h1>TABLA SIMBOLO</h1>
             </center>
             <table class="table table-dark table-hover rounded shadow p-3 mb-5 bg-body rounded" id="tabla-simbolo">
+                
+            </table>
+        </div>
+
+    </div>
+
+    <div class="container-fluid mt-5" id="reporteGramatical">
+        
+        <div class="tabla-report">
+            <h1 class="text-center">REPORTE GRAMATICAL</h1>
+            <table class="table table-dark table-hover rounded shadow p-3 mb-5 bg-body rounded" id="tabla-reporteGramatical">
                 
             </table>
         </div>

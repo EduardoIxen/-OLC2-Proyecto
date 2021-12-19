@@ -1,5 +1,6 @@
 var graficarArbol = false;
 var codigoDot = false;
+var mostrarGramatical = false;
 
 function execute(){
     out.setValue("")
@@ -97,8 +98,12 @@ function execute(){
 
     var init = new NodoAST("RAIZ");
     var instruc = new NodoAST("INSTRUCCIONES");
-    for(var instruAST of ast.getInstruccion()) {
-        instruc.agregarHijoNodo(instruAST.getNodo());
+    try {
+        for(var instruAST of ast.getInstruccion()) {
+            instruc.agregarHijoNodo(instruAST.getNodo());
+        }
+    } catch (error) {
+        console.log(error)
     }
     init.agregarHijoNodo(instruc)
     var grafo = ast.getDot(init); //devuelve el codigo de graphviz
@@ -149,6 +154,14 @@ function execute(){
         return;
     }
 
+    if (mostrarGramatical) {
+        console.log(instrucciones.gramatical)
+        document.getElementById("tabla-reporteGramatical").innerHTML = tablaGramatical(instrucciones.gramatical);
+        mostrarGramatical = false;
+        return;
+    }
+
+
     document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getException());
     document.getElementById("tabla-simbolo").innerHTML = tablaSimbolo(ast.getTablaSimbolos()); //probar
     outCosole.setValue(ast.getConsola());
@@ -197,6 +210,24 @@ function tablaSimbolo(simbolo){
     
 
     return tablaSimbolo;
+}
+
+function tablaGramatical(listaGramatical){
+    var tablaGra = '';
+    tablaGra += "<thead><tr><th scope=\"col\">Producción</th>";
+    tablaGra += "<th>Reglas semánticas</th></tr></thead>";
+    tablaGra += "<tbody>";
+
+    for (var grama of listaGramatical) {
+        tablaGra += '<tr>'
+        tablaGra += `<td>${grama['prod']}</td>`
+        tablaGra += `<td>${grama['regla']}</td>`
+        tablaGra += '</tr>'
+    }
+    tablaGra += '</tbody>'
+    
+
+    return tablaGra;
 }
 
 function createNativas(ast){
@@ -313,5 +344,10 @@ function graphAST() {
 
 function generarDot() {
     codigoDot = true;
+    execute();
+}
+
+function generarGramatical() {
+    mostrarGramatical = true;
     execute();
 }

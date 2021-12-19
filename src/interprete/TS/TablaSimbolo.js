@@ -51,6 +51,16 @@ class TablaSimbolo{
                     }
                     return null; //variable actualizada
                 }
+                else if(tablaActual.tabla[simbolo.id].getType() == Tipo.DECIMAL && simbolo.getType() == Tipo.ENTERO){
+                    var temp = tablaActual.tabla[simbolo.id].getType();
+                    tablaActual.tabla[simbolo.id].setValue(simbolo.getValue());
+                    tablaActual.tabla[simbolo.id].setType(temp);
+                    return null
+                }
+                if (simbolo.getRow() == 41 && simbolo.getColumn() == 8) {
+                    console.log(simbolo.getType(), typeof(simbolo.getType()), simbolo.getType() == Tipo.ENTERO);
+                    console.log(tablaActual.tabla[simbolo.id].getType(), typeof(tablaActual.tabla[simbolo.id].getType()), tablaActual.tabla[simbolo.id].getType() == Tipo.DECIMAL);
+                }
                 return new Exception("Semantico","Tipo de asignación incorrecta.", simbolo.getRow(), simbolo.getColumn());
 
             }else{

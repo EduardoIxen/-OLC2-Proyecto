@@ -88,327 +88,572 @@ case 1:
                                                         //var retornoErrores = Object.assign([], listaErrores);
                                                         var retornoErrores = listaErrores;
                                                         listaErrores = [];
-                                                        return {instr:this.$, errores:retornoErrores}
+                                                        return {instr:this.$, errores:retornoErrores, gramatical:listaGramatical}
                                                 
 break;
-case 2: case 80:
- $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
+case 2:
+ $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; listaGramatical.push({prod:"instrucciones -> instrucciones instruccion", regla: "instrucciones.lista = instrucciones.lista.add(instruccion.val);"});
 break;
-case 3: case 81:
- this.$ = [$$[$0]]; 
+case 3:
+ this.$ = [$$[$0]]; listaGramatical.push({prod:"instrucciones", regla:"instrucciones.lista = [instruccion];"});
 break;
-case 4: case 5: case 6: case 15: case 18: case 19: case 20: case 21: case 22: case 23: case 25: case 26: case 27: case 35: case 38: case 39: case 40: case 41: case 42: case 43: case 75:
- this.$ = $$[$0-1]; 
+case 4: case 25:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> imprimir_instr tk_puntocoma", regla:"instrucciones.instr = imprimir_instr.instr;"});
 break;
-case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 16: case 17: case 28: case 29: case 30: case 31: case 32: case 33: case 34: case 36: case 37: case 76: case 109: case 132: case 143:
- this.$ = $$[$0]; 
+case 5: case 26:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> declaracion_instr tk_puntocoma", regla:"instrucciones.instr = declaracion_instr.instr;"});
+break;
+case 6: case 27:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> asignacion_instr tk_puntocoma", regla:"instrucciones.instr = asignacion_instr.instr;"});
+break;
+case 7:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> if_instr", regla:"instrucciones.instr = if_instr.instr;"});
+break;
+case 8: case 28:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> switch_instr", regla:"instrucciones.instr = switch_instr.instr;"});
+break;
+case 9: case 29:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> while_instr", regla:"instrucciones.instr = while_instr.instr;"});
+break;
+case 10: case 30:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> break_instr", regla:"instrucciones.instr = break_instr.instr;"});
+break;
+case 11: case 31:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> continue_instr", regla:"instrucciones.instr = continue_instr.instr;"});
+break;
+case 12:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> return instr", regla:"instrucciones.instr = return_instr.instr;"});
+break;
+case 13: case 33:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> do_while_instr", regla:"instrucciones.instr = doWhile_instr.instr;"});
+break;
+case 14: case 34:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> funcion_instr", regla:"instrucciones.instr = funcion_instr.instr;"});
+break;
+case 15: case 35:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> llamada_instr tk_puntocoma", regla:"instrucciones.instr = llamada_instr.instr;"});
+break;
+case 16: case 36:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> main_instr", regla:"instrucciones.instr = main_instr.instr;"});
+break;
+case 17: case 37:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> for_instr", regla:"instrucciones.instr = for_instr.instr;"});
+break;
+case 18: case 38:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> incre_decre_instr tk_puntocoma", regla:"instrucciones.instr = incre_decre_instr.instr;"});
+break;
+case 19:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> declaracion_array_instr tk_puntocoma", regla:"instrucciones.instr = declaracion_array_instr.instr;"});
+break;
+case 20: case 40:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> struct_instr tk_puntocoma", regla:"instrucciones.instr = struct_instr.instr;"});
+break;
+case 21: case 41:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> asignacion_struct_instr tk_puntocoma", regla:"instrucciones.instr = asignacion_struct_instr.instr;"});
+break;
+case 22: case 42:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> assign_array_instr tk_puntocoma", regla:"instrucciones.instr = asignacion_array_instr.instr;"});
+break;
+case 23:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> modificar_acceso_struct tk_puntocoma", regla:"instrucciones.instr = modificar_acceso_struct_instr.instr;"});
 break;
 case 24: case 44:
 
                                                 listaErrores.push(new Exception("Sintáctico", "No se esperaba "+yytext, _$[$0-1].first_line, _$[$0-1].first_column)); 
 break;
+case 32:
+ this.$ = $$[$0]; listaGramatical.push({prod:"instruccion -> return_instr", regla:"instrucciones.instr = return_instr.instr;"});
+break;
+case 39:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> declaracio_array_instr tk_puntocoma", regla:"instrucciones.instr = declaracion_array_instr.instr;"});
+break;
+case 43:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"instruccion -> modificar_acceso_struct_instr tk_puntocoma", regla:"instrucciones.instr = modificar_acceso_struct_instr.instr;"});
+break;
 case 47:
- this.$ = new Main($$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+ this.$ = new Main($$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column);
+         listaGramatical.push({prod:"main_instr -> RVOID RMAIN tk_para tk_parc tk_llavea instrucciones tk_llavec", regla:"main_instr.instr = new Main(instrucciones.list);"});
 break;
 case 48:
  this.$ = new Println($$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column); 
+        listaGramatical.push({prod:"imprimir_instr -> RPRINTLN tk_para expresion tk_parc", regla:"imprimir_instr.instr = new Println(expresion.val);"});
 break;
 case 49:
  this.$ = new Print($$[$0-1],   _$[$0-3].first_line, _$[$0-3].first_column);   
+        listaGramatical.push({prod:"imprimir_instr -> RPRINT tk_para expresion tk_parc", regla:"imprimir_instr.instr = new Println(expresion.val);"});
 break;
 case 50:
  this.$ = new Declaracion($$[$0-3], $$[$0-2], $$[$0],   _$[$0-3].first_line, _$[$0-3].first_column); 
+         listaGramatical.push({prod:"declaracion_instr -> TIPO identificador tk_igual expresion", regla:"declaracion_instr.instr = new Declaracion(TIPO, identificador.val, expresion.val);"});
 break;
 case 51:
  this.$ = new Declaracion($$[$0-1], $$[$0], null, _$[$0-1].first_line, _$[$0-1].first_column); 
+         listaGramatical.push({prod:"declaracion_instr -> TIPO LISTA_ID", regla:"declaracion_instr.instr = new Declaracion(TIPO, lista_id);"});
 break;
 case 52:
 this.$ = new DeclaracionArray($$[$0-5], $$[$0-2], $$[$0], _$[$0-5].first_line, _$[$0-5].first_column);
+          listaGramatical.push({prod:"declaracion_array_instr -> TIPO tk_cora tk_corc identificador tk_igual valores_array", regla:"declaracion_array_instr.instr = new DeclaracionArray(TIPO, identificador.val, valores_array.list);"});
 break;
 case 53:
 this.$ = new DeclaracionArray($$[$0-6], $$[$0-3], new AccesoArreglo($$[$0-1],$$[$0], _$[$0-6].first_line, _$[$0-6].first_column), _$[$0-6].first_line, _$[$0-6].first_column);
+        listaGramatical.push({prod:"declaracion_array_instr -> TIPO tk_cora tk_corc identificador tk_igual identificador list_position", regla:"declaracion_array_instr.instr = new DeclaracionArray(TIPO, identificador.val, valores_array.list);"});
 break;
 case 54:
 this.$ = new DeclaracionArrayRC($$[$0-5], $$[$0-2], $$[$0],false, _$[$0-5].first_line, _$[$0-5].first_column);
+        listaGramatical.push({prod:"declaracion_array_instr -> TIPO tk_cora tk_corc identificador tk_igual identificador", regla:"declaracion_array_instr.instr = new DeclaracionArrayRC(TIPO, identificador.val, identificador.val, false);"});
 break;
 case 55:
 this.$ = new DeclaracionArrayRC($$[$0-6], $$[$0-3], $$[$0],true, _$[$0-6].first_line, _$[$0-6].first_column);
+        listaGramatical.push({prod:"declaracion_array_instr -> TIPO tk_cora tk_corc identificador tk_igual tk_numeral identificador", regla:"declaracion_array_instr.instr = new DeclaracionArrayRC(TIPO, identificador.val, identificador.val, true);"});
 break;
-case 56: case 66:
-this.$ = $$[$0-1];
+case 56:
+this.$ = $$[$0-1]; listaGramatical.push({prod:"valores_array -> tk_cora lista_valores_array tk_corc", regla:"valores_array.val = lista_valores_array.val;"});
 break;
 case 57:
-this.$ = [];
+this.$ = []; listaGramatical.push({prod:"valores_array -> tk_cora tk_corc", regla:"valores_array.val = [];"});
 break;
 case 58:
-$$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+$$[$0-2].push($$[$0]); this.$ = $$[$0-2]; listaGramatical.push({prod:"lista_valores_array -> lista_valores_array tk_coma valores", regla:"lista_valores_array.lista = lista_valores_array.lista.push(valores.val);"});
 break;
-case 59: case 65:
-this.$ = [$$[$0]];
+case 59:
+this.$ = [$$[$0]]; listaGramatical.push({prod:"lista_valores_array -> valores", regla:"lista_valores_array.lista = [valores];"});
 break;
-case 60: case 61: case 171:
-this.$ = $$[$0];
+case 60:
+this.$ = $$[$0]; listaGramatical.push({prod:"valores -> valores_array", regla:"valores.val = valores_array.lista;"});
 break;
-case 62: case 63:
+case 61:
+this.$ = $$[$0]; listaGramatical.push({prod:"valors -> expresion", regla:"valores.val = expresion.val"});
+break;
+case 62:
 this.$ = new AccesoArreglo($$[$0-3], $$[$0-2], _$[$0-3].first_line, _$[$0-3].first_column, $$[$0]);
+        listaGramatical.push({prod:"assign_array_instr -> identificador list_position tk_igual expresion", regla:"assign_array_instr.instr = new AccesoArreglo(identificador.val, list_position.list, expresion.val);"});
+break;
+case 63:
+this.$ = new AccesoArreglo($$[$0-3], $$[$0-2], _$[$0-3].first_line, _$[$0-3].first_column, $$[$0]);
+        listaGramatical.push({prod:"assign_array_instr -> identificador list_position tk_igual valores_array", regla:"assign_array_instr.instr = new AccesoArreglo(identificador.val, list_position.list, valores_array.list);"});
 break;
 case 64:
 $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
+         listaGramatical.push({prod:"list_position -> list_position expresssion_acces", regla:"list_position.list = list_position.list.push(expression_acces.list);"});
+break;
+case 65:
+this.$ = [$$[$0]]; 
+        listaGramatical.push({prod:"list_position -> expression_acces", regla:"list_position.list = [expression_acces.val]"});
+break;
+case 66:
+this.$ = $$[$0-1]; 
+        listaGramatical.push({prod:"expression_acces -> tk_cora expresion tk_corc", regla:"expression_acces.val = expresion.val"});
 break;
 case 67:
  this.$ = new Asignacion($$[$0-2], $$[$0], _$[$0-2].first_line, _$[$0-2].first_column); 
+         listaGramatical.push({prod:"asignacion_instr -> identificador tk_igual expresion", regla:" asignacion_instr.instr = new Asignacion(identificador.val, expresion.val);"});
 break;
 case 68:
  this.$= new Incremento($$[$0-1], true, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"incre_decre_instr -> identificador tk_masmas", regla:"incre_decre_instr.instr = new Incremento(identificador.val);"});
 break;
 case 69:
- this.$= new Decremento($$[$0-1], true, _$[$0-1].first_line, _$[$0-1].first_column); 
+ this.$= new Decremento($$[$0-1], true, _$[$0-1].first_line, _$[$0-1].first_column);
+        listaGramatical.push({prod:"incre_decre_instr -> identificador tk_menosmenos", regla:"incre_decre_instr.instr = new Decremento(identificador.val);"});
 break;
 case 70:
  this.$= new Decremento($$[$0], false, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"l_incre_decre_instr -> tk_menosmenos identificador", regla:"l_incre_decre_instr.instr = new Decremento(identificador.val);"});
 break;
 case 71:
  this.$= new Incremento($$[$0], false, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"l_incre_decre_instr -> tk_masmas identificador", regla:"l_incre_decre_instr.instr = new Incremento(identificador.val);"});
 break;
 case 72:
 this.$ = new If($$[$0-2], $$[$0], null, null, _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"if_instr -> RIF tk_para expresion tk_parc BLOCK_IF", regla:"if_instr.instr = new If(expresion.val, BLOCK_IF.list);"});
 break;
 case 73:
 this.$ = new If($$[$0-4], $$[$0-2], $$[$0], null,   _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"if_instr -> RIF tk_para expresion tk_parc BLOCK_IF RELSE BLOCK_IF", regla:"if_instr.instr = new If(expresion.val, BLOCK_IF.list, BLOCK_IF.list);"});
 break;
 case 74:
 this.$ = new If($$[$0-4], $$[$0-2], null, $$[$0],   _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"if_instr -> RIF tk_para expresion tk_parc BLOCK_IF RELSE if_instr", regla:"if_instr.instr = new If(expresion.val, BLOCK_IF.list, if_instr.instr);"});
+break;
+case 75:
+ this.$ = $$[$0-1]; listaGramatical.push({prod:"BLOCK_IF -> tk_llavea instrucciones tk_llavec", regla:"BLOCK_IF.list = instrucciones.list;"});
+break;
+case 76:
+ this.$ = $$[$0]; listaGramatical.push({prod:"BLOCK_IF -> instruccion2", regla:"BLOCK_IF.list = instruccion2.list"});
 break;
 case 77:
-this.$ = new Switch($$[$0-5], $$[$0-2], $$[$0-1],   _$[$0-7].first_line, _$[$0-7].first_column); 
+this.$ = new Switch($$[$0-5], $$[$0-2], $$[$0-1],   _$[$0-7].first_line, _$[$0-7].first_column);
+        listaGramatical.push({prod:"switch_instr -> RSWITCH tk_para expresion tk_parc tk_llavea list_case default_intr tk_llavec", regla:"switch.instr = new Switch(expresion.val, list_case.list, default_instr.list);"});
 break;
 case 78:
 this.$ = new Switch($$[$0-4], $$[$0-1], null, _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"switch_instr -> RSWITCH tk_para expresion tk_parc tk_llavea list_case tk_llavec", regla:"switch_instr.instr = new Switch(expresion.val, list_case.list);"});
 break;
 case 79:
 this.$ = new Switch($$[$0-4], null, $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"switch_instr -> RSWITCH tk_para expresion tk_parc tk_llavea default_intr tk_llavec", regla:"switch_instr.instr = new Switch(expresion.val, default_instr.list);"});
+break;
+case 80:
+ $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; listaGramatical.push({prod:"list_case -> list_case case_instr", regla:"list_case.list = list_case.list.push(case_instr);"});
+break;
+case 81:
+ this.$ = [$$[$0]]; listaGramatical.push({prod:"list_case -> case_instr", regla:"list_case.list = [case_instr]"});
 break;
 case 82:
 this.$ = new Case($$[$0-2], $$[$0], _$[$0-3].first_line, _$[$0-3].first_column); 
+        listaGramatical.push({prod:"case_instr -> RCASE expresion tk_dospuntos instrucciones", regla:"case_instr.instr = new Case(expresion.val, instrucciones.list);"});
 break;
 case 83:
 this.$ = new Default($$[$0], _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"default_intr -> RDEFAULT tk_dospuntos instrucciones", regla:"default_instr.instr = new Default(instrucciones.list);"});
 break;
-case 84: case 107: case 125: case 141:
+case 84:
  $$[$0-2].push($$[$0]); this.$ = $$[$0-2];
+        listaGramatical.push({prod:"LISTA_ID -> LISTA_ID tk_coma identificador", regla:"LISTA_ID.list = LISTA_ID.list.push(identificador);"});
 break;
-case 85: case 102: case 108: case 113: case 126: case 142:
+case 85:
  this.$=[$$[$0]]; 
+        listaGramatical.push({prod:"LISTA_ID -> identificador", regla:"LISTA_ID.list = [identificador];"});
 break;
 case 86:
  this.$ = new While($$[$0-4], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"while_instr -> RWHILE tk_para expresion tk_parc tk_llavea instrucciones tk_llavec", regla:"while_instr.instr = new While(expresion.val, instrucciones.list);"});
 break;
 case 87:
  this.$ = new Do_While($$[$0-2], $$[$0-6], _$[$0-8].first_line, _$[$0-8].first_column); 
+        listaGramatical.push({prod:"do_while_instr -> RDO tk_llavea instrucciones tk_llavec RWHILE tk_para expresion tk_parc tk_puntocoma", regla:"do_while_instr.instr = new Do_While(expresion.val, instrucciones.list);"});
 break;
 case 88:
 this.$ = new For($$[$0-8], $$[$0-6], $$[$0-4], $$[$0-1], Tipo.ENTERO, _$[$0-10].first_line, _$[$0-10].first_column); 
+        listaGramatical.push({prod:"for_instr -> RFOR tk_para declaracion_for tk_puntocoma expresion tk_puntocoma asignacion_for tk_parc tk_llavea instrucciones tk_llavec", regla:"for_instr.instr = new For(declaracion_for.val, expresion.val, asignacion, instrucciones.list);"});
 break;
 case 89:
 this.$ = new For($$[$0-5], null, $$[$0-3], $$[$0-1], Tipo.STRING, _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"for_instr -> RFOR identificador RIN expresion tk_llavea instrucciones tk_llavec", regla:"for_instr.instr = new For(identificador.val, expresion.val, instrucciones.list);"});
 break;
-case 90: case 91: case 92: case 93: case 161: case 172: case 173: case 174:
-this.$ = $$[$0]; 
+case 90:
+this.$ = $$[$0]; listaGramatical.push({prod:"asignacion_for -> asignacion_instr", regla:"asignacion_for.val = asignacion_instr.instr;"});
+break;
+case 91:
+this.$ = $$[$0]; listaGramatical.push({prod:"asignacion_for -> incre_decre_instr", regla:"asignacion_for.val = incre_decre_instr.instr;"});
+break;
+case 92:
+this.$ = $$[$0]; listaGramatical.push({prod:"declaracion_for -> declaracion_instr", regla:"declaracion_for.val = declaracion_instr.instr"});
+break;
+case 93:
+this.$ = $$[$0]; listaGramatical.push({prod:"declaracion_for -> asignacion_instr", regla:"declaracion_for.val = asignacion_instr.instr;"});
 break;
 case 94:
 this.$ = new Identificador($$[$0], _$[$0].first_line, _$[$0].first_column); 
+        listaGramatical.push({prod:"declaracion_for -> identificador", regla:"declaracion_for.val = new Identificador(identificador.val);"});
 break;
 case 95:
 this.$ = new Break(_$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"break_instr -> RBREAK tk_puntocoma", regla:"break_intr.intr = new Break();"});
 break;
 case 96:
 this.$ = new Continue(_$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"continue_instr -> RCONTINUE tk_puntocoma", regla:"continue_instr.instr = new Continue();"});
 break;
 case 97:
 this.$ = new Return($$[$0-1], _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"return_instr -> RRETURN expresion tk_puntocoma", regla:"return_instr.instr = new Return(expresion.val);"});
 break;
 case 98:
 this.$ = new Return(null, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"return_instr -> RRETURN tk_puntocoma", regla:"return_instr.instr = new Return();"});
 break;
 case 99:
 this.$ = new Ternario($$[$0-4], $$[$0-2], $$[$0], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"ternario_instr -> expresion tk_interrogacion expresion tk_dospuntos expresion", regla:"ternario_instr.intr = new Ternario(expresion.val, expresion.val, expresion.val);"});
 break;
 case 100:
 this.$ = new DeclaracionStruct($$[$0-3], $$[$0-1], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"struct_instr -> RSTRUCT identificador tk_llavea lista_struct tk_llavec", regla:"struct_instr.intr = new DeclaracionStruct(identificador.val, lista_struct);"});
 break;
 case 101:
  $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+        listaGramatical.push({prod:"lista_struct -> lista_struct tk_coma LIST_STRUCT", regla:"lista_struct.list = lista_struct.list.push(LIST_STRUCT);"});
+break;
+case 102:
+ this.$=[$$[$0]]; listaGramatical.push({prod:"list_struct -> LIST_STRUCT", regla:"list_struct.list = [LIST_STRUCT]"});
 break;
 case 103:
  this.$ = {type: $$[$0-1], name: $$[$0], bool:false}; 
+        listaGramatical.push({prod:"LIST_STRUCT -> TIPO identificador", regla:"list_struct.val = {type: TIPO, name: identificador.val}"});
 break;
 case 104:
- this.$ = {type: $$[$0-1], name: $$[$0], bool:true} ; 
+ this.$ = {type: $$[$0-1], name: $$[$0], bool:true} ;
+        listaGramatical.push({prod:"LIST_STRUCT -> identificador identificador", regla:"list_struct.val = {type: identificador.val, name: identificador.val}"});
 break;
 case 105:
 this.$ = new AsignacionStruct($$[$0-6], $$[$0-5], $$[$0-3], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"asignacion_struct -> identificador identificador tk_igual identificador tk_para parametros_struct tk_parc", regla:"asignacion_struct.val = new AsignacionStruct(identificador.val, identificador.val, identificador.val, parametros_struct.list);"});
 break;
 case 106:
 this.$ = new AsignacionStruct($$[$0-3], $$[$0-2], null, null, _$[$0-3].first_line, _$[$0-3].first_column); 
+        listaGramatical.push({prod:"asignacion_struct -> identificador identificador tk_igual RNULL", regla:"asignacion_struct.val = new AsignacionStruct(identificador.val, identificador.val);"});
+break;
+case 107:
+ $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+                listaGramatical.push({prod:"parametros_struct -> parametros_struct tk_coma parametro_struct", regla:"parametros_struct.list = parametros_struct.list.push(parametro_struct);"});
+break;
+case 108:
+ this.$=[$$[$0]]; 
+                listaGramatical.push({prod:"parametros_struct -> parametro_struct", regla:"parametros_struct.list = [parametro_struct];"});
+break;
+case 109:
+ this.$ = $$[$0]; listaGramatical.push({prod:"parametros_struct -> expresion", regla:"parametro_struct.val = expresion.val;"});
 break;
 case 110:
 this.$ = new AccesoStruct($$[$0-1], $$[$0], _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"acceso_struct -> identificador LIST_ACCES_STRUCTS", regla:"acceso_struct.val = new AccesoStruct(identificador, LIST_ACCES);"});
 break;
 case 111:
 this.$ = new ModificarStruct($$[$0-2], $$[$0], _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"modificar_acceso_struct -> acceso_struct tk_igual expresion", regla:"modificar_acceso_struct.val = new ModificarStruct(acceso_struct, expresion.val);"});
 break;
 case 112:
- $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
+ $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
+                listaGramatical.push({prod:"LIST_ACCES_STRUCTS -> LIST_ACCES_STRUCTS LIST_ACCES_STRUCT", regla:"LIST_ACCES_STRUCT.list = LIST_ACCES_STRUCT.list.push(LIST_ACCES_STRUCT);"});
+break;
+case 113:
+ this.$=[$$[$0]]; 
+                listaGramatical.push({prod:"LIST_ACCES_STRUCTS -> LIST_ACCES_STRUCT", regla:"LIST_ACCES_STRUCT.list = [LIS_ACCES_STRUCT];"});
 break;
 case 114:
  this.$ = {id:$$[$0]}; 
+                listaGramatical.push({prod:"LIST_ACCES_STRUCT -> tk_punto identificador", regla:"LIST_ACCES_STRUCT.val = identificador.val;"});
 break;
 case 115:
-this.$ = Tipo.ENTERO;  
+this.$ = Tipo.ENTERO;  listaGramatical.push({prod:"TIPO -> RINT", regla:"TIPO.val = int;"});
 break;
 case 116:
-this.$ = Tipo.DECIMAL; 
+this.$ = Tipo.DECIMAL; listaGramatical.push({prod:"TIPO -> RDOUBLE", regla:"TIPO.val = double;"});
 break;
 case 117:
-this.$ = Tipo.BOOLEANO;
+this.$ = Tipo.BOOLEANO;listaGramatical.push({prod:"TIPO -> RBOOLEAN", regla:"TIPO.val = boolean;"});
 break;
 case 118:
-this.$ = Tipo.CARACTER;
+this.$ = Tipo.CARACTER;listaGramatical.push({prod:"TIPO -> RCHAR", regla:"TIPO.val = char;"});
 break;
 case 119:
-this.$ = Tipo.STRING;  
+this.$ = Tipo.STRING;  listaGramatical.push({prod:"TIPO -> RSTRING", regla:"TIPO.val = string;"});
 break;
 case 120:
-this.$ = Tipo.VOID;    
+this.$ = Tipo.VOID;    listaGramatical.push({prod:"TIPO -> RVOIF", regla:"TIPO.val = void;"});
 break;
 case 121:
  this.$ = new Funcion($$[$0-6], $$[$0-5], [], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column); 
+        listaGramatical.push({prod:"funcion_instr -> TIPO identificador tk_para tk_parc tk_llavea instrucciones tk_llavec", regla:"funcion_instr.instr = new Funcion(TIPO.val, identificador.val, instrucciones.list);"});
 break;
-case 122: case 124:
+case 122:
  this.$ = new Funcion($$[$0-7], $$[$0-6], $$[$0-4], $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
+        listaGramatical.push({prod:"funcion_instr -> TIPO identificador tk_para parametros tk_parc tk_llavea instrucciones tk_llavec", regla:"funcion_instr.instr = new Funcion(TIPO.val, identificador.val, parametros.list, instrucciones.list);"});
 break;
 case 123:
  this.$ = new Funcion($$[$0-5], $$[$0-4], [], $$[$0], _$[$0-5].first_line, _$[$0-5].first_column); 
+        listaGramatical.push({prod:"funcion_instr -> identificador tk_para tk_parc tk_llavea instrucciones tk_llavec", regla:"funcion_instr.instr = new Funcio(identificador.val, instrucciones.list);"});
+break;
+case 124:
+ this.$ = new Funcion($$[$0-7], $$[$0-6], $$[$0-4], $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
+        listaGramatical.push({prod:"funcion_instr -> identificador identificador tk_para parametros tk_parc tk_llavea instrucciones tk_llavec", regla:"funcion_instr.instr = new Funcio(identificador.val, identificador.val, parametros.list, instrucciones.list);"});
+break;
+case 125:
+ $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; listaGramatical.push({prod:"parametros -> parametros tk_coma parametro", regla:"parametros.lista = parametros.lista.push(parametro);"});
+break;
+case 126:
+ this.$=[$$[$0]]; listaGramatical.push({prod:"parametros -> parametro", regla:"parametros.lista = [parametro];"});
 break;
 case 127:
- this.$ = {tipo: $$[$0-1], identificador: $$[$0]} ;
+ this.$ = {tipo: $$[$0-1], identificador: $$[$0]} ; 
+        listaGramatical.push({prod:"parametro -> TIPO identificador", regla:"parametro.tipo = TIPO; parametro.identificador = identificador; "});
 break;
 case 128:
  this.$ = {tipo: Tipo.ARRAY, identificador: $$[$0], type_init: $$[$0-3]}; 
+        listaGramatical.push({prod:"parametro -> TIPO tk_cora tk_corc identificador", regla:"parametro.tipo = TIPO.ARRAY; parametro.identificador = identificador; parametro.tipe_init = TIPO;"});
 break;
 case 129:
  this.$ = {tipo: $$[$0-1], identificador: $$[$0]}; 
+        listaGramatical.push({prod:"parametro -> identificador identificador", regla:"parametro.tipo = identificador.val; parametro.identificador = identificador.val; "});
 break;
 case 130:
  this.$ = new LlamadaFuncion($$[$0-2], [], _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"llamada_instr -> identificador tk_para tk_parc", regla:"llamada_instr.intr = new LamadaFuncion(identificador.val);"});
 break;
 case 131:
  this.$ = new LlamadaFuncion($$[$0-3], $$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column); 
+        listaGramatical.push({prod:"llamada_instr -> identificador tk_para parametros_llamada tk_parc", regla:"llamada_instr.intr = new LamadaFuncion(identificador.val, parametros_llamada.list);"});
+break;
+case 132:
+ this.$ = $$[$0]; 
+        listaGramatical.push({prod:"llamada_instr -> nativas_instr", regla:"llamada_instr.instr = nativas_intrs.instr;"});
 break;
 case 133:
  this.$ = new ToLowerCase($$[$0-4], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RTOLOWERCASE tk_para tk_parc", regla:"nativas_instr.instr = new ToLowerCase(identificador.val);"});
 break;
 case 134:
  this.$ = new ToUpperCase($$[$0-4], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RTOUPPERCASE tk_para tk_parc", regla:"nativas_instr.instr = new ToUpperCase(identificador.val);"});
 break;
 case 135:
  this.$ = new Parse($$[$0-5], $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column);   
+        listaGramatical.push({prod:"nativas_instr -> TIPO tk_punto RPARSE tk_para expresion tk_parc", regla:"nativas_instr.instr = new Parse(identificador.val);"});
 break;
 case 136:
  this.$ = new Length($$[$0-4], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RLENGTH tk_para tk_parc", regla:"nativas_instr.instr = new Length(identificador.val);"});
 break;
 case 137:
  this.$ = new CaracterOfPosition($$[$0-5], $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RCARACTEROFPOSITION tk_para expresion tk_parc", regla:"nativas_instr.instr = new CaracterOfPosition(identificador.val, expresion.val);"});
 break;
 case 138:
  this.$ = new SubString($$[$0-7], $$[$0-3], $$[$0-1], _$[$0-7].first_line, _$[$0-7].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RSUBSTRING tk_para expresion tk_coma expresion tk_parc", regla:"nativas_instr.instr = new SubString(identificador.val, expresion.val, expresion.val);"});
 break;
 case 139:
  this.$ = new Push($$[$0-5], $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RPUSH tk_para expresion tk_parc", regla:"nativas_instr.instr = new Push(identificador.val, expresion.val);"});
 break;
 case 140:
  this.$ = new Pop($$[$0-4], _$[$0-4].first_line, _$[$0-4].first_column); 
+        listaGramatical.push({prod:"nativas_instr -> identificador tk_punto RPOP tk_para tk_parc", regla:"nativas_instr.instr = new Pop(identificador.val);"});
+break;
+case 141:
+ $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+                listaGramatical.push({prod:"parametros_llamada -> parametros_llamada tk_coma parametro_llamada", regla:"parametros_llamada.list = parametros_llamada.list.push(parametro_llamada.val);"});
+break;
+case 142:
+ this.$=[$$[$0]]; 
+                listaGramatical.push({prod:"parametros_llamada -> parametro_llamada", regla:"parametros_llamada.list = [parametros_llamada];"});
+break;
+case 143:
+ this.$ = $$[$0]; listaGramatical.push({prod:"parametro_llamada -> expresion", regla:"parametro_llamada.val = expresion.val;"});
 break;
 case 144:
 this.$ = new Aritmetica($$[$0-2], $$[$0], Operador_Aritmetico.MAS,      _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_mas expresion", regla:"expresion.val = new Aritmetica(expresion.val, expresion.val);"});
 break;
 case 145:
 this.$ = new Aritmetica($$[$0-2], $$[$0], Operador_Aritmetico.RESTA,    _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_menos expresion", regla:"expresion.val = new Aritmetica(expresion.val, expresion.val);"});
 break;
 case 146:
 this.$ = new Aritmetica($$[$0-2], $$[$0], Operador_Aritmetico.POR,      _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_por expresion", regla:"expresion.val = new Aritmetica(expresion.val, expresion.val);"});
 break;
 case 147:
 this.$ = new Aritmetica($$[$0-2], $$[$0], Operador_Aritmetico.DIV,      _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_dividido expresion", regla:"expresion.val = new Aritmetica(expresion.val, expresion.val);"});
 break;
 case 148:
 this.$ = new Aritmetica($$[$0-2], $$[$0], Operador_Aritmetico.MODULO,   _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_modulo expresion", regla:"expresion.val = new Aritmetica(expresion.val, expresion.val);"});
 break;
 case 149:
 this.$ = new Aritmetica($$[$0], null, Operador_Aritmetico.UMENOS, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"expresion -> tk_menos expresion", regla:"expresion.val = new Aritmetica(expresion.val);"});
 break;
 case 150:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MENORQUE,   _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_menorque expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 151:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MAYORQUE,   _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_mayorque expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 152:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MENORIGUAL, _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_menorigual expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 153:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.MAYORIGUAL, _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_mayorigual expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 154:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.IGUALACION, _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_dobleigual expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 155:
 this.$ = new Relacional($$[$0-2], $$[$0], Operador_Relacional.DIFERENCIA, _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_diferente expresion", regla:"expresion.val = new Relacional(expresion.val, expresion.val);"});
 break;
 case 156:
 this.$ = new Logica($$[$0-2], $$[$0], Operador_Logico.AND,   _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_and expresion", regla:"expresion.val = new Logica(expresion.val, expresion.val);"});
 break;
 case 157:
 this.$ = new Logica($$[$0-2], $$[$0], Operador_Logico.OR,    _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_or expresion", regla:"expresion.val = new Logica(expresion.val, expresion.val);"});
 break;
 case 158:
 this.$ = new Logica($$[$0], null, Operador_Logico.NOT, _$[$0-1].first_line, _$[$0-1].first_column); 
+        listaGramatical.push({prod:"expresion -> tk_not expresion", regla:"expresion.val = new Logica(expresion.val);"});
 break;
 case 159:
 this.$ = new Operador($$[$0-2], $$[$0], Operador_Cadena.CONCATENACION, _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_concatenacion expresion", regla:"expresion.val = new Operador(expresion.val, expresion.val);"});
 break;
 case 160:
 this.$ = new Operador($$[$0-2], $$[$0], Operador_Cadena.REPETICION,    _$[$0-2].first_line, _$[$0-2].first_column); 
+        listaGramatical.push({prod:"expresion -> expresion tk_repeticion expresion", regla:"expresion.val = new Operador(expresion.val, expresion.val);"});
+break;
+case 161:
+this.$ = $$[$0]; listaGramatical.push({prod:"expresion -> ternario_instr", regla:"expresion.val = ternario_instr.val;"});
 break;
 case 162:
-this.$ = $$[$0-1]; 
+this.$ = $$[$0-1]; listaGramatical.push({prod:"expresion -> tk_para expresion tk_parc", regla:"expresion.val = expresion.val;"});
 break;
 case 163:
 this.$ = new Primitivo(Tipo.ENTERO,   $$[$0],    _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RENTERO", regla:"expresion.val = new Primitivo(Tipo.Entero, expresion.val);"});
 break;
 case 164:
 this.$ = new Primitivo(Tipo.DECIMAL,  $$[$0],    _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RDECIMAL", regla:"expresion.val = new Primitivo(Tipo.DECIMAL, expresion.val);"});
 break;
 case 165:
 this.$ = new Primitivo(Tipo.CARACTER, $$[$0].slice(1,-1),    _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RCARACTER", regla:"expresion.val = new Primitivo(Tipo.CARACTER, expresion.val);"});
 break;
 case 166:
 this.$ = new Primitivo(Tipo.STRING,   $$[$0],    _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RCADENA", regla:"expresion.val = new Primitivo(Tipo.STRING, expresion.val);"});
 break;
 case 167:
 this.$ = new Identificador(           $$[$0],    _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> identificador", regla:"expresion.val = new Identificador(expresion.val);"});
 break;
 case 168:
 this.$ = new Primitivo(Tipo.BOOLEANO, true,  _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RTRUE", regla:"expresion.val = new Primitivo(Tipo.BOOLEANO, expresion.val);"});
 break;
 case 169:
 this.$ = new Primitivo(Tipo.BOOLEANO, false, _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RFALSE", regla:"expresion.val = new Primitivo(Tipo.BOOLEANO, expresion.val);"});
 break;
 case 170:
 this.$ = new Primitivo(Tipo.NULO,     "null",  _$[$0].first_line, _$[$0].first_column);    
+        listaGramatical.push({prod:"expresion -> RNULL", regla:"expresion.val = new Primitivo(Tipo.NULO, expresion.val);"});
+break;
+case 171:
+this.$ = $$[$0]; listaGramatical.push({prod:"expresion -> llamada_instr", regla:"expresion.val = llamada_instr.instr;"});
+break;
+case 172:
+this.$ = $$[$0]; listaGramatical.push({prod:"expresion -> incre_decre_instr", regla:"expresion.val = incre_decre_instr.instr;"});
+break;
+case 173:
+this.$ = $$[$0]; listaGramatical.push({prod:"expresion -> l_incre_decre_instr", regla:"expresion.val = l_incre_decre_instr.instr;"});
+break;
+case 174:
+this.$ = $$[$0]; listaGramatical.push({prod:"expresion -> acceso_struct", regla:"expresion.val = acceso_struct.instr;"});
 break;
 case 175:
 this.$ = new AccesoArreglo($$[$0-1], $$[$0], _$[$0-1].first_line, _$[$0-1].first_column);
+        listaGramatical.push({prod:"expresion -> identificador list_position", regla:"expresion.val = new AccesoArreglo(identificador, list_position);"});
 break;
 }
 },
@@ -663,6 +908,7 @@ _handle_error:
 }};
 
         var listaErrores = [];
+        var listaGramatical = [];
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
