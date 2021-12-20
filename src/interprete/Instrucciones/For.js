@@ -53,7 +53,32 @@ class For extends Instruction{
             var variable = newTable.getTabla(this.variable);
             var update = this.update.interpretar(tree, newTable);
             if(update instanceof Exception) return update;
-            if(this.update.type != Tipo.STRING){
+            if(this.update.type != Tipo.STRING || update instanceof DeclaracionArray){
+                if (update instanceof DeclaracionArray) {
+                    var symbol;
+                    var newSecondTable = new TablaSimbolo(newTable);
+                    if (update.list_value.length > 0) {
+                        if(variable == null){
+                            symbol = new Simbolo(this.variable.toString(), update.list_value[0].type, this.row, this.column, update.list_value[0].value, "Local");
+                            newSecondTable.setTabla(symbol);
+                        }   
+                        for (var item of update.list_value) {
+                            symbol = new Simbolo(this.variable.toString(), item.type, this.row, this.column, item.value, "Local");
+                            newSecondTable.updateTabla(symbol);
+                            for (var instruction of this.instruction) {
+                                var result = instruction.interpretar(tree, newSecondTable);
+                                if (result instanceof Exception){
+                                    tree.getException().push(result);
+                                    tree.updateConsola(result.toString());
+                                }
+                                if(result instanceof Break) return null;
+                                if(result instanceof Return) return result;
+                                if(result instanceof Continue) break;
+                            }
+                        }
+                        return null;
+                    }
+                }
                 return new Exception("Semántico", "Error del tipo de Operación en For.", this.row, this.column);
             }
             var symbol;
@@ -72,16 +97,38 @@ class For extends Instruction{
                         tree.getException().push(result);
                         tree.updateConsola(result.toString());
                     }
-                    if(result instanceof Break) return result;
+                    if(result instanceof Break) return null;
                     if(result instanceof Return) return result;
-                    if(result instanceof Continue) return result;
+                    if(result instanceof Continue) break;
 
                 }
 
             }
 
         }else if(this.type == Tipo.ARRAY){
-            // here code...
+            var variable = newTable.getTabla(this.variable);
+            var symbol;
+            var newSecondTable = new TablaSimbolo(newTable);
+            if (this.update instanceof Array && this.update.length > 0) {
+                if(variable == null){
+                    symbol = new Simbolo(this.variable.toString(), this.update[0].type, this.row, this.column, this.update[0], "Local");
+                    newSecondTable.setTabla(symbol);
+                }
+                for (var item of this.update) {
+                    symbol = new Simbolo(this.variable.toString(), item.type, this.row, this.column, item.value, "Local");
+                    newSecondTable.updateTabla(symbol);
+                    for (var instruccion of this.instruction) {
+                        var result = instruccion.interpretar(tree, newSecondTable);
+                        if (result instanceof Exception){
+                            tree.getException().push(result);
+                            tree.updateConsola(result.toString());
+                        }
+                        if(result instanceof Break) return null;
+                        if(result instanceof Return) return result;
+                        if(result instanceof Continue) break;
+                    }
+                }
+            }
         }else{
             return new Exception("Semántico", "Error del tipo de Operación en For.", this.row, this.column);
         }
@@ -90,15 +137,17 @@ class For extends Instruction{
 
     getNodo(){
         var nodo = new NodoAST("FOR");
-        //var condiciones = new NodoAST("CONDICIONES");
+        var condiciones = new NodoAST("LOOP");
         var instrucciones = new NodoAST("INSTRUCCIONES");
-        /*for (var cond of this.condition) {
-            condiciones.agregarHijoNodo(cond.getNodo());
-        }*/
+        if (this.condition == null && this.variable != null) {
+            condiciones.agregarHijo(this.variable.toString());
+            condiciones.agregarHijo("in");
+            condiciones.agregarHijo("expersion");
+        }
         for(var instr of this.instruction){
             instrucciones.agregarHijoNodo(instr.getNodo());
         }
-        //nodo.agregarHijoNodo(condiciones);
+        nodo.agregarHijoNodo(condiciones);
         nodo.agregarHijoNodo(instrucciones);
         return nodo;
     }

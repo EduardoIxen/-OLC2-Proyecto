@@ -236,7 +236,7 @@ function tablaGramatical(listaGramatical){
 
     for (var grama of listaGramatical) {
         tablaGra += '<tr>'
-        tablaGra += `<td>${grama['prod']}</td>`
+        tablaGra += `<td>${grama['prod'].replaceAll('<','&lt;').replaceAll('>','&gt;')}</td>`
         tablaGra += `<td>${grama['regla']}</td>`
         tablaGra += '</tr>'
     }
