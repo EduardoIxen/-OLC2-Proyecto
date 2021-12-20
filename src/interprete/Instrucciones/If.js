@@ -105,23 +105,12 @@ class If extends Instruction{
     }
 
     getTabla(tree, table, padre){
-        var salida = "";
-        for (var instr of this.instr_if) {
-            if (instr instanceof Declaracion) {
-                salida += instr.getTabla(tree, this.tabla, padre).toString();
+        try {
+            var salida = "";
+            if ((this.instr_if instanceof Array)) {
+                return "";
             }
-            if (instr instanceof DeclaracionArray) {
-                salida += instr.getTabla(tree, table, padre);
-            }
-            if (instr instanceof DeclaracionStruct) {
-                salida += instr.getTabla(tree, table, padre);
-            }
-            if (instr instanceof DeclaracionArrayRC) {
-                salida += instr.getTabla(tree, table, padre);
-            }//falta declaracion por referencia y copia
-        }
-        if (this.instr_else != null) {
-            for (var instr of this.instr_else) {
+            for (var instr of this.instr_if) {
                 if (instr instanceof Declaracion) {
                     salida += instr.getTabla(tree, this.tabla, padre).toString();
                 }
@@ -135,12 +124,31 @@ class If extends Instruction{
                     salida += instr.getTabla(tree, table, padre);
                 }//falta declaracion por referencia y copia
             }
-        }
-        if (this.instr_elseif != null) {
-            if (this.instr_elseif instanceof If) {
-                this.instr_elseif.getTabla(tree, table, padre);
+            if (this.instr_else != null) {
+                for (var instr of this.instr_else) {
+                    if (instr instanceof Declaracion) {
+                        salida += instr.getTabla(tree, this.tabla, padre).toString();
+                    }
+                    if (instr instanceof DeclaracionArray) {
+                        salida += instr.getTabla(tree, table, padre);
+                    }
+                    if (instr instanceof DeclaracionStruct) {
+                        salida += instr.getTabla(tree, table, padre);
+                    }
+                    if (instr instanceof DeclaracionArrayRC) {
+                        salida += instr.getTabla(tree, table, padre);
+                    }//falta declaracion por referencia y copia
+                }
             }
+            if (this.instr_elseif != null) {
+                if (this.instr_elseif instanceof If) {
+                    this.instr_elseif.getTabla(tree, table, padre);
+                }
+            }
+            return salida;
+        } catch (error) {
+            console.log(error);
+            console.log(this.instr_if)
         }
-        return salida;
     }
 }

@@ -24,9 +24,27 @@ class Operador extends Instruction{
         }*/
 
         if (this.operator == Operador_Cadena.CONCATENACION) {
+            if (left instanceof Primitivo) {
+                left = left.value;
+            }
+            if (right instanceof Primitivo) {
+                right = right.value;
+            }
+            if (left instanceof DeclaracionArray) {
+                left = this.getArreglo(left.list_value);
+            }
+            if (right instanceof DeclaracionArray) {
+                right = this.getArreglo(right.list_value);
+            }
             return left.toString() + right.toString();
         } else if (this.operator == Operador_Cadena.REPETICION) {
             if (this.exp_left.type == Tipo.STRING && (this.exp_right.type == Tipo.ENTERO || this.exp_right.type == Tipo.DECIMAL)) {
+                if (left instanceof Primitivo) {
+                    left = left.value;
+                }
+                if (right instanceof Primitivo) {
+                    right = right.value;
+                }
                 if (right >= 0 ) {
                     return left.repeat(right);
                 }
@@ -52,5 +70,16 @@ class Operador extends Instruction{
             return "^";
         }
         return operador.toString();
+    }
+
+    getArreglo(listaVal){
+        var aux = []
+        for (var v of listaVal) {
+            if (v instanceof Array) {
+                aux.push(this.getArreglo(v));
+            }
+            aux.push(v.value);
+        }
+        return "["+aux+"]";
     }
 }

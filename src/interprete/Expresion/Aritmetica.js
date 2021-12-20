@@ -98,14 +98,25 @@ class Aritmetica extends Instruction{
                 return new Exception("Matematico", "Error matemetico: Division por cero.", this.row, this.column);
             }
             if(this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.ENTERO){
-                this.type = Tipo.ENTERO
-                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right)
+                var resultado = this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right)
+                if (resultado % 1 == 0) {
+                    this.type = Tipo.ENTERO;
+                } else {
+                    this.type = Tipo.DECIMAL;
+                }
+                return resultado
             }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.DECIMAL) || (this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.ENTERO)){
                 this.type = Tipo.DECIMAL;
                 return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
             }else if((this.exp_left.type == Tipo.ENTERO && this.exp_right.type == Tipo.CARACTER) || (this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.ENTERO)){
+                var resultado = this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+                if (resultado % 1 == 0) {
+                    this.type = Tipo.ENTERO;
+                } else {
+                    this.type = Tipo.DECIMAL;
+                }
                 this.type = Tipo.ENTERO;
-                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+                return resultado;
             }else if(this.exp_left.type == Tipo.DECIMAL && this.exp_right.type == Tipo.DECIMAL){
                 this.type = Tipo.DECIMAL;
                 return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
@@ -113,8 +124,14 @@ class Aritmetica extends Instruction{
                 this.type = Tipo.DECIMAL;
                 return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
             }else if(this.exp_left.type == Tipo.CARACTER && this.exp_right.type == Tipo.CARACTER){
+                var resultado = this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+                if (resultado % 1 == 0) {
+                    this.type = Tipo.ENTERO;
+                } else {
+                    this.type = Tipo.DECIMAL;
+                }
                 this.type = Tipo.ENTERO;
-                return this.casteo(this.exp_left.type, left) / this.casteo(this.exp_right.type, right);
+                return resultado;
             }
             return new Exception("Error Semantico","No se pueden dividir los datos "+left.toString()+" "+this.exp_left.type + " y " + right.toString()+" "+this.exp_right.type, this.row, this.column);
 

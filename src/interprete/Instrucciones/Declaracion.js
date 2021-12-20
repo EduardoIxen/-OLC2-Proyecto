@@ -20,6 +20,14 @@ class Declaracion extends Instruction{
                 value = "null";
             }
             this.value = value;
+            if (this.value instanceof Primitivo) {
+                if (this.type == value.type) {
+                    var simbolo = new Simbolo(this.id, this.type, this.row, this.column, value.value, "agregar ambito");
+                    var result = table.setTabla(simbolo);
+                    if (result instanceof Exception) return result;
+                    return null;
+                }
+            }
             if (this.type != this.expression.type && (this.type != Tipo.DECIMAL && this.expression.type != Tipo.ENTERO)) {
                 if (this.expression.type == Tipo.ARRAY) {
                     if (this.type != value.type) {

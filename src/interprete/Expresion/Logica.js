@@ -23,13 +23,13 @@ class Logica extends Instruction{
             if (this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO) {
                 return this.casteo(this.exp_left.type, left) && this.casteo(this.exp_right.type, right);
             }
-            return new Exception("Error semantico", "Error al realizar la operacion"+left.toString()+" "+this.exp_left.type + "&&" + right.toString()+" "+this.exp_right.type, this.row, this.column);
+            return new Exception("Error semantico", "Error al realizar la operacion "+left.toString()+" "+this.exp_left.type + "&&" + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         } else if (this.operator == Operador_Logico.OR) {
             if (this.exp_left.type == Tipo.BOOLEANO && this.exp_right.type == Tipo.BOOLEANO) {
                 return this.casteo(this.exp_left.type, left) || this.casteo(this.exp_right.type, right);
             }
-            return new Exception("Error semantico", "Error al realizar la operacion"+left.toString()+" "+this.exp_left.type + "||" + right.toString()+" "+this.exp_right.type, this.row, this.column);
+            return new Exception("Error semantico", "Error al realizar la operacion "+left.toString()+" "+this.exp_left.type + "||" + right.toString()+" "+this.exp_right.type, this.row, this.column);
 
         } else if (this.operator == Operador_Logico.NOT) {
             if (this.exp_left.type == Tipo.BOOLEANO) {
@@ -41,6 +41,9 @@ class Logica extends Instruction{
     }
 
     casteo(tipo, valor){
+        if (valor instanceof Primitivo) {
+            valor = valor.value
+        }
         if (tipo == Tipo.ENTERO){
             return parseInt(valor);
         }else if (tipo == Tipo.DECIMAL){

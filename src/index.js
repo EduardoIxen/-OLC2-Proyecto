@@ -96,66 +96,82 @@ function execute(){
     }
 
 
-    var init = new NodoAST("RAIZ");
-    var instruc = new NodoAST("INSTRUCCIONES");
-    try {
-        for(var instruAST of ast.getInstruccion()) {
-            instruc.agregarHijoNodo(instruAST.getNodo());
-        }
-    } catch (error) {
-        console.log(error)
-    }
-    init.agregarHijoNodo(instruc)
-    var grafo = ast.getDot(init); //devuelve el codigo de graphviz
-
-    var salidaDot = grafo.dot;
-    var nodosG = grafo.nodosG;
-    var aristasG = grafo.aristasG;
-
-    var nodosVis = new vis.DataSet(nodosG);
-    var aristasVis = new vis.DataSet(aristasG);
-    var contenedor = document.getElementById("grafoAST");
-    var datos = {
-        nodes:nodosVis,
-        edges:aristasVis
-    };
-    var opciones = {
-        physics: {
-            // adaptiveTimestep: true,
-            stabilization: false,
-            barnesHut: {
-                // gravitationalConstant: -8000,
-                // springConstant: 0.04,
-                springLength: 250 
-            },
-            stabilization: {
-                iterations: 987
-            }
-        },
-        nodes:{
-            color:{background:'#F2FF9D'}
-        },
-        layout: {
-            // randomSeed: 191006,
-            // improvedLayout: false,
-            hierarchical: {
-                direction: "UD",
-              },
-        }
-    };
     if (codigoDot) {
+        var init = new NodoAST("RAIZ");
+        var instruc = new NodoAST("INSTRUCCIONES");
+        try {
+            for(var instruAST of ast.getInstruccion()) {
+                instruc.agregarHijoNodo(instruAST.getNodo());
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        init.agregarHijoNodo(instruc)
+        var grafo = ast.getDot(init); //devuelve el codigo de graphviz
+        
+        var salidaDot = grafo.dot;
+
         graph.setValue(salidaDot);
         codigoDot = false;
         return;
     }
     if (graficarArbol) {
+        var init = new NodoAST("RAIZ");
+        var instruc = new NodoAST("INSTRUCCIONES");
+        try {
+            for(var instruAST of ast.getInstruccion()) {
+                instruc.agregarHijoNodo(instruAST.getNodo());
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        init.agregarHijoNodo(instruc)
+        var grafo = ast.getDot(init); //devuelve el codigo de graphviz
+    
+    
+        //var salidaDot = grafo.dot;
+        var nodosG = grafo.nodosG;
+        var aristasG = grafo.aristasG;
+    
+        var nodosVis = new vis.DataSet(nodosG);
+        var aristasVis = new vis.DataSet(aristasG);
+        var contenedor = document.getElementById("grafoAST");
+        var datos = {
+            nodes:nodosVis,
+            edges:aristasVis
+        };
+        var opciones = {
+            physics: {
+                // adaptiveTimestep: true,
+                stabilization: false,
+                barnesHut: {
+                    // gravitationalConstant: -8000,
+                    // springConstant: 0.04,
+                    springLength: 250 
+                },
+                stabilization: {
+                    iterations: 987
+                }
+            },
+            nodes:{
+                color:{background:'#F2FF9D'}
+            },
+            layout: {
+                // randomSeed: 191006,
+                // improvedLayout: false,
+                hierarchical: {
+                    direction: "UD",
+                  },
+            }
+        };
+
+
         var grafoASTVis = new vis.Network(contenedor, datos, opciones)
         graficarArbol = false;
         return;
     }
 
     if (mostrarGramatical) {
-        console.log(instrucciones.gramatical)
         document.getElementById("tabla-reporteGramatical").innerHTML = tablaGramatical(instrucciones.gramatical);
         mostrarGramatical = false;
         return;

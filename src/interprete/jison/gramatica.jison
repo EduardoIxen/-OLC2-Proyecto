@@ -144,11 +144,11 @@
 
 /* operator associations and precedence */
 
+%left 'tk_concatenacion'
 %left 'tk_interrogacion'
 %left 'tk_or'
 %left 'tk_and'
 %right 'UNOT'
-%left 'tk_concatenacion'
 %left 'tk_repeticion'
 %left 'tk_dobleigual' 'tk_diferente' 'tk_menorque' 'tk_menorigual' 'tk_mayorque' 'tk_mayorigual'
 %left 'tk_mas' 'tk_menos'
@@ -165,15 +165,17 @@ init
         : instrucciones EOF                     {       $$ = $1;
                                                         //var retornoErrores = Object.assign([], listaErrores);
                                                         var retornoErrores = listaErrores;
+                                                        var retornoGramatical = listaGramatical;
                                                         listaErrores = [];
-                                                        return {instr:$$, errores:retornoErrores, gramatical:listaGramatical}
+                                                        listaGramatical = [];
+                                                        return {instr:$$, errores:retornoErrores, gramatical:retornoGramatical}
                                                 }
 ;
 
 
 instrucciones
 	: instrucciones instruccion             { $1.push($2); $$ = $1; listaGramatical.push({prod:"instrucciones -> instrucciones instruccion", regla: "instrucciones.lista = instrucciones.lista.add(instruccion.val);"});} // Recursivo por la izquierda.
-	| instruccion				{ $$ = [$1]; listaGramatical.push({prod:"instrucciones", regla:"instrucciones.lista = [instruccion];"});}
+	| instruccion				{ $$ = [$1]; listaGramatical.push({prod:"instrucciones -> instruccion", regla:"instrucciones.lista = [instruccion];"});}
 ;
 
 instruccion
