@@ -287,6 +287,8 @@ assign_array_instr
         listaGramatical.push({prod:"<assign_array_instr> ::= identificador <list_position> tk_igual <expresion>", regla:"assign_array_instr.instr = new AccesoArreglo(identificador.val, list_position.list, expresion.val);"});}
         | identificador list_position tk_igual valores_array    {$$ = new AccesoArreglo($1, $2, @1.first_line, @1.first_column, $4);
         listaGramatical.push({prod:"<assign_array_instr> ::= identificador <list_position> tk_igual <valores_array>", regla:"assign_array_instr.instr = new AccesoArreglo(identificador.val, list_position.list, valores_array.list);"});}
+        | identificador tk_igual valores_array                  {$$ = new AccesoArreglo($1, null, @1.first_line, @1.first_column, $3);
+        listaGramatical.push({prod:"<assign_array_instr> ::= identificador tk_igual <valores_array>", regla:"assign_array_instr.instr = new AccesoArreglo(identificador.val, valores_array.list);"});}
 ;
 
 list_position

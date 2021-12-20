@@ -13,6 +13,17 @@ class Push extends Instruction{
         if(symbol == null){
             return new Exception("Semantico", `La variable (${this.identificador}) no existe`, this.row, this.column);
         }
+
+        if (this.expression instanceof Identificador) {
+            var result = this.expression.interpretar(tree,table);
+            if (symbol.getValue().type == this.expression.type) {
+                this.type = symbol.getValue().type;
+                this.valueAST = result;
+                symbol.getValue().list_value.push(new Primitivo(this.expression.type, result, this.expression.row, this.column));
+                return null;
+            }
+        }
+
         if (this.expression.type == null) {
             var value = this.expression.interpretar(tree, table);
             if (symbol.getValue().type == value.type_init) {

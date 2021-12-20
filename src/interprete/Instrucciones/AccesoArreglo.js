@@ -32,6 +32,11 @@ class AccesoArreglo extends Instruction{
         }
 
 
+        if (this.list_expression == null) {
+            symbol.getValue().list_value = this.new_value;
+            symbol.getValue().list_expresion = this.new_value;
+            return null;
+        }
         var auxIndex = []
         for(var numeroIndex of this.list_expression){
             if (numeroIndex instanceof Identificador || numeroIndex instanceof Aritmetica || numeroIndex instanceof LlamadaFuncion || numeroIndex instanceof Length) {
