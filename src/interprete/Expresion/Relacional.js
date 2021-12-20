@@ -345,6 +345,29 @@ class Relacional extends Instruction{
         var op = this.obtOp(this.operator).toString();
 
         
+        
+
+        if(right.type == Tipo.STRING && left.type == Tipo.STRING){
+            if(!tree.nativeRelacional){
+                gen.setNative(gen.getNativeCompareString());
+            }
+
+            var temp = gen.newTemp();
+            tree.updateConsola(gen.setArithmetic(temp, 'P', '+', '0'));
+            tree.updateConsola(gen.setArithmetic(temp, temp, '+', '1'));
+            tree.updateConsola(gen.setStack(temp,left.value));
+            tree.updateConsola(gen.setArithmetic(temp, temp, '+', '1'));
+            tree.updateConsola(gen.setStack(temp,right.value));
+            tree.updateConsola(gen.setArithmetic('P', 'P', '+', '0'));
+            tree.updateConsola('\tnativeCompareString();\n');
+            temp = gen.newTemp();
+            tree.updateConsola(`\t${temp} = stack[(int)P];\n`)
+            tree.updateConsola(gen.setArithmetic('P', 'P', '-', '0'));
+            left.value = temp;
+            right.value = '1';
+            
+        }
+
         var EV = gen.newLabel();
         var EF = gen.newLabel();
         tree.updateConsola(gen.getIf(left.value, op, right.value, EV, EF));

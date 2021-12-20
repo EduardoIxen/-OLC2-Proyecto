@@ -106,7 +106,7 @@ class Generator{
         var temp = this.newTemp(); // t0
         var EV = this.newLabel();
         var EF = this.newLabel();
-        var conca = '\n/************ NATIVE PRINTF ************/\n';
+        var conca = '\n/************ NATIVE PRINTF STRING ************/\n';
         conca += 'void printfString(){\n'
         conca += this.setArithmetic(temp,'P','+','1');
         var auxTemp = temp; // t1
@@ -157,12 +157,12 @@ class Generator{
         conca += this.setArithmetic(auxTemp1, auxTemp1, '+', '1'); // t9 = t9+1;
         conca += this.setArithmetic(auxTemp2, auxTemp2, '+', '1');   // t10 = t10+1;
         conca += this.addGoto(EF1);    // goto L3;
-        conca += this.addGoto(EV2);    //    L4:
+        conca += this.addLabel(EV2);    //    L4:
         conca += `\tstack[(int)P] = 1;\n`   // stack[(int)P] = 1;
         conca += this.addGoto(EV1); // goto L2;
-        conca += this.addGoto(EF2);    // L5:
+        conca += this.addLabel(EF2);    // L5:
         conca += `\tstack[(int)P] = 0;\n`    // stack[(int)P] = 0;
-        conca += this.addGoto(EV1);    // L2:
+        conca += this.addLabel(EV1);    // L2:
         conca += '\treturn;\n}\n'    // return;
         
         return conca;

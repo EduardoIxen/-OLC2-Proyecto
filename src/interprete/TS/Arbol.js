@@ -13,7 +13,7 @@ class Arbol {
         this.tablaSimbolos = [];
         this.generator = null;
         this.nativas = false;
-        this.nativeConca = false;
+        this.nativeRelacional = false;
     }
 
     getInstruccion() { return this.instruccion; }

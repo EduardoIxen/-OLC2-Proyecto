@@ -101,7 +101,7 @@ class Println extends Instruction{
         }else if(result.type == Tipo.STRING){
 
             if(!tree.nativas){
-                gen.native = gen.getPrintfString();
+                gen.setNative(gen.getPrintfString());
             }
             var temp = gen.newTemp();
             var conca = '';
