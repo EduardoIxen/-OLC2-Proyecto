@@ -98,7 +98,7 @@ class Println extends Instruction{
             var newL = gen.getLabel();
             tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
            
-        }else if(result.type == Tipo.STRING){
+        }else if(result.type == Tipo.STRING || result.type == Tipo.CARACTER){
 
             if(!tree.nativas){
                 gen.setNative(gen.getPrintfString());
