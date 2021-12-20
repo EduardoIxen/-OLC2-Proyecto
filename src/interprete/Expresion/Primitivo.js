@@ -60,6 +60,33 @@ class Primitivo extends Instruction{
                 result.EF = EF;
             }
         
+        }else if(this.type == Tipo.STRING){
+            var result  = new C3D(null, this.type, false);
+            
+            var temp = gen.newTemp();
+            var conca = '\n';
+            conca += gen.setArithmetic(temp, 'H', '', '');
+            var i = 0;
+            while(i<this.value.length){
+                conca += gen.setHeap(this.value[i].charCodeAt(0));
+                conca += gen.newHeap();
+
+                i++;
+            }
+
+            conca += gen.setHeap('-1');
+            conca += gen.newHeap();
+            
+            result.value = temp;
+            result.isTemp = true;
+
+            tree.updateConsola(conca);  
+
+            
+
+            return result;
+            
+             
         }else{
             //here code...
         }

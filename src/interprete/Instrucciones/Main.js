@@ -94,8 +94,16 @@ class Main extends Instruction{
     }
 
     compilar(tree, table){
-        for(var instructions of this.instructions)
-        var instruction = instructions.compilar(tree, table);
+        var conca = '\nvoid main(){\n\tP = 0; H = 0;\n';
+        for(var instructions of this.instructions){
+            var instruction = instructions.compilar(tree, table);
+
+        }
+        conca += tree.getConsola();
+        conca += '\n}\n'
+
+        tree.setConsola(conca);
+
 
     }
 }

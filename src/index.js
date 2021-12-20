@@ -344,9 +344,8 @@ function executeCompiler(){
     
     var consola = '';
     consola += ast.getGenerator().getHeader().toString();
-    consola += '\nvoid main(){\n'
+    consola += ast.getGenerator().getNative();
     consola += ast.getConsola();
-    consola += '}\n'
     ast.setConsola(consola); 
     out.setValue(ast.getConsola())
 

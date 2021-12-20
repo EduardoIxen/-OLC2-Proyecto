@@ -7,8 +7,16 @@ class Generator{
         /**** ETIQUETAS ****/
         this.label = [];   // L0, L1, L2, L3, ... ,tn
         this.countLabel = 0;
+        /**** NATIVES ****/
+        this.native = '';
+        /**** STACK ****/
+        this.stack = [];
+        this.countStack = 0;
+        /**** HEAP ****/
+        this.heap = [];
+        this.countHeap = 0;
     }
-
+/************************************************* TEMPORALES *************************************************/                        
     newTemp(){
         this.temp.push(`t${this.countTemp}`) // t0 t1 t2
         var temp  = `t${this.countTemp}`;   // t0  t1 t2
@@ -20,6 +28,7 @@ class Generator{
         return `t${this.countTemp}`;    // t3
     }
 
+/************************************************* ETIQUETAS *************************************************/
     newLabel(){
         this.label.push(`L${this.countLabel}`) // L0
         var label = `L${this.countLabel}`;  // L0
@@ -31,6 +40,35 @@ class Generator{
         return `L${this.countLabel}`;
     }
 
+/************************************************* HEAP *************************************************/
+    newHeap(){  // H = H + 1;
+        this.countHeap ++;
+        return `\tH = H + 1;\n`.toString();
+    }
+
+    setHeap(ascii){ // heap[int(H)] = ASCII;
+        return `\theap[(int)H] = ${ascii};\n`;
+    }
+
+/************************************************* STACK *************************************************/
+    newStack(){
+        this.countStack ++;
+        return `\tP = P + 1;\n`.toString();
+    }
+    resetStack(reset){
+        this.countStack = this.countStack - parseInt(reset);
+        return `\tP = P - ${reset};\n`.toString();
+    }
+
+    setStack(temp, H){
+        return `\tstack[(int)${temp}] = ${H};\n`;
+    }
+
+    getStack(){
+        // var conca
+    }
+
+/************************************************* HEADER *************************************************/
     getHeader(){
         var consola = '/*******HEADER********/\n';
         consola += '#include <stdio.h>\n';
@@ -54,22 +92,109 @@ class Generator{
         consola += '\n';
         return consola;
     }
+/************************************************* NATIVAS *************************************************/
+    getNative(){
+        return this.native.toString();
+    }
+    setNative(conca){
+        this.native = this.native.toString() + conca.toString();
+    }
+
+/************************************************* PRINTF *************************************************/ 
+    getPrintfString(){
+
+        var temp = this.newTemp(); // t0
+        var EV = this.newLabel();
+        var EF = this.newLabel();
+        var conca = '\n/************ NATIVE PRINTF ************/\n';
+        conca += 'void printfString(){\n'
+        conca += this.setArithmetic(temp,'P','+','1');
+        var auxTemp = temp; // t1
+        temp = this.newTemp();
+        conca += `\t${temp} = stack[(int)${auxTemp}];\n`; // t1 = stack[int(t0)]
+        conca += this.addLabel(EF);
+        var auxTemp = temp; // t1
+        temp = this.newTemp();        // t2
+        conca += `\t${temp} = heap[(int)${auxTemp}];\n`;
+        conca += `\tif(${temp} == -1) goto ${EV};\n`;
+        conca += this.setPrintf('c', 'int',temp, false);
+        conca += this.setArithmetic(auxTemp, auxTemp, '+', '1');
+        conca += this.addGoto(EF);
+        conca += this.addLabel(EV);
+        conca += `\treturn;\n}\n`
+
+        return conca;
+    }
+
+    getNativeCompareString(){
+        var conca = '\n/************ NATIVE COMPARE STRING ************/\n';
+        conca += 'void nativeCompareString(){\n'
+        var temp = this.newTemp();
+        var EV1 = this.newLabel(); // L2
+        var EF1 = this.newLabel(); // L3
+        var EV2 = this.newLabel(); // L4
+        var EF2 = this.newLabel(); // L5
+
+        conca += this.setArithmetic(temp, 'P', '+', '1'); // t8 = P+1;
+        var auxTemp = temp; // t8
+        temp = this.newTemp(); // t9
+        var auxTemp1 = temp;
+        conca += `\t${temp} = stack[(int)${auxTemp}];\n`    // t9 = stack[(int)t8];
+        conca += this.setArithmetic(auxTemp, auxTemp, '+', '1');   // t8 = t8+1;
+        conca += `\t${this.getTemp()} = stack[(int)${auxTemp}];\n`;    // t10 = stack[(int)t8];
+        auxTemp = temp; // t9
+        temp = this.newTemp(); // t10
+        var auxTemp2 = temp;
+        conca += this.addLabel(EF1);    // L3:
+        conca += `\t${this.getTemp()} = heap[(int)${auxTemp}];\n`;    // t11 = heap[(int)t9];
+        auxTemp = temp; // t10
+        temp = this.newTemp(); // t11
+        conca += `\t${this.getTemp()} = heap[(int)${auxTemp}];\n`    // t12 = heap[(int)t10];
+        auxTemp = temp; // t11
+        temp = this.newTemp(); // 12
+        conca += `\tif(${auxTemp} != ${temp}) goto ${EF2};\n`    // if(t11 != t12) goto L5;
+        conca += `\tif(${auxTemp} != -1) goto ${EV2};\n`    // if(t11 == -1) goto L4;
+        conca += this.setArithmetic(auxTemp1, auxTemp1, '+', '1'); // t9 = t9+1;
+        conca += this.setArithmetic(auxTemp2, auxTemp2, '+', '1');   // t10 = t10+1;
+        conca += this.addGoto(EF1);    // goto L3;
+        conca += this.addGoto(EV2);    //    L4:
+        conca += `\tstack[(int)P] = 1;\n`   // stack[(int)P] = 1;
+        conca += this.addGoto(EV1); // goto L2;
+        conca += this.addGoto(EF2);    // L5:
+        conca += `\tstack[(int)P] = 0;\n`    // stack[(int)P] = 0;
+        conca += this.addGoto(EV1);    // L2:
+        conca += '\treturn;\n}\n'    // return;
+        
+        return conca;
+    }
 
     setPrintf(op, type, expression, cond){    // si la cond es true, es un slto de linea.
         var conca = `\tprintf(\"%${op}\", (${type})${expression});\n`;
-        if(cond == true){                                       
+        if(cond){
+            conca += this.newLine(cond);
+        }
+        return conca;
+    }
+/************************************************* SALTO DE LINEA *************************************************/ 
+
+    newLine(cond){
+        var conca = '';
+        if(cond){
             conca +=  `\tprintf(\"%c\", (char)10);\n` // salto de linea
+        }else{
+            conca += '/********** SIN SALTO DE LINEA ***********/'
         }
         return conca;
     }
 
+/************************************************* EXPRESSION *************************************************/ 
     setArithmetic(temp, left, op, right){
         var conca = '';
         if(op == '%'){
-            conca = `\t${temp} = fmod(${left},${right});`;
+            conca = `\t${temp} = fmod(${left},${right});\n`;
         
         }else{
-            conca = `\t${temp} = ${left} ${op} ${right};`;
+            conca = `\t${temp} = ${left} ${op} ${right};\n`;
         }
 
         return conca;

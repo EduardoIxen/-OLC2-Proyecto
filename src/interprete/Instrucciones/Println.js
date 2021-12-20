@@ -98,6 +98,26 @@ class Println extends Instruction{
             var newL = gen.getLabel();
             tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
            
+        }else if(result.type == Tipo.STRING){
+
+            if(!tree.nativas){
+                gen.native = gen.getPrintfString();
+            }
+            var temp = gen.newTemp();
+            var conca = '';
+            conca += gen.setArithmetic(temp, 'P', '+', '0'); // editar a futuro el pos
+            conca += gen.setArithmetic(temp, temp, '+', '1');
+            conca += gen.setStack(temp, result.value);
+            conca += gen.setArithmetic('P', 'P', '+', '0'); // editar a futuro el pos
+            conca += '\tprintfString();\n';
+            temp = gen.newTemp();
+            conca += gen.setArithmetic(temp,'stack[(int)P]','','');
+            conca += gen.setArithmetic('P', 'P', '-', '0'); // // editar a futuro el pos
+            conca += gen.newLine(true) + '\n';
+
+            tree.updateConsola(conca);
+            
+
         }else{
             tree.updateConsola(gen.setPrintf(op, type, result.value, true)+'\n');
         }

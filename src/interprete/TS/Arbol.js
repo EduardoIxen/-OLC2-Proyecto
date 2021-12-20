@@ -12,6 +12,8 @@ class Arbol {
         this.contador = 0;
         this.tablaSimbolos = [];
         this.generator = null;
+        this.nativas = false;
+        this.nativeConca = false;
     }
 
     getInstruccion() { return this.instruccion; }
