@@ -9,6 +9,7 @@ class ToLowerCase extends Instruction{
     }
 
     interpretar(tree, table){
+        console.log("id",this.identificador);
         var symbol = table.getTabla(this.identificador);
         if(symbol == null){
             return new Exception("Semantico", `La variable (${this.identificador}) no existe`, this.row, this.column);

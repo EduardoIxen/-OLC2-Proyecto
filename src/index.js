@@ -229,6 +229,7 @@ function tablaSimbolo(simbolo){
 }
 
 function tablaGramatical(listaGramatical){
+    listaGramatical = listaGramatical.reverse();
     var tablaGra = '';
     tablaGra += "<thead><tr><th scope=\"col\">Producción</th>";
     tablaGra += "<th>Reglas semánticas</th></tr></thead>";

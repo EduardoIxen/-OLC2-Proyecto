@@ -42,7 +42,9 @@ class Case extends Instruction{
                 salida += instr.getTabla(tree,table, padre);
             }if (instr instanceof DeclaracionArrayRC){
                 salida += instr.getTabla(tree,table, padre);
-            } //faltaria declaracion arreglo copia y referencia
+            }if (instr instanceof LlamadaFuncion){
+                salida += instr.getTabla(tree,table, padre);
+            }
         }
         return salida;
     }

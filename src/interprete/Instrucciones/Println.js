@@ -6,33 +6,42 @@ class Println extends Instruction{
     }
 
     interpretar(tree, table){
-        var value = this.expression.interpretar(tree, table);
-        if(value instanceof Exception) return value;
-        if(value == null){
-            var symbol = table.getTabla(this.expression.parameters[0].identificador);
-            var result = Object.values(symbol.value);
-            var texto = '(';
-            texto += this.recorrerStruct(result).toString();
-            value = texto;
-        }else{
-            if (value.typeArray == Tipo.ARRAY && !(value instanceof DeclaracionArray) && !(value instanceof Array)) {
-                //value = this.recorrerArray(value.list_value);
-                
-                try {
+        var concatenacion = "";
+        for (var expression of this.expression) {
+            var value = expression.interpretar(tree, table);
+            if(value instanceof Exception) return value;
+            if(value == null){
+                var symbol = table.getTabla(expression.parameters[0].identificador);
+                var result = Object.values(symbol.value);
+                var texto = '(';
+                texto += this.recorrerStruct(result).toString();
+                value = texto;
+                concatenacion = concatenacion + value;
+            }else{
+                if (value.typeArray == Tipo.ARRAY && !(value instanceof DeclaracionArray) && !(value instanceof Array)) {
+                    try {
+                        value = value.value;
+                        concatenacion = concatenacio + value;
+                    } catch (error) {
+                        value = new Exception("semático", "Index malo", this.row, this.column);
+                        concatenacion += value;
+                    }
+                }else if (value.typeArray == Tipo.ARRAY && (value instanceof Array)) {
+                    value = this.recorrerArray(value);
+                    concatenacion += value;
+                }else if (value.typeArray == Tipo.ARRAY && value.typeArray == Tipo.ARRAY) {
+                    value = this.recorrerArray(value.list_value);
+                    concatenacion += value;
+                }else if (value instanceof Primitivo) {
                     value = value.value;
-                } catch (error) {
-                    value = new Exception("semático", "Index malo", this.row, this.column);
+                    concatenacion = concatenacion + value;
+                }else{
+                    concatenacion += value;
                 }
-            }else if (value.typeArray == Tipo.ARRAY && (value instanceof Array)) {
-                value = this.recorrerArray(value);
-            }else if (value.typeArray == Tipo.ARRAY && value.typeArray == Tipo.ARRAY) {
-                value = this.recorrerArray(value.list_value);
-            }else if (value instanceof Primitivo) {
-                value = value.value;
             }
         }
        
-        tree.updateConsola(value+'\n');
+        tree.updateConsola(concatenacion+'\n');
     }
 
     recorrerArray(listaValores){

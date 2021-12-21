@@ -241,10 +241,10 @@ main_instr
 
 /************************************* [PRINT] y [PRINTLN] ************************************/                                     
 imprimir_instr
-        : RPRINTLN tk_para expresion tk_parc	{ $$ = new Println($3, @1.first_line, @1.first_column); 
-        listaGramatical.push({prod:"<imprimir_instr> ::= RPRINTLN tk_para <expresion> tk_parc", regla:"imprimir_instr.instr = new Println(expresion.val);"});}
-        | RPRINT tk_para expresion tk_parc	{ $$ = new Print($3,   @1.first_line, @1.first_column);   
-        listaGramatical.push({prod:"<imprimir_instr> ::= RPRINT tk_para <expresion> tk_parc", regla:"imprimir_instr.instr = new Println(expresion.val);"});}
+        : RPRINTLN tk_para parametros_llamada tk_parc	{ $$ = new Println($3, @1.first_line, @1.first_column); 
+        listaGramatical.push({prod:"<imprimir_instr> ::= RPRINTLN tk_para <parametros_llamada> tk_parc", regla:"imprimir_instr.instr = new Println(parametros_llamada.list);"});}
+        | RPRINT tk_para parametros_llamada tk_parc	{ $$ = new Print($3,   @1.first_line, @1.first_column);   
+        listaGramatical.push({prod:"<imprimir_instr> ::= RPRINT tk_para <parametros_llamada> tk_parc", regla:"imprimir_instr.instr = new Println(parametros_llamada.list);"});}
 ;
 
 /***************************************** [DECLARACION] ***************************************/     

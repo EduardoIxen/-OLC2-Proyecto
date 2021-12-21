@@ -77,7 +77,9 @@ class Main extends Instruction{
             }
             if (instr instanceof DeclaracionArrayRC) {
                 salida += instr.getTabla(tree, table, "Local").toString();
-            } //falta declaracion por referencia y copia
+            }if (instr instanceof LlamadaFuncion){
+                salida += instr.getTabla(tree,table, padre);
+            }
         }
 
         var dict = {}

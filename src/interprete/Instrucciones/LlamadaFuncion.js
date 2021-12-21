@@ -10,7 +10,6 @@ class LlamadaFuncion extends Instruction{
         if (result == null) {
             return new Exception("Semantico", "No se encontro la funcion "+this.id, this.row, this.column);
         }
-
         var newTable = new TablaSimbolo(tree.getTablaTsGlobal());
         if (result.parameters.length == this.parameters.length) { //cantidad de parametros iguales
             var count = 0;
@@ -156,5 +155,27 @@ class LlamadaFuncion extends Instruction{
         nodo.agregarHijoNodo(parametros);
         return nodo;
 
+    }
+
+    getTabla(tree, table, padre){
+        var salida = "";
+        var result = tree.getFuncion(this.id);
+        if (result == null || result.parameters.length == 0) {
+            return "";
+        }
+        for (var param of result.parameters) {
+            console.log("para for",param)
+            var salida = "";
+            var dict = {}
+            dict['Identificador'] = param.identificador;
+            dict['Tipo'] = "Variable";
+            dict['Tipo2'] = param.tipo.toString();
+            dict['Entorno'] = "Local";
+            dict['Valor'] = "   ";
+            dict['Fila'] =this.row.toString();
+            dict['Columna'] =this.column.toString();
+            tree.addTSG(dict);
+        }
+        return salida;
     }
 }

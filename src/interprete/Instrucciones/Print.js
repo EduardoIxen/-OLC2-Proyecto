@@ -6,33 +6,44 @@ class Print extends Instruction{
     }
 
     interpretar(tree, table){
-        var value = this.expression.interpretar(tree, table);
-        if(value instanceof Exception) return value;
-        if(value == null){
-            var symbol = table.getTabla(this.expression.parameters[0].identificador);
-            var result = Object.values(symbol.value);
-            var texto = '(';
-            texto += this.recorrerStruct(result).toString();
-            value = texto;
-        }else{
-            if (value.typeArray == Tipo.ARRAY && !(value instanceof DeclaracionArray) && !(value instanceof Array)) {
-                //value = this.recorrerArray(value.list_value);
-                
-                try {
+        var concatenacion = "";
+        for (var expression of this.expression) {
+            var value = expression.interpretar(tree, table);
+            if(value instanceof Exception) return value;
+            if(value == null){
+                var symbol = table.getTabla(expression.parameters[0].identificador);
+                var result = Object.values(symbol.value);
+                var texto = '(';
+                texto += this.recorrerStruct(result).toString();
+                value = texto;
+                concatenacion += value;
+            }else{
+                if (value.typeArray == Tipo.ARRAY && !(value instanceof DeclaracionArray) && !(value instanceof Array)) {
+                    //value = this.recorrerArray(value.list_value);
+                    
+                    try {
+                        value = value.value;
+                        concatenacion += value;
+                    } catch (error) {
+                        value = new Exception("semático", "Index malo", this.row, this.column);
+                        concatenacion += value;
+                    }
+                }else if (value.typeArray == Tipo.ARRAY && (value instanceof Array)) {
+                    value = this.recorrerArray(value);
+                    concatenacion += value;
+                }else if (value.typeArray == Tipo.ARRAY && value.typeArray == Tipo.ARRAY) {
+                    value = this.recorrerArray(value.list_value);
+                    concatenacion += value;
+                }else if (value instanceof Primitivo) {
                     value = value.value;
-                } catch (error) {
-                    value = new Exception("semático", "Index malo", this.row, this.column);
+                    concatenacion += value;
+                }else{
+                    concatenacion += value;
                 }
-            }else if (value.typeArray == Tipo.ARRAY && (value instanceof Array)) {
-                value = this.recorrerArray(value);
-            }else if (value.typeArray == Tipo.ARRAY && value.typeArray == Tipo.ARRAY) {
-                value = this.recorrerArray(value.list_value);
-            }else if (value instanceof Primitivo) {
-                value = value.value;
             }
         }
        
-        tree.updateConsola(value);
+        tree.updateConsola(concatenacion);
     }
 
     recorrerArray(listaValores){

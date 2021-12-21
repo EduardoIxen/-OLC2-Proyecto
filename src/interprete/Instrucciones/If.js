@@ -122,7 +122,9 @@ class If extends Instruction{
                 }
                 if (instr instanceof DeclaracionArrayRC) {
                     salida += instr.getTabla(tree, table, padre);
-                }//falta declaracion por referencia y copia
+                }if (instr instanceof LlamadaFuncion){
+                    salida += instr.getTabla(tree,table, padre);
+                }
             }
             if (this.instr_else != null) {
                 for (var instr of this.instr_else) {
@@ -137,7 +139,9 @@ class If extends Instruction{
                     }
                     if (instr instanceof DeclaracionArrayRC) {
                         salida += instr.getTabla(tree, table, padre);
-                    }//falta declaracion por referencia y copia
+                    }if (instr instanceof LlamadaFuncion){
+                        salida += instr.getTabla(tree,table, padre);
+                    }
                 }
             }
             if (this.instr_elseif != null) {
