@@ -60,7 +60,7 @@ class Primitivo extends Instruction{
                 result.EF = EF;
             }
         
-        }else if(this.type == Tipo.STRING){
+        }else if(this.type == Tipo.STRING || this.type == Tipo.CARACTER){
             var result  = new C3D(null, this.type, false);
             
             var temp = gen.newTemp();
@@ -90,7 +90,7 @@ class Primitivo extends Instruction{
         }else{
             //here code...
         }
-        
+
 
         return result;
     }
