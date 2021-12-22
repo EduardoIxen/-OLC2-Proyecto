@@ -116,7 +116,7 @@ class Main extends Instruction{
 
         tree.updateTsSymbol(symbol, newTable.size)
         conca += tree.getConsola();
-        conca += '\n}\n'
+        conca += '\n\treturn;\n}\n'
 
         
 

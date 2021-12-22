@@ -144,7 +144,6 @@ class Declaracion extends Instruction{
         tree.updateConsola(gen.setStack(symbol.posGlobal, value.value));
         tree.updateConsola(`\t/****** Fin de Declaración *******/\n\n`);
         tree.newPos();
-        console.log(symbol)
 
         
         return null;

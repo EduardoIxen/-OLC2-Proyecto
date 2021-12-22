@@ -372,7 +372,7 @@ class Relacional extends Instruction{
         var EV = gen.newLabel();
         var EF = gen.newLabel();
         tree.updateConsola(gen.getIf(left.value, op, right.value, EV, EF));
-        result.isTemp = true;
+        result.isTemp = false;
         result.EV = EV;
         result.EF = EF;
 

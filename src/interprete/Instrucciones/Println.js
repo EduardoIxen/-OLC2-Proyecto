@@ -114,7 +114,6 @@ class Println extends Instruction{
             }else if(result.type == Tipo.STRING || result.type == Tipo.CARACTER){
 
                 if(!tree.nativas){
-                    console.log(tree.nativas);
                     gen.setNative(gen.getPrintfString());
                     tree.nativas = true;
                 }
@@ -129,7 +128,7 @@ class Println extends Instruction{
                 conca += gen.setArithmetic(temp,'stack[(int)P]','','');
                 conca += gen.setArithmetic('P', 'P', '-', tree.getPos()); // // editar a futuro el pos
                 conca += gen.newLine(true) + '\n';
-
+                
                 tree.updateConsola(conca);
                 
 

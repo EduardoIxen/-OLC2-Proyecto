@@ -155,4 +155,85 @@ class If extends Instruction{
             console.log(this.instr_if)
         }
     }
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var condition = this.condition.compilar(tree, table);
+        if(condition instanceof Exception) return condition;
+        tree.updateConsola('\n/******* Iniciando con If *******/\n')
+        if(condition.type == Tipo.BOOLEANO){
+            var newL = gen.newLabel();
+            var newTable = new TablaSimbolo(table);
+            tree.updateConsola(gen.addLabel(condition.EV));
+            try {
+                for(var instruction of this.instr_if){
+                    var result = instruction.compilar(tree, newTable);
+                    if(result instanceof Exception){
+                        gen.setException(result);
+                    }
+                    // if(result instanceof Break) return result;
+                    // if(result instanceof Return) return result;
+                    // if(result instanceof Continue) return result;
+                }
+
+                tree.updateConsola(gen.addGoto(newL));
+            } catch (error) {
+                var result = this.instr_if.compilar(tree, newTable);
+                if(result instanceof Exception){
+                    gen.setException(result);
+                }
+                // if(result instanceof Break) return result;
+                // if(result instanceof Return) return result;
+                // if(result instanceof Continue) return result;
+
+                tree.updateConsola(gen.addGoto(newL));
+                
+            }
+
+            if(this.instr_elseif != null){
+                tree.updateConsola(gen.addLabel(condition.EF));
+                var result = this.instr_elseif.compilar(tree, table);
+                if(result instanceof Exception) return result;
+                // if(result instanceof Break) return result;
+                // if(result instanceof Return) return result;
+                // if(result instanceof Continue) return result;
+
+            }else if(this.instr_else != null){
+                
+                tree.updateConsola(gen.addLabel(condition.EF));
+                try {
+                    for(var instruction of this.instr_else){
+                        var result = instruction.compilar(tree, newTable);
+                        if(result instanceof Exception){
+                            gen.setException(result);
+                        }
+                        // if(result instanceof Break) return result;
+                        // if(result instanceof Return) return result;
+                        // if(result instanceof Continue) return result;
+                        
+                    }   
+                    
+                    
+                } catch (error) {
+                    var result = this.instr_else.compilar(tree, newTable);
+                    if(result instanceof Exception){
+                        gen.setException(result);
+                    }
+                    // if(result instanceof Break) return result;
+                    // if(result instanceof Return) return result;
+                    // if(result instanceof Continue) return result;
+
+                }
+
+            }
+           
+            
+
+            tree.updateConsola(gen.addLabel(newL));            
+
+        }else{
+            return new Exception("Semantico", "Tipo de dato no booleano en IF.", this.row, this.column);
+        }
+
+    }
 }
