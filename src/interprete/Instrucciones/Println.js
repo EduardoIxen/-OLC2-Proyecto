@@ -127,17 +127,19 @@ class Println extends Instruction{
                 temp = gen.newTemp();
                 conca += gen.setArithmetic(temp,'stack[(int)P]','','');
                 conca += gen.setArithmetic('P', 'P', '-', tree.getPos()); // // editar a futuro el pos
-                conca += gen.newLine(true) + '\n';
+                conca += '\n';
                 
                 tree.updateConsola(conca);
                 
 
             }else{
-                tree.updateConsola(gen.setPrintf(op, type, result.value, true)+'\n');
+                tree.updateConsola(gen.setPrintf(op, type, result.value, false)+'\n');
             }
     
 
         }
+
+        tree.updateConsola(gen.newLine(true));
         
     }
 }

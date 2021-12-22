@@ -87,9 +87,62 @@ class Print extends Instruction{
         return nodo;
     }
 
-    compilar(tree, table){
-        var expression = this.expression.compilar(tree, table);
-        var gen = tree.getGenerator();
     
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        for(var value of this.expression){
+            var result = value.compilar(tree, table);
+            if(value instanceof Exception) return result;
+            var op = '';
+            var type = '';
+
+            if(result.type == Tipo.ENTERO){
+                op = 'd';
+                type = 'int';
+            }else if(result.type == Tipo.DECIMAL){
+                // here code...
+                op = 'f';
+                type = 'double';
+            }else if(result.type == Tipo.CARACTER){
+                // here code...
+                op = 'c';
+                type = 'char';
+            }
+                
+                
+            if(result.type == Tipo.BOOLEANO){
+                var newL = gen.getLabel();
+                tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
+            
+            }else if(result.type == Tipo.STRING || result.type == Tipo.CARACTER){
+
+                if(!tree.nativas){
+                    gen.setNative(gen.getPrintfString());
+                    tree.nativas = true;
+                }
+                var temp = gen.newTemp();
+                var conca = '';
+                conca += gen.setArithmetic(temp, 'P', '+', tree.getPos()); // editar a futuro el pos
+                conca += gen.setArithmetic(temp, temp, '+', '1');
+                conca += gen.setStack(temp, result.value);
+                conca += gen.setArithmetic('P', 'P', '+', tree.getPos()); // editar a futuro el pos
+                conca += '\tprintfString();\n';
+                temp = gen.newTemp();
+                conca += gen.setArithmetic(temp,'stack[(int)P]','','');
+                conca += gen.setArithmetic('P', 'P', '-', tree.getPos()); // // editar a futuro el pos
+                conca += '\n';
+                
+                tree.updateConsola(conca);
+                
+
+            }else{
+                tree.updateConsola(gen.setPrintf(op, type, result.value, false)+'\n');
+            }
+    
+
+        }
+
+        tree.updateConsola(gen.newLine(false));
+        
     }
 }

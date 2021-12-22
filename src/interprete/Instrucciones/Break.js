@@ -12,4 +12,8 @@ class Break extends Instruction{
         var nodo =  new NodoAST("BREAK");
         return nodo;
     }
+
+    compilar(tree, table){
+        return this
+    }
 }

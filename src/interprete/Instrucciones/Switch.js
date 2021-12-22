@@ -122,4 +122,23 @@ class Switch extends Instruction{
         }
         return salida;
     }
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+
+        var newTable = new TablaSimbolo(table);
+
+        var newLprueba = gen.newLabel();
+        var newLsalida = gen.newLabel();
+        tree.updateConsola(gen.addGoto(newLprueba));
+        tree.updateConsola(gen.addGoto(newLsalida));
+        tree.updateConsola(gen.addLabel(newLprueba));
+        
+        // if(this.instr_case != null && this.instr_default != null){ // Condition 1 => [<CASES_LIST>][<DEFAULT>]
+        // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
+        // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
+        // }
+
+
+    }
 }
