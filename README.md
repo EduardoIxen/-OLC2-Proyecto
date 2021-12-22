@@ -140,7 +140,7 @@ Se aceptan dos tipos de comentarios:
 | OPERADOR | DESCRIPCION | EJEMPLO|
 |----------|-------------|--------|
 |AND (&&)|Devuelve true si ambos operandos son true, de lo contrario, devuelve false.| true && true //true|
-|OR (`||`)|Devuelve true si alguno de los operandos es true, si ambos son falsos, devuelve false.| true `||` false //true|
+|OR \|\||Devuelve true si alguno de los operandos es true, si ambos son falsos, devuelve false.| true \| false //true|
 |NOT (!)|Devuelve false si el operador es true y devuelve true si el operador es false| !true // false|
 
 ### Operaciones con cadenas <a name="operacionesCad"></a>
