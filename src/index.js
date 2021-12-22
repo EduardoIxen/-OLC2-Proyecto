@@ -341,6 +341,9 @@ function executeCompiler(){
 
     for(var instruction of ast.getInstruccion()){
         var result = instruction.compilar(ast, TsGlobal);
+        if(result instanceof Exception){
+            ast.getGenerator().setException(result);
+        }
     }
     
     var consola = '';
@@ -348,9 +351,19 @@ function executeCompiler(){
     consola += ast.getGenerator().getNative();
     consola += ast.getConsola();
     ast.setConsola(consola); 
+
+    var consolaError = ''
+    for (const e of ast.getGenerator().getException()) {
+        consolaError += e;
+    }
+    
+    // console.log(ast.getTsSymbol())
+    
     out.setValue(ast.getConsola())
+    outCosole.setValue(consolaError)
 
-
+    document.getElementById("tabla-reporte").innerHTML = tablaError(ast.getGenerator().getException());
+    document.getElementById("tabla-simbolo").innerHTML = tablaSimboloC3D(ast.getTsSymbol()); //probar
 }
 
 function graphAST() {
@@ -366,4 +379,36 @@ function generarDot() {
 function generarGramatical() {
     mostrarGramatical = true;
     execute();
+}
+
+
+
+function tablaSimboloC3D(simbolo){
+    var tablaSimbolo = '';
+    tablaSimbolo += "<thead><tr><th scope=\"col\">ID</th>";
+    tablaSimbolo += "<th>Tipo Id</th>";
+    tablaSimbolo += "<th>Tipo</th>";
+    tablaSimbolo += "<th>Ambito</th>";
+    tablaSimbolo += "<th>Tam</th>";
+    tablaSimbolo += "<th>dir</th></tr></thead>";
+    tablaSimbolo += "<tbody>";
+
+    for (var i of simbolo) {
+        tablaSimbolo += '<tr>'
+        tablaSimbolo += `<td>${i.id}</td>`
+        tablaSimbolo += `<td>${i.typeId}</td>`
+        tablaSimbolo += `<td>${i.type}</td>`
+        tablaSimbolo += `<td>${i.ambito}</td>`
+        tablaSimbolo += `<td>${i.posGlobal}</td>`
+        if(i.pos!=null){
+            tablaSimbolo += `<td>${i.pos}</td>`
+        }else{
+            tablaSimbolo += `<td> -- </td>`
+        }
+        tablaSimbolo += '</tr>'
+    }
+    tablaSimbolo += '</tbody>'
+    
+
+    return tablaSimbolo;
 }

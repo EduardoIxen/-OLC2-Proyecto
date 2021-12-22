@@ -87,51 +87,58 @@ class Println extends Instruction{
 
     compilar(tree, table){
         var gen = tree.getGenerator();
-        var result = this.expression.compilar(tree, table);
-        var op = '';
-        var type = '';
+        for(var value of this.expression){
+            var result = value.compilar(tree, table);
+            if(value instanceof Exception) return result;
+            var op = '';
+            var type = '';
 
-        if(result.type == Tipo.ENTERO){
-            op = 'd';
-            type = 'int';
-        }else if(result.type == Tipo.DECIMAL){
-            // here code...
-            op = 'f';
-            type = 'double';
-        }else if(result.type == Tipo.CARACTER){
-            // here code...
-            op = 'c';
-            type = 'char';
-        }
-            
-            
-        if(result.type == Tipo.BOOLEANO){
-            var newL = gen.getLabel();
-            tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
-           
-        }else if(result.type == Tipo.STRING || result.type == Tipo.CARACTER){
-
-            if(!tree.nativas){
-                gen.setNative(gen.getPrintfString());
+            if(result.type == Tipo.ENTERO){
+                op = 'd';
+                type = 'int';
+            }else if(result.type == Tipo.DECIMAL){
+                // here code...
+                op = 'f';
+                type = 'double';
+            }else if(result.type == Tipo.CARACTER){
+                // here code...
+                op = 'c';
+                type = 'char';
             }
-            var temp = gen.newTemp();
-            var conca = '';
-            conca += gen.setArithmetic(temp, 'P', '+', '0'); // editar a futuro el pos
-            conca += gen.setArithmetic(temp, temp, '+', '1');
-            conca += gen.setStack(temp, result.value);
-            conca += gen.setArithmetic('P', 'P', '+', '0'); // editar a futuro el pos
-            conca += '\tprintfString();\n';
-            temp = gen.newTemp();
-            conca += gen.setArithmetic(temp,'stack[(int)P]','','');
-            conca += gen.setArithmetic('P', 'P', '-', '0'); // // editar a futuro el pos
-            conca += gen.newLine(true) + '\n';
-
-            tree.updateConsola(conca);
+                
+                
+            if(result.type == Tipo.BOOLEANO){
+                var newL = gen.getLabel();
+                tree.updateConsola(gen.setBoolean(result.EV, result.EF, null, newL, true)+'\n');
             
+            }else if(result.type == Tipo.STRING || result.type == Tipo.CARACTER){
 
-        }else{
-            tree.updateConsola(gen.setPrintf(op, type, result.value, true)+'\n');
-        }
+                if(!tree.nativas){
+                    console.log(tree.nativas);
+                    gen.setNative(gen.getPrintfString());
+                    tree.nativas = true;
+                }
+                var temp = gen.newTemp();
+                var conca = '';
+                conca += gen.setArithmetic(temp, 'P', '+', result.posGlobal); // editar a futuro el pos
+                conca += gen.setArithmetic(temp, temp, '+', '1');
+                conca += gen.setStack(temp, result.value);
+                conca += gen.setArithmetic('P', 'P', '+', result.posGlobal); // editar a futuro el pos
+                conca += '\tprintfString();\n';
+                temp = gen.newTemp();
+                conca += gen.setArithmetic(temp,'stack[(int)P]','','');
+                conca += gen.setArithmetic('P', 'P', '-', result.posGlobal); // // editar a futuro el pos
+                conca += gen.newLine(true) + '\n';
+
+                tree.updateConsola(conca);
+                
+
+            }else{
+                tree.updateConsola(gen.setPrintf(op, type, result.value, true)+'\n');
+            }
     
+
+        }
+        
     }
 }

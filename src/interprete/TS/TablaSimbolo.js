@@ -13,6 +13,14 @@ class TablaSimbolo{
         this.anterior = anterior;
         this.funciones = {};
         this.struct = {};
+
+        //compile
+        this.size = 0;
+        this.returnSize = 0;
+        if(anterior != null){
+            this.size = this.anterior.size;
+            // this
+        }
     }
 
 
@@ -65,4 +73,15 @@ class TablaSimbolo{
         }
         return new Exception("Semantico",`Variable ${simbolo.getId()} no encontrada.`, simbolo.getRow(), simbolo.getColumn());
     }
+    
+    isGlobal(){
+        var tablaActual = this;
+        var global = true;
+        tablaActual = tablaActual.anterior;
+        if(tablaActual != null){
+            return !(global);
+        }
+        return global;
+    }
+
 }

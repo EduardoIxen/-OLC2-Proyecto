@@ -89,4 +89,64 @@ class Declaracion extends Instruction{
         tree.addTSG(dict);
         return salida;
     }
+
+    compilar(tree, table){
+        var value = null;
+        var gen = tree.getGenerator();
+        if(this.expression != null){
+            value = this.expression.compilar(tree, table);
+            if (value instanceof Exception) return value;
+        }
+        
+        if (this.type != this.expression.type && (this.type != Tipo.DECIMAL && this.expression.type != Tipo.ENTERO)) {
+            if (this.expression.type == Tipo.ARRAY) {
+                if (this.type != value.type) {
+                    return Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+                }
+            }else{
+                return new Exception("Semantico", "Expresion incompatible con el tipo de dato de la variable.", this.row, this.column);
+            }
+        }
+    
+        var symbol = table.getTabla(this.id);
+        var isGlobal = '';
+        if(symbol != null){
+            return new Exception("Semantico", `Ya existe la variable ${this.id}`, this.row, this.column);
+        }
+        symbol = new Simbolo(this.id, this.type, this.row, this.column, value, null);
+        if(table.isGlobal()){
+            isGlobal = 'Global';
+            
+        }else{
+            isGlobal = 'Local';
+
+            table.size ++;
+        }
+        symbol.pos = null; // puede variar segun el tamaño
+        symbol.ambito = isGlobal;
+        
+        symbol.isTemp = true;
+        symbol.isGlobal = table.isGlobal();
+        symbol.posGlobal = tree.getPos();
+        var result = table.setTabla(symbol);
+        
+        if(result instanceof Exception) return result;
+
+        var auxSymbol = new Simbolo(this.id, this.type, this.row, this.column, value, isGlobal);
+        auxSymbol.pos = null; // puede variar segun el tamaño
+        auxSymbol.isTemp = true;
+        auxSymbol.isGlobal = table.isGlobal();
+        auxSymbol.posGlobal = tree.getPos();
+        auxSymbol.typeId = tree.getType(this.type);
+        auxSymbol.type = tree.getType(this.type);
+        tree.pushTsSymbol(auxSymbol);
+        tree.updateConsola(`\t/********** Declaración **********/\n`);
+        tree.updateConsola(gen.setStack(symbol.posGlobal, value.value));
+        tree.updateConsola(`\t/****** Fin de Declaración *******/\n\n`);
+        tree.newPos();
+        console.log(symbol)
+
+        
+        return null;
+    }
 }

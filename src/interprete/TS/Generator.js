@@ -15,6 +15,9 @@ class Generator{
         /**** HEAP ****/
         this.heap = [];
         this.countHeap = 0;
+        /**** EXCEPTION ****/
+        this.exception = [];
+        
     }
 /************************************************* TEMPORALES *************************************************/                        
     newTemp(){
@@ -64,8 +67,8 @@ class Generator{
         return `\tstack[(int)${temp}] = ${H};\n`;
     }
 
-    getStack(){
-        // var conca
+    getStack(temp, pos){
+        return `\t${temp} = stack[(int)${pos}];\n`
     }
 
 /************************************************* HEADER *************************************************/
@@ -255,6 +258,11 @@ class Generator{
         return conca;
     }
 
-    // getAnd()
-
+    /*************
+     * Exception *
+    **************/
+    setException(exception){
+        this.exception.push(exception);
+    }
+    getException(){ return this.exception; }
 }

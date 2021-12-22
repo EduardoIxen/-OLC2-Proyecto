@@ -96,14 +96,31 @@ class Main extends Instruction{
     }
 
     compilar(tree, table){
+        var gen = tree.getGenerator();
         var conca = '\nvoid main(){\n\tP = 0; H = 0;\n';
+        var newTable = new TablaSimbolo(table);
+
+        var symbol = new Simbolo('main', 'VOID', this.row, this.column, ' ', "Global");
+        symbol.typeId = 'Function';
+        symbol.posGlobal = '--';
+        symbol.pos = null;
+        tree.pushTsSymbol(symbol);
         for(var instructions of this.instructions){
-            var instruction = instructions.compilar(tree, table);
+            var instruction = instructions.compilar(tree, newTable);
+            if(instruction instanceof Exception){
+                gen.setException(instruction);
+            }
+            
 
         }
+
+        tree.updateTsSymbol(symbol, newTable.size)
         conca += tree.getConsola();
         conca += '\n}\n'
 
+        
+
+        
         tree.setConsola(conca);
 
 

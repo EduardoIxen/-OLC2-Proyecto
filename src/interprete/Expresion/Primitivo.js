@@ -79,10 +79,9 @@ class Primitivo extends Instruction{
             
             result.value = temp;
             result.isTemp = true;
+            result.posGlobal = tree.getPos();
 
             tree.updateConsola(conca);  
-
-            
 
             return result;
             

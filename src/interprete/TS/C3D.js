@@ -5,6 +5,7 @@ class C3D{
         this.isTemp = isTemp; // temp || label
         this.EV = ''; // ETIQUETA VERDADERA
         this.EF = ''; // ETIQUETA FALSA
+        this.posGlobal = null; // POSICIÓN DEL STACK
     }
 
 }

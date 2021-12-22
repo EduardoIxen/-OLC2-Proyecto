@@ -9,6 +9,17 @@ class Simbolo{
         this.ambito = ambito;
         this.nameStruct = null;
         this.typeArray = null;
+
+        // compile
+        this.pos = 0;         // Stack position.
+        this.posGlobal = 0;
+        this.isTemp = null;   // Si es Temp o Label.
+        this.EV = '';         // Label True.
+        this.EF = '';         // Label False.
+        this.isGlobal = null; // Verifica si es Global o Local.
+        this.typeId = '';
+
+
     }
 
 
@@ -29,5 +40,24 @@ class Simbolo{
 
     getAmbito(){ return this.ambito; }
     setAmbito(ambito){ this.ambito = ambito; }
+
+
+//     this.EV = '';         // Label True.
+//     this.EF = '';         // Label False.
+//     this.isGlobal = null; // Verifica si es Global o Local.
+
+    getPos(){ return this.pos; }
+    setPos(pos){ this.pos = pos; }
+
+    getIsTemp(){ return this.isTemp; }
+    setIsTemp(isTemp){ this.isTemp = isTemp; }
+
+    getEF(){ return this.EV; }
+    setEV(EV){ this.EV = EV; }
+
+    getEF(){ return this.EF; }
+    setEF(EF){ this.EF = EF; }
+
+
 
 }

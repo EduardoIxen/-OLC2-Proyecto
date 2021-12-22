@@ -11,9 +11,13 @@ class Arbol {
         this.dot = "";
         this.contador = 0;
         this.tablaSimbolos = [];
+
+        // compile
         this.generator = null;
         this.nativas = false;
         this.nativeRelacional = false;
+        this.stackGlobal = 0;
+        this.tsSymbol = [];
     }
 
     getInstruccion() { return this.instruccion; }
@@ -97,10 +101,6 @@ class Arbol {
         }
     }
 
-
-    getGenerator(){ return this.generator; }
-    setGenerator(generator){ this.generator = generator; }
-
     verTipo(tipoDato){
         if (tipoDato['Tipo2'] == Tipo.ENTERO) {
             tipoDato['Tipo2'] = "INT";
@@ -125,4 +125,66 @@ class Arbol {
         }
         return tipoDato;
     }
+
+
+    getType(tipoDato){
+        if (tipoDato == Tipo.ENTERO) {
+            tipoDato = "INT";
+        }else if (tipoDato == Tipo.DECIMAL) {
+            tipoDato = "DOUBLE";
+        }else if (tipoDato == Tipo.STRING) {
+            tipoDato = "STRING";
+        }else if (tipoDato == Tipo.BOOLEANO) {
+            tipoDato = "BOOLEAN";
+        }else if (tipoDato == Tipo.CARACTER) {
+            tipoDato = "CHAR";
+        }else if (tipoDato == Tipo.IDENTIFICADOR) {
+            tipoDato = "IDENTIFICADOR";
+        }else if (tipoDato == Tipo.NULO) {
+            tipoDato = "NULO";
+        }else if (tipoDato == Tipo.ARRAY) {
+            tipoDato = "ARRAY";
+        }else if (tipoDato == Tipo.STRUCT) {
+            tipoDato = "STRUCT";
+        }else if (tipoDato == Tipo.VOID) {
+            tipoDato = "VOID";
+        }
+        return tipoDato;
+    }
+
+    /******************** COMPILE ********************/
+    getGenerator(){ return this.generator; }
+    setGenerator(generator){ this.generator = generator; }
+
+    newPos(){
+        this.stackGlobal ++;
+    }
+    getPos(){
+        return this.stackGlobal;
+    }
+
+    pushTsSymbol(symbol){
+        this.tsSymbol.push(symbol);
+    }
+
+    getTsSymbol(){ return this.tsSymbol; }
+
+    updateTsSymbol(symbol, size){
+        for(var ts of this.tsSymbol){
+            if(ts.id == symbol.id){
+                symbol.pos = size;
+                return;
+            }
+        }
+    }
+
+    changeValueTsSymbol(symbol, value){
+        for(var ts of this.tsSymbol){
+            if(ts.id == symbol.id){
+                symbol.value = value;
+                return;
+            }
+        }
+    }
+
 }

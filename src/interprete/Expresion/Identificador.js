@@ -21,4 +21,24 @@ class Identificador extends Instruction {
         nodo.agregarHijo(this.identificador.toString());
         return nodo;
     }
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var symbol = table.getTabla(this.identificador);
+        if(symbol == null){
+            return new Exception("Semantico", `Variable ${this.identificador} no encontrada.`, this.row, this.column);
+        }
+        var temp = gen.newTemp();
+        this.type = symbol.getType();
+        tree.updateConsola(`\t/********** Identificador **********/\n`);
+        tree.updateConsola(gen.getStack(temp, symbol.posGlobal))
+        tree.updateConsola(`\t/******* Fin de Declaración ********/\n\n`);
+        var result = new C3D(temp, this.type, true);
+        result.posGlobal = symbol.posGlobal;
+
+        return result;
+
+
+
+    }
 }

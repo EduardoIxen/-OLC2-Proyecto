@@ -350,6 +350,7 @@ class Relacional extends Instruction{
         if((right.type == Tipo.STRING || left.type == Tipo.STRING) || (right.type == Tipo.CARACTER || left.type == Tipo.CARACTER )){
             if(!tree.nativeRelacional){
                 gen.setNative(gen.getNativeCompareString());
+                tree.nativeRelacional = true;
             }
 
             var temp = gen.newTemp();
