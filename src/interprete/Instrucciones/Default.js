@@ -16,4 +16,9 @@ class Default extends Instruction{
         var nodo = new NodoAST("DEFAULT");
         return nodo;
     }
+
+    compilar(tree, table){
+        return null;
+
+    }
 }

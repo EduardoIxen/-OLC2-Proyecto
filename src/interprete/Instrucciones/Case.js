@@ -49,4 +49,11 @@ class Case extends Instruction{
         return salida;
     }
 
+    compilar(tree, table){
+        var condition = this.condition.compilar(tree, table);
+        if(condition instanceof Exception) return condition;
+
+        return condition;
+    }
+
 }

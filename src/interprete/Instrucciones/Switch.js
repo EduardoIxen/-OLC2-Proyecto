@@ -110,11 +110,14 @@ class Switch extends Instruction{
 
     getTabla(tree, table, padre){
         var salida = "";
-        for (var instrCase of this.instr_case) {
-            if (instrCase instanceof Case) {
-                salida += instrCase.getTabla(tree, this.tabla, padre).toString();
+        if(this.instr_case != null){
+            for (var instrCase of this.instr_case) {
+                if (instrCase instanceof Case) {
+                    salida += instrCase.getTabla(tree, this.tabla, padre).toString();
+                }
             }
         }
+        
         if (this.instr_default != null) {
             if (this.instr_default instanceof Case) {
                 this.instr_default.getTabla(tree, this.tabla, padre);
@@ -126,14 +129,92 @@ class Switch extends Instruction{
     compilar(tree, table){
         var gen = tree.getGenerator();
 
-        var newTable = new TablaSimbolo(table);
-
+        var condition = this.condition.compilar(tree, table);
+        if(condition instanceof Exception) return condition;
+        
         var newLprueba = gen.newLabel();
         var newLsalida = gen.newLabel();
-        tree.updateConsola(gen.addGoto(newLprueba));
-        tree.updateConsola(gen.addGoto(newLsalida));
-        tree.updateConsola(gen.addLabel(newLprueba));
+        var newTable = new TablaSimbolo(table);
+        var conca1 = ''; // la salida del if
+        var conca2 = ''; // comparaciones de los case
+        var conca3 = ''; // salida
+        var labelTemp = [];
+
+        conca1 += gen.addGoto(newLprueba);
+
+        conca2 += gen.addGoto(newLsalida);
+        conca2 += gen.addLabel(newLprueba);
         
+        if(this.instr_case != null){
+            for(var instruction of this.instr_case){
+                var result = instruction.compilar(tree, table);
+                if(result instanceof Exception){
+                    gen.setException(result);
+                }
+                var EV = gen.newLabel();
+                conca2 += gen.onlyIf(condition.value, '==', result.value, EV);
+                labelTemp.push(gen.addLabel(EV).toString());
+            }
+        }
+        var concaDefault = null;
+        if(this.instr_default != null){
+            var EV = gen.newLabel();
+            conca2 += gen.addGoto(EV);
+            concaDefault = gen.addLabel(EV);
+        }
+
+        conca3 += gen.addLabel(newLsalida);
+        
+        
+        
+        /********************** MOSTRANDO C3D DEL SWITCH **********************/
+   
+        tree.updateConsola(conca1);
+      
+        var count = 0;
+        if(this.instr_case!=null){
+            tree.updateConsola("\n\t/***************** [<LIST>][<CASE>] *****************/\n")
+            for(var instruction of this.instr_case){
+                tree.updateConsola(labelTemp[count])
+                for(var instructions of instruction.getInstruction()){
+                    var value = instructions.compilar(tree, newTable);
+                    if(value instanceof Exception){
+                        gen.setException(value);
+                    }
+                    if(value instanceof Break){
+                        tree.updateConsola(gen.addGoto(newLsalida))
+                    }
+                }
+                count ++;
+            }
+            tree.updateConsola("\t/****************************************************/\n")
+        }
+       
+
+        if(concaDefault!=null){
+
+            tree.updateConsola("\n\t/***************** [<DEFAULT>] *****************/\n")
+            tree.updateConsola(concaDefault);
+            for (let instruction of this.instr_default.getInstruction()){
+                var value = instruction.compilar(tree, newTable);
+                if(value instanceof Exception){
+                    gen.setException(value);
+                }
+                if(value instanceof Break){
+                    tree.updateConsola(gen.addGoto(newLsalida))
+                }
+
+            }
+            tree.updateConsola("\t/****************************************************/\n")
+        }
+        
+        tree.updateConsola(conca2);
+        
+        tree.updateConsola(conca3);        
+    
+        
+
+
         // if(this.instr_case != null && this.instr_default != null){ // Condition 1 => [<CASES_LIST>][<DEFAULT>]
         // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
         // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]

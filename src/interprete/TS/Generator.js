@@ -258,6 +258,12 @@ class Generator{
         return conca;
     }
 
+    onlyIf(left, op, right, EV){
+        var conca = '';
+        conca += `\n\tif(${left} ${op} ${right}) goto ${EV};\n`
+        return conca;
+    }
+
     /*************
      * Exception *
     **************/
