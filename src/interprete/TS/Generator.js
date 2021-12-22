@@ -156,7 +156,7 @@ class Generator{
         auxTemp = temp; // t11
         temp = this.newTemp(); // 12
         conca += `\tif(${auxTemp} != ${temp}) goto ${EF2};\n`    // if(t11 != t12) goto L5;
-        conca += `\tif(${auxTemp} != -1) goto ${EV2};\n`    // if(t11 == -1) goto L4;
+        conca += `\tif(${auxTemp} == -1) goto ${EV2};\n`    // if(t11 == -1) goto L4;
         conca += this.setArithmetic(auxTemp1, auxTemp1, '+', '1'); // t9 = t9+1;
         conca += this.setArithmetic(auxTemp2, auxTemp2, '+', '1');   // t10 = t10+1;
         conca += this.addGoto(EF1);    // goto L3;
