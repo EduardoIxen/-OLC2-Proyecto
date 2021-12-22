@@ -171,4 +171,37 @@ class For extends Instruction{
         }
         return salida;
     }
+
+    compilar(tree, table){
+        console.log(this.variable)
+        console.log(this.condition)
+        console.log(this.update)
+        console.log(this.instruction)
+        var gen = tree.getGenerator();
+        if (this.type == Tipo.ENTERO) {
+            var newTable = new TablaSimbolo(table);
+            var newVar = this.variable.compilar(tree, newTable);
+            console.log(newVar)
+            var newL = gen.newLabel();
+            tree.updateConsola(gen.addLabel(newL));
+            if (this.condition.type == Tipo.BOOLEANO) {
+                var cond = this.condition.compilar(tree,newTable);
+                tree.updateConsola(gen.addLabel(cond.EV));
+                for (var instruction of this.instruction) {
+                    var result = instruction.compilar(tree, newTable);
+                    if (result instanceof Exception) {
+                        gen.setException(result);
+                    }
+                }
+                this.update.compilar(tree,newTable);
+                tree.updateConsola(gen.addGoto(newL));
+                tree.updateConsola(gen.addLabel(cond.EF));
+            }else{
+                return new Exception("Semántico", "La expresion de comparacion no es de tipo booleana.",this.row, this.column)
+            }
+            
+        }else{
+            return new Exception("Semántico","El dato debe de ser de tipo entero.", this.row, this.column);
+        }
+    }
 }
