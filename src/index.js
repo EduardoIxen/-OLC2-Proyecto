@@ -389,8 +389,8 @@ function tablaSimboloC3D(simbolo){
     tablaSimbolo += "<th>Tipo Id</th>";
     tablaSimbolo += "<th>Tipo</th>";
     tablaSimbolo += "<th>Ambito</th>";
-    tablaSimbolo += "<th>Tam</th>";
-    tablaSimbolo += "<th>dir</th></tr></thead>";
+    tablaSimbolo += "<th>dir</th>";
+    tablaSimbolo += "<th>tam</th></tr></thead>";
     tablaSimbolo += "<tbody>";
 
     for (var i of simbolo) {
