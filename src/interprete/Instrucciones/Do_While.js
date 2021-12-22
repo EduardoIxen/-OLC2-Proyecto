@@ -75,4 +75,22 @@ class Do_While extends Instruction{
         }
         return salida;
     }
+
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+        var newTable = new TablaSimbolo(table);
+        var newL = gen.newLabel();
+        tree.updateConsola(gen.addLabel(newL));
+        for (var instruccion of this.instrucciones) {
+            var result = instruccion.compilar(tree, newTable)
+            if (result instanceof Exception) {
+                gen.setException(result);
+            }
+        }
+        var condicion = this.condicion.compilar(tree, table);
+        tree.updateConsola(gen.addLabel(condicion.EV))
+        tree.updateConsola(gen.addGoto(newL));
+        tree.updateConsola(gen.addLabel(condicion.EF));
+
+    }
 }
