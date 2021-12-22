@@ -35,17 +35,16 @@ class Asignacion extends Instruction{
         var symbol = table.getTabla(this.id);
 
         if(symbol == null){
-            return new Exception("Semantico", `Variable ${this.identificador} no encontrada.`, this.row, this.column);
+            return new Exception("Semantico", `Variable ${this.id} no encontrada.`, this.row, this.column);
         }
 
         var value = this.expression.compilar(tree, table);
         if(value instanceof Exception) return result;
-        console.log(symbol);
-        console.log(value);
+
         if(symbol.type != value.type){
             return new Exception("Semantico", `Tipos diferentes.`, this.row, this.column);
         }
-
+ 
         symbol.value = value.value;
         symbol.isTemp = true;
 
@@ -54,7 +53,6 @@ class Asignacion extends Instruction{
         tree.updateConsola(gen.setStack(symbol.posGlobal, value.value));
         tree.updateConsola(`\t/***** Fin de Asignación *****/\n\n`);
 
-        console.log("a")
         
         return null;
 

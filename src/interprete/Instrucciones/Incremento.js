@@ -39,4 +39,32 @@ class Incremento extends Instruction{
         return nodo;
     }
 
+    compilar(tree, table){
+        var gen = tree.getGenerator();
+
+        var symbol = table.getTabla(this.identificador);
+        if(symbol == null){
+            return new Exception("Semantico", `Variable ${this.identificador} no encontrada.`, this.row, this.column);
+        }
+        var temp = gen.newTemp();
+
+        if(symbol.type == Tipo.ENTERO || symbol.type == Tipo.DECIMAL){
+            tree.updateConsola(gen.getStack(temp, symbol.posGlobal));
+
+            var auxTemp = gen.newTemp();
+            tree.updateConsola(gen.setArithmetic(auxTemp, temp, '+', '1'));
+            
+            symbol.value = auxTemp;
+            symbol.isTemp = true;
+
+            tree.changeValueTsSymbol(symbol, auxTemp);
+            tree.updateConsola("\t/********* Incremento *********/\n");
+            tree.updateConsola(gen.setStack(symbol.posGlobal, auxTemp));
+            tree.updateConsola(`\t/***** Fin de Incremento *****/\n\n`);
+
+        }else{
+            return new Exception("Semantico", "Error de tipo de dato.", this.row, this.column);
+        }
+    }
+
 }
