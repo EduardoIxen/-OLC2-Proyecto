@@ -120,14 +120,14 @@ class Println extends Instruction{
                 }
                 var temp = gen.newTemp();
                 var conca = '';
-                conca += gen.setArithmetic(temp, 'P', '+', result.posGlobal); // editar a futuro el pos
+                conca += gen.setArithmetic(temp, 'P', '+', tree.getPos()); // editar a futuro el pos
                 conca += gen.setArithmetic(temp, temp, '+', '1');
                 conca += gen.setStack(temp, result.value);
-                conca += gen.setArithmetic('P', 'P', '+', result.posGlobal); // editar a futuro el pos
+                conca += gen.setArithmetic('P', 'P', '+', tree.getPos()); // editar a futuro el pos
                 conca += '\tprintfString();\n';
                 temp = gen.newTemp();
                 conca += gen.setArithmetic(temp,'stack[(int)P]','','');
-                conca += gen.setArithmetic('P', 'P', '-', result.posGlobal); // // editar a futuro el pos
+                conca += gen.setArithmetic('P', 'P', '-', tree.getPos()); // // editar a futuro el pos
                 conca += gen.newLine(true) + '\n';
 
                 tree.updateConsola(conca);
