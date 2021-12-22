@@ -74,4 +74,40 @@ class While extends Instruction{
         }
         return salida;
     }
+
+    compilar(tree, table){
+
+        var gen = tree.getGenerator();
+        var newTable = new TablaSimbolo(table);
+
+        var newL = gen.newLabel();
+
+        tree.updateConsola(gen.addLabel(newL));
+
+        var condicion = this.condicion.compilar(tree, table);
+        if(condicion instanceof Exception) return condicion;
+        
+        if(condicion.type == Tipo.BOOLEANO){
+
+            tree.updateConsola(gen.addLabel(condicion.EV));
+            for(var instruction of this.instrucciones){
+                var result = instruction.compilar(tree, newTable);
+
+                if(result instanceof Exception){
+                    gen.setException(result);
+                }
+                // if(result instanceof Break) return result;
+                // if(result instanceof Return) return result;
+                // if(result instanceof Continue) return result;
+            }
+            tree.updateConsola(gen.addGoto(newL));
+            tree.updateConsola(gen.addLabel(condicion.EF));
+
+        }else{
+            return new Excepcion("Semantico", "Tipo de dato no booleano en while.", this.row, this.column)
+        }
+       
+
+
+    }
 }
