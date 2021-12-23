@@ -164,7 +164,6 @@ class LlamadaFuncion extends Instruction{
             return "";
         }
         for (var param of result.parameters) {
-            console.log("para for",param)
             var salida = "";
             var dict = {}
             dict['Identificador'] = param.identificador;
