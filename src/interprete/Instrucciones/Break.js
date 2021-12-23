@@ -14,6 +14,12 @@ class Break extends Instruction{
     }
 
     compilar(tree, table){
-        return this
+        var gen = tree.getGenerator();
+        var breakLabel = gen.newLabel();
+        tree.updateConsola(gen.addGoto(breakLabel))
+      
+        tree.breakLabel = breakLabel.toString();
+        tree.breakReturn = true;
+        
     }
 }

@@ -92,5 +92,10 @@ class Do_While extends Instruction{
         tree.updateConsola(gen.addGoto(newL));
         tree.updateConsola(gen.addLabel(condicion.EF));
 
+        if(tree.breakReturn){
+            tree.updateConsola(gen.addLabel(tree.breakLabel));
+            tree.breakReturn = false;
+            tree.breakLabel = '';
+        }
     }
 }

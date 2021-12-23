@@ -172,6 +172,7 @@ class Switch extends Instruction{
         tree.updateConsola(conca1);
       
         var count = 0;
+        var tempBreak = [];
         if(this.instr_case!=null){
             tree.updateConsola("\n\t/***************** [<LIST>][<CASE>] *****************/\n")
             for(var instruction of this.instr_case){
@@ -181,8 +182,10 @@ class Switch extends Instruction{
                     if(value instanceof Exception){
                         gen.setException(value);
                     }
-                    if(value instanceof Break){
-                        tree.updateConsola(gen.addGoto(newLsalida))
+                    if(tree.breakReturn){
+                        tempBreak.push(gen.addLabel(tree.breakLabel));
+                        tree.breakReturn = false;
+                        tree.breakLabel = '';
                     }
                 }
                 count ++;
@@ -200,8 +203,10 @@ class Switch extends Instruction{
                 if(value instanceof Exception){
                     gen.setException(value);
                 }
-                if(value instanceof Break){
-                    tree.updateConsola(gen.addGoto(newLsalida))
+                if(tree.breakReturn){
+                    tempBreak.push(gen.addLabel(tree.breakLabel));
+                    tree.breakReturn = false;
+                    tree.breakLabel = '';
                 }
 
             }
@@ -209,17 +214,14 @@ class Switch extends Instruction{
         }
         
         tree.updateConsola(conca2);
+          
+        var i = 0;
+        while(i<tempBreak.length){
+            conca3 += tempBreak[i].toString();
+            i++;
+        }
         
-        tree.updateConsola(conca3);        
+        tree.updateConsola(conca3);      
     
-        
-
-
-        // if(this.instr_case != null && this.instr_default != null){ // Condition 1 => [<CASES_LIST>][<DEFAULT>]
-        // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
-        // }else if(this.instr_case != null && this.instr_default == null){ // Condition 2 => [<CASES_LIST>]
-        // }
-
-
     }
 }

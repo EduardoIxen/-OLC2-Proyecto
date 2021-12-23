@@ -110,7 +110,11 @@ class Main extends Instruction{
             if(instruction instanceof Exception){
                 gen.setException(instruction);
             }
-            
+            if (tree.breakReturn) {
+                gen.setException(new Exception("Semantico", "Sentencia BREAK fuera de ciclo.", this.row, this.column));
+                tree.breakReturn = false;
+                tree.breakLabel = '';
+            }
 
         }
 

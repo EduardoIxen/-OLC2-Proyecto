@@ -18,6 +18,8 @@ class Arbol {
         this.nativeRelacional = false;
         this.stackGlobal = 0;
         this.tsSymbol = [];
+        this.breakReturn = false; // return breal
+        this.breakLabel = '';
     }
 
     getInstruccion() { return this.instruccion; }

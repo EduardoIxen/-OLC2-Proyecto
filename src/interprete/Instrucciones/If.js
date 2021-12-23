@@ -160,6 +160,7 @@ class If extends Instruction{
         var gen = tree.getGenerator();
         var condition = this.condition.compilar(tree, table);
         if(condition instanceof Exception) return condition;
+
         tree.updateConsola('\n/******* Iniciando con If *******/\n')
         if(condition.type == Tipo.BOOLEANO){
             var newL = gen.newLabel();
@@ -171,21 +172,21 @@ class If extends Instruction{
                     if(result instanceof Exception){
                         gen.setException(result);
                     }
-                    // if(result instanceof Break) return result;
+                    
                     // if(result instanceof Return) return result;
                     // if(result instanceof Continue) return result;
                 }
 
                 tree.updateConsola(gen.addGoto(newL));
+
             } catch (error) {
                 var result = this.instr_if.compilar(tree, newTable);
                 if(result instanceof Exception){
                     gen.setException(result);
                 }
-                // if(result instanceof Break) return result;
+                
                 // if(result instanceof Return) return result;
                 // if(result instanceof Continue) return result;
-
                 tree.updateConsola(gen.addGoto(newL));
                 
             }
@@ -194,7 +195,7 @@ class If extends Instruction{
                 tree.updateConsola(gen.addLabel(condition.EF));
                 var result = this.instr_elseif.compilar(tree, table);
                 if(result instanceof Exception) return result;
-                // if(result instanceof Break) return result;
+         
                 // if(result instanceof Return) return result;
                 // if(result instanceof Continue) return result;
 
@@ -207,7 +208,6 @@ class If extends Instruction{
                         if(result instanceof Exception){
                             gen.setException(result);
                         }
-                        // if(result instanceof Break) return result;
                         // if(result instanceof Return) return result;
                         // if(result instanceof Continue) return result;
                         
@@ -219,21 +219,19 @@ class If extends Instruction{
                     if(result instanceof Exception){
                         gen.setException(result);
                     }
-                    // if(result instanceof Break) return result;
                     // if(result instanceof Return) return result;
                     // if(result instanceof Continue) return result;
 
                 }
 
+            }else{
+                tree.updateConsola(gen.addLabel(condition.EF));
             }
            
-            
-
             tree.updateConsola(gen.addLabel(newL));            
 
         }else{
             return new Exception("Semantico", "Tipo de dato no booleano en IF.", this.row, this.column);
         }
-
     }
 }

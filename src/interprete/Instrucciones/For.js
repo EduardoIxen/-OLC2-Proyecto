@@ -173,15 +173,12 @@ class For extends Instruction{
     }
 
     compilar(tree, table){
-        console.log(this.variable)
-        console.log(this.condition)
-        console.log(this.update)
-        console.log(this.instruction)
+       
         var gen = tree.getGenerator();
         if (this.type == Tipo.ENTERO) {
             var newTable = new TablaSimbolo(table);
             var newVar = this.variable.compilar(tree, newTable);
-            console.log(newVar)
+
             var newL = gen.newLabel();
             tree.updateConsola(gen.addLabel(newL));
             if (this.condition.type == Tipo.BOOLEANO) {
@@ -202,6 +199,12 @@ class For extends Instruction{
             
         }else{
             return new Exception("Semántico","El dato debe de ser de tipo entero.", this.row, this.column);
+        }
+
+        if(tree.breakReturn){
+            tree.updateConsola(gen.addLabel(tree.breakLabel));
+            tree.breakReturn = false;
+            tree.breakLabel = '';
         }
     }
 }

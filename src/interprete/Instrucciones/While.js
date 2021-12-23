@@ -86,7 +86,7 @@ class While extends Instruction{
 
         var condicion = this.condicion.compilar(tree, table);
         if(condicion instanceof Exception) return condicion;
-        
+
         if(condicion.type == Tipo.BOOLEANO){
 
             tree.updateConsola(gen.addLabel(condicion.EV));
@@ -107,6 +107,12 @@ class While extends Instruction{
             return new Excepcion("Semantico", "Tipo de dato no booleano en while.", this.row, this.column)
         }
        
+        
+        if(tree.breakReturn){
+            tree.updateConsola(gen.addLabel(tree.breakLabel));
+            tree.breakReturn = false;
+            tree.breakLabel = '';
+        }
 
 
     }
