@@ -31,6 +31,10 @@ class Generator{
         return `t${this.countTemp}`;    // t3
     }
 
+    onlyTemp(temp, salida){
+        return `\t${temp} = ${salida};\n`;
+    }
+
 /************************************************* ETIQUETAS *************************************************/
     newLabel(){
         this.label.push(`L${this.countLabel}`) // L0
